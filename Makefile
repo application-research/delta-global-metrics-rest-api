@@ -4,7 +4,7 @@ export DATE := $(shell date +%Y.%m.%d-%H%M)
 export LATEST_COMMIT := $(shell git log --pretty=format:'%h' -n 1)
 export BRANCH := $(shell git branch |grep -v "no branch"| grep \*|cut -d ' ' -f2)
 export BUILT_ON_IP := $(shell [ $$(uname) = Linux ] && hostname -i || hostname )
-export BIN_DIR=./bin
+export BIN_DIR=.
 export PACKR2_EXECUTABLE := $(shell command -v packr2  2> /dev/null)
 export SWAG_EXECUTABLE := $(shell command -v swag  2> /dev/null)
 export RUNTIME_VER := $(shell go version)
