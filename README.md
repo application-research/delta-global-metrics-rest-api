@@ -1,2 +1,8 @@
-# delta-metrics-rest
-Delta Metrics / Telemetry REST Endpoints
+## Delta Metrics Rest
+Rest API for Delta Global Metrics
+```
+make dmr
+```
+
+# Author
+Protocol Labs Outercore Engineering.
