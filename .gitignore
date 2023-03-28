@@ -21,6 +21,7 @@ bin/
 .idea/
 
 generate.sh
+.env
 
 
 

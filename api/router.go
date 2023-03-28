@@ -84,6 +84,7 @@ func ConfigGinRouter(router gin.IRoutes) {
 	configGinLogEventsRouter(router)
 	configGinPieceCommitmentLogsRouter(router)
 	configGinWalletLogsRouter(router)
+	configGinStatisticsRouter(router)
 
 	router.GET("/ddl/:argID", ConverHttprouterToGin(GetDdl))
 	router.GET("/ddl", ConverHttprouterToGin(GetDdlEndpoints))

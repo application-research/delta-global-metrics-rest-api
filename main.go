@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/spf13/viper"
 	"log"
 	"os"
 	"os/signal"
@@ -79,6 +80,13 @@ func GinServer() (err error) {
 // @BasePath /
 func main() {
 	OsSignal = make(chan os.Signal, 1)
+	viper.SetConfigFile(".env")
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Fatalf("Error while reading config file %s", err)
+	}
+
+	DB_DSN, _ := viper.Get("DB_DSN").(string)
 
 	// Define version information
 	goopt.Version = fmt.Sprintf(
@@ -90,8 +98,7 @@ func main() {
   Built on OS     : %s
 `, BuildDate, BuildNumber, LatestCommit, RuntimeVer, BuiltOnOs)
 	goopt.Parse(nil)
-
-	db, err := gorm.Open("postgres", "host=kEOpaaIn7ZRDLL9IGrKYOH2MpUEavWWg@dpg-cfto8d9a6gdotcfptsrg-a.oregon-postgres.render.com user=deltadb_metrics_user password=kEOpaaIn7ZRDLL9IGrKYOH2MpUEavWWg dbname=deltadb_metrics port=5432")
+	db, err := gorm.Open("postgres", DB_DSN)
 	if err != nil {
 		log.Fatalf("Got error when connect database, the error is '%v'", err)
 	}
