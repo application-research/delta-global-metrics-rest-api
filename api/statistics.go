@@ -8,7 +8,7 @@ import (
 )
 
 func configGinStatisticsRouter(router gin.IRoutes) {
-	router.GET("/open/totals/info", ConverHttprouterToGin(GetOpenTotalInfoStats))
+	router.GET("/open/stats/totals/info", ConverHttprouterToGin(GetOpenTotalInfoStats))
 }
 
 func GetOpenTotalInfoStats(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
