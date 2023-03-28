@@ -86,7 +86,27 @@ func main() {
 		log.Fatalf("Error while reading config file %s", err)
 	}
 
-	DB_DSN, _ := viper.Get("DB_DSN").(string)
+	dbHost, okHost := viper.Get("DB_HOST").(string)
+	dbUser, okUser := viper.Get("DB_USER").(string)
+	dbPass, okPass := viper.Get("DB_PASS").(string)
+	dbName, okName := viper.Get("DB_NAME").(string)
+	dbPort, okPort := viper.Get("DB_PORT").(string)
+	if !okHost || !okUser || !okPass || !okName || !okPort {
+		log.Fatalf("Error while reading database config")
+	}
+
+	// Define version information
+	goopt.Version = fmt.Sprintf(
+		`Application build information
+				  Build date      : %s
+				  Build number    : %s
+				  Git commit      : %s
+				  Runtime version : %s
+				  Built on OS     : %s
+				`, BuildDate, BuildNumber, LatestCommit, RuntimeVer, BuiltOnOs)
+	goopt.Parse(nil)
+
+	dsn := "host=" + dbHost + " user=" + dbUser + " password=" + dbPass + " dbname=" + dbName + " port=" + dbPort
 
 	// Define version information
 	goopt.Version = fmt.Sprintf(
@@ -98,7 +118,7 @@ func main() {
   Built on OS     : %s
 `, BuildDate, BuildNumber, LatestCommit, RuntimeVer, BuiltOnOs)
 	goopt.Parse(nil)
-	db, err := gorm.Open("postgres", DB_DSN)
+	db, err := gorm.Open("postgres", dsn)
 	if err != nil {
 		log.Fatalf("Got error when connect database, the error is '%v'", err)
 	}
