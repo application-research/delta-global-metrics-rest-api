@@ -1,0 +1,4032 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Sample CRUD api for estuary db",
+        "title": "Sample CRUD api for estuary db",
+        "contact": {
+            "name": "Me",
+            "url": "http://me.com/terms.html",
+            "email": "alvin@protocol.ai"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/contentdeallogs": {
+            "get": {
+                "description": "GetAllContentDealLogs is a handler to get a slice of record(s) from content_deal_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealLogs"
+                ],
+                "summary": "Get list of ContentDealLogs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.ContentDealLogs"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to content_deal_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealLogs"
+                ],
+                "summary": "Add an record to content_deal_logs table",
+                "parameters": [
+                    {
+                        "description": "Add ContentDealLogs",
+                        "name": "ContentDealLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/contentdeallogs/{contentDealLogsID}": {
+            "get": {
+                "description": "GetContentDealLogs is a function to get a single record from the content_deal_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealLogs"
+                ],
+                "summary": "Get record from table ContentDealLogs by  contentDealLogsID",
+                "operationId": "contentDealLogsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contentDealLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from content_deal_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealLogs"
+                ],
+                "summary": "Update an record in table content_deal_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contentDealLogsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update ContentDealLogs record",
+                        "name": "ContentDealLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from content_deal_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealLogs"
+                ],
+                "summary": "Delete a record from content_deal_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contentDealLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/contentdealproposallogs": {
+            "get": {
+                "description": "GetAllContentDealProposalLogs is a handler to get a slice of record(s) from content_deal_proposal_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealProposalLogs"
+                ],
+                "summary": "Get list of ContentDealProposalLogs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.ContentDealProposalLogs"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to content_deal_proposal_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealProposalLogs"
+                ],
+                "summary": "Add an record to content_deal_proposal_logs table",
+                "parameters": [
+                    {
+                        "description": "Add ContentDealProposalLogs",
+                        "name": "ContentDealProposalLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/contentdealproposallogs/{contentDealProposalLogsID}": {
+            "get": {
+                "description": "GetContentDealProposalLogs is a function to get a single record from the content_deal_proposal_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealProposalLogs"
+                ],
+                "summary": "Get record from table ContentDealProposalLogs by  contentDealProposalLogsID",
+                "operationId": "contentDealProposalLogsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contentDealProposalLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from content_deal_proposal_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealProposalLogs"
+                ],
+                "summary": "Update an record in table content_deal_proposal_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contentDealProposalLogsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update ContentDealProposalLogs record",
+                        "name": "ContentDealProposalLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from content_deal_proposal_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealProposalLogs"
+                ],
+                "summary": "Delete a record from content_deal_proposal_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contentDealProposalLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/contentdealproposalparameterslogs": {
+            "get": {
+                "description": "GetAllContentDealProposalParametersLogs is a handler to get a slice of record(s) from content_deal_proposal_parameters_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealProposalParametersLogs"
+                ],
+                "summary": "Get list of ContentDealProposalParametersLogs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.ContentDealProposalParametersLogs"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to content_deal_proposal_parameters_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealProposalParametersLogs"
+                ],
+                "summary": "Add an record to content_deal_proposal_parameters_logs table",
+                "parameters": [
+                    {
+                        "description": "Add ContentDealProposalParametersLogs",
+                        "name": "ContentDealProposalParametersLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalParametersLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalParametersLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/contentdealproposalparameterslogs/{contentDealProposalParametersLogsID}": {
+            "get": {
+                "description": "GetContentDealProposalParametersLogs is a function to get a single record from the content_deal_proposal_parameters_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealProposalParametersLogs"
+                ],
+                "summary": "Get record from table ContentDealProposalParametersLogs by  contentDealProposalParametersLogsID",
+                "operationId": "contentDealProposalParametersLogsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contentDealProposalParametersLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalParametersLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from content_deal_proposal_parameters_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealProposalParametersLogs"
+                ],
+                "summary": "Update an record in table content_deal_proposal_parameters_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contentDealProposalParametersLogsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update ContentDealProposalParametersLogs record",
+                        "name": "ContentDealProposalParametersLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalParametersLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalParametersLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from content_deal_proposal_parameters_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentDealProposalParametersLogs"
+                ],
+                "summary": "Delete a record from content_deal_proposal_parameters_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contentDealProposalParametersLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentDealProposalParametersLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/contentlogs": {
+            "get": {
+                "description": "GetAllContentLogs is a handler to get a slice of record(s) from content_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentLogs"
+                ],
+                "summary": "Get list of ContentLogs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.ContentLogs"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to content_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentLogs"
+                ],
+                "summary": "Add an record to content_logs table",
+                "parameters": [
+                    {
+                        "description": "Add ContentLogs",
+                        "name": "ContentLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/contentlogs/{contenDealLogsID}": {
+            "get": {
+                "description": "GetContentLogs is a function to get a single record from the content_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentLogs"
+                ],
+                "summary": "Get record from table ContentLogs by  contenDealLogsID",
+                "operationId": "contenDealLogsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contenDealLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from content_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentLogs"
+                ],
+                "summary": "Update an record in table content_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contenDealLogsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update ContentLogs record",
+                        "name": "ContentLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from content_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentLogs"
+                ],
+                "summary": "Delete a record from content_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contenDealLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/contentminerlogs": {
+            "get": {
+                "description": "GetAllContentMinerLogs is a handler to get a slice of record(s) from content_miner_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentMinerLogs"
+                ],
+                "summary": "Get list of ContentMinerLogs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.ContentMinerLogs"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to content_miner_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentMinerLogs"
+                ],
+                "summary": "Add an record to content_miner_logs table",
+                "parameters": [
+                    {
+                        "description": "Add ContentMinerLogs",
+                        "name": "ContentMinerLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentMinerLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentMinerLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/contentminerlogs/{contenMinerLogsID}": {
+            "get": {
+                "description": "GetContentMinerLogs is a function to get a single record from the content_miner_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentMinerLogs"
+                ],
+                "summary": "Get record from table ContentMinerLogs by  contenMinerLogsID",
+                "operationId": "contenMinerLogsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contenMinerLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentMinerLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from content_miner_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentMinerLogs"
+                ],
+                "summary": "Update an record in table content_miner_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contenMinerLogsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update ContentMinerLogs record",
+                        "name": "ContentMinerLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentMinerLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentMinerLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from content_miner_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentMinerLogs"
+                ],
+                "summary": "Delete a record from content_miner_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contenMinerLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentMinerLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/contentwalletlogs": {
+            "get": {
+                "description": "GetAllContentWalletLogs is a handler to get a slice of record(s) from content_wallet_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentWalletLogs"
+                ],
+                "summary": "Get list of ContentWalletLogs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.ContentWalletLogs"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to content_wallet_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentWalletLogs"
+                ],
+                "summary": "Add an record to content_wallet_logs table",
+                "parameters": [
+                    {
+                        "description": "Add ContentWalletLogs",
+                        "name": "ContentWalletLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentWalletLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentWalletLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/contentwalletlogs/{contenWalletLogsID}": {
+            "get": {
+                "description": "GetContentWalletLogs is a function to get a single record from the content_wallet_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentWalletLogs"
+                ],
+                "summary": "Get record from table ContentWalletLogs by  contenWalletLogsID",
+                "operationId": "contenWalletLogsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contenWalletLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentWalletLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from content_wallet_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentWalletLogs"
+                ],
+                "summary": "Update an record in table content_wallet_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contenWalletLogsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update ContentWalletLogs record",
+                        "name": "ContentWalletLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentWalletLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentWalletLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from content_wallet_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ContentWalletLogs"
+                ],
+                "summary": "Delete a record from content_wallet_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "contenWalletLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.ContentWalletLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/ddl": {
+            "get": {
+                "description": "GetDdlEndpoints is a function to get a list of ddl endpoints available for tables in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TableInfo"
+                ],
+                "summary": "Gets a list of ddl endpoints available for tables in the estuary database",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.CrudAPI"
+                        }
+                    }
+                }
+            }
+        },
+        "/ddl/{argID}": {
+            "get": {
+                "description": "GetDdl is a function to get table info for a table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TableInfo"
+                ],
+                "summary": "Get table info for a table in the estuary database by argID",
+                "operationId": "argID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "argID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.CrudAPI"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/deltanodegeolocations": {
+            "get": {
+                "description": "GetAllDeltaNodeGeoLocations is a handler to get a slice of record(s) from delta_node_geo_locations table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DeltaNodeGeoLocations"
+                ],
+                "summary": "Get list of DeltaNodeGeoLocations",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.DeltaNodeGeoLocations"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to delta_node_geo_locations table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DeltaNodeGeoLocations"
+                ],
+                "summary": "Add an record to delta_node_geo_locations table",
+                "parameters": [
+                    {
+                        "description": "Add DeltaNodeGeoLocations",
+                        "name": "DeltaNodeGeoLocations",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaNodeGeoLocations"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaNodeGeoLocations"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/deltanodegeolocations/{deltaNodeGeoLocationsID}": {
+            "get": {
+                "description": "GetDeltaNodeGeoLocations is a function to get a single record from the delta_node_geo_locations table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DeltaNodeGeoLocations"
+                ],
+                "summary": "Get record from table DeltaNodeGeoLocations by  deltaNodeGeoLocationsID",
+                "operationId": "deltaNodeGeoLocationsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "deltaNodeGeoLocationsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaNodeGeoLocations"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from delta_node_geo_locations table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DeltaNodeGeoLocations"
+                ],
+                "summary": "Update an record in table delta_node_geo_locations",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "deltaNodeGeoLocationsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update DeltaNodeGeoLocations record",
+                        "name": "DeltaNodeGeoLocations",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaNodeGeoLocations"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaNodeGeoLocations"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from delta_node_geo_locations table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DeltaNodeGeoLocations"
+                ],
+                "summary": "Delete a record from delta_node_geo_locations",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "deltaNodeGeoLocationsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaNodeGeoLocations"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/deltastartuplogs": {
+            "get": {
+                "description": "GetAllDeltaStartupLogs is a handler to get a slice of record(s) from delta_startup_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DeltaStartupLogs"
+                ],
+                "summary": "Get list of DeltaStartupLogs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.DeltaStartupLogs"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to delta_startup_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DeltaStartupLogs"
+                ],
+                "summary": "Add an record to delta_startup_logs table",
+                "parameters": [
+                    {
+                        "description": "Add DeltaStartupLogs",
+                        "name": "DeltaStartupLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaStartupLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaStartupLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/deltastartuplogs/{deltaStartupLogsID}": {
+            "get": {
+                "description": "GetDeltaStartupLogs is a function to get a single record from the delta_startup_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DeltaStartupLogs"
+                ],
+                "summary": "Get record from table DeltaStartupLogs by  deltaStartupLogsID",
+                "operationId": "deltaStartupLogsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "deltaStartupLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaStartupLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from delta_startup_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DeltaStartupLogs"
+                ],
+                "summary": "Update an record in table delta_startup_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "deltaStartupLogsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update DeltaStartupLogs record",
+                        "name": "DeltaStartupLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaStartupLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaStartupLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from delta_startup_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DeltaStartupLogs"
+                ],
+                "summary": "Delete a record from delta_startup_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "deltaStartupLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.DeltaStartupLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/instancemetalogs": {
+            "get": {
+                "description": "GetAllInstanceMetaLogs is a handler to get a slice of record(s) from instance_meta_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InstanceMetaLogs"
+                ],
+                "summary": "Get list of InstanceMetaLogs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.InstanceMetaLogs"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to instance_meta_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InstanceMetaLogs"
+                ],
+                "summary": "Add an record to instance_meta_logs table",
+                "parameters": [
+                    {
+                        "description": "Add InstanceMetaLogs",
+                        "name": "InstanceMetaLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.InstanceMetaLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.InstanceMetaLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/instancemetalogs/{instanceMetaLogsID}": {
+            "get": {
+                "description": "GetInstanceMetaLogs is a function to get a single record from the instance_meta_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InstanceMetaLogs"
+                ],
+                "summary": "Get record from table InstanceMetaLogs by  instanceMetaLogsID",
+                "operationId": "instanceMetaLogsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "instanceMetaLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.InstanceMetaLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from instance_meta_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InstanceMetaLogs"
+                ],
+                "summary": "Update an record in table instance_meta_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "instanceMetaLogsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update InstanceMetaLogs record",
+                        "name": "InstanceMetaLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.InstanceMetaLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.InstanceMetaLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from instance_meta_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InstanceMetaLogs"
+                ],
+                "summary": "Delete a record from instance_meta_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "instanceMetaLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.InstanceMetaLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/logevents": {
+            "get": {
+                "description": "GetAllLogEvents is a handler to get a slice of record(s) from log_events table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "LogEvents"
+                ],
+                "summary": "Get list of LogEvents",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.LogEvents"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to log_events table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "LogEvents"
+                ],
+                "summary": "Add an record to log_events table",
+                "parameters": [
+                    {
+                        "description": "Add LogEvents",
+                        "name": "LogEvents",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.LogEvents"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.LogEvents"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/logevents/{logEventsID}": {
+            "get": {
+                "description": "GetLogEvents is a function to get a single record from the log_events table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "LogEvents"
+                ],
+                "summary": "Get record from table LogEvents by  logEventsID",
+                "operationId": "logEventsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "logEventsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.LogEvents"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from log_events table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "LogEvents"
+                ],
+                "summary": "Update an record in table log_events",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "logEventsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update LogEvents record",
+                        "name": "LogEvents",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.LogEvents"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.LogEvents"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from log_events table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "LogEvents"
+                ],
+                "summary": "Delete a record from log_events",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "logEventsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.LogEvents"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/piececommitmentlogs": {
+            "get": {
+                "description": "GetAllPieceCommitmentLogs is a handler to get a slice of record(s) from piece_commitment_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PieceCommitmentLogs"
+                ],
+                "summary": "Get list of PieceCommitmentLogs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.PieceCommitmentLogs"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to piece_commitment_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PieceCommitmentLogs"
+                ],
+                "summary": "Add an record to piece_commitment_logs table",
+                "parameters": [
+                    {
+                        "description": "Add PieceCommitmentLogs",
+                        "name": "PieceCommitmentLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.PieceCommitmentLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.PieceCommitmentLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/piececommitmentlogs/{pieceCommitmentLogsID}": {
+            "get": {
+                "description": "GetPieceCommitmentLogs is a function to get a single record from the piece_commitment_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PieceCommitmentLogs"
+                ],
+                "summary": "Get record from table PieceCommitmentLogs by  pieceCommitmentLogsID",
+                "operationId": "pieceCommitmentLogsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "pieceCommitmentLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.PieceCommitmentLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from piece_commitment_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PieceCommitmentLogs"
+                ],
+                "summary": "Update an record in table piece_commitment_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "pieceCommitmentLogsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update PieceCommitmentLogs record",
+                        "name": "PieceCommitmentLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.PieceCommitmentLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.PieceCommitmentLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from piece_commitment_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PieceCommitmentLogs"
+                ],
+                "summary": "Delete a record from piece_commitment_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "pieceCommitmentLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.PieceCommitmentLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/walletlogs": {
+            "get": {
+                "description": "GetAllWalletLogs is a handler to get a slice of record(s) from wallet_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WalletLogs"
+                ],
+                "summary": "Get list of WalletLogs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page requested (defaults to 0)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of records in a page  (defaults to 20)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "db sort order column",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.PagedResults"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.WalletLogs"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add to add a single record to wallet_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WalletLogs"
+                ],
+                "summary": "Add an record to wallet_logs table",
+                "parameters": [
+                    {
+                        "description": "Add WalletLogs",
+                        "name": "WalletLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.WalletLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.WalletLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/walletlogs/{walletLogsID}": {
+            "get": {
+                "description": "GetWalletLogs is a function to get a single record from the wallet_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WalletLogs"
+                ],
+                "summary": "Get record from table WalletLogs by  walletLogsID",
+                "operationId": "walletLogsID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "walletLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.WalletLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a single record from wallet_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WalletLogs"
+                ],
+                "summary": "Update an record in table wallet_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "walletLogsID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update WalletLogs record",
+                        "name": "WalletLogs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.WalletLogs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.WalletLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a single record from wallet_logs table in the estuary database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WalletLogs"
+                ],
+                "summary": "Delete a record from wallet_logs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "walletLogsID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/model.WalletLogs"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.HTTPError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.CrudAPI": {
+            "type": "object",
+            "properties": {
+                "createUrl": {
+                    "type": "string"
+                },
+                "deleteUrl": {
+                    "type": "string"
+                },
+                "fetchDdlUrl": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "retrieveManyUrl": {
+                    "type": "string"
+                },
+                "retrieveOneUrl": {
+                    "type": "string"
+                },
+                "tableInfo": {
+                    "$ref": "#/definitions/model.TableInfo"
+                },
+                "updateUrl": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.HTTPError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 400
+                },
+                "message": {
+                    "type": "string",
+                    "example": "status bad request"
+                }
+            }
+        },
+        "api.PagedResults": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "page": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "totalRecords": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.ColumnInfo": {
+            "type": "object",
+            "properties": {
+                "columnLength": {
+                    "type": "integer"
+                },
+                "columnType": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "databaseTypeName": {
+                    "type": "string"
+                },
+                "databaseTypePretty": {
+                    "type": "string"
+                },
+                "defaultValue": {
+                    "type": "string"
+                },
+                "goFieldName": {
+                    "type": "string"
+                },
+                "goFieldType": {
+                    "type": "string"
+                },
+                "index": {
+                    "type": "integer"
+                },
+                "isArray": {
+                    "type": "boolean"
+                },
+                "isAutoIncrement": {
+                    "type": "boolean"
+                },
+                "isNullable": {
+                    "type": "boolean"
+                },
+                "isPrimaryKey": {
+                    "type": "boolean"
+                },
+                "jsonFieldName": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "protobufFieldName": {
+                    "type": "string"
+                },
+                "protobufFieldPos": {
+                    "type": "integer"
+                },
+                "protobufFieldType": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.ContentDealLogs": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "[ 1] content                                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "createdAt": {
+                    "description": "[22] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "dealID": {
+                    "description": "[ 5] deal_id                                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "dealProtocolVersion": {
+                    "description": "[16] deal_protocol_version                          TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "dealUUID": {
+                    "description": "[ 3] deal_uuid                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "deltaNodeUUID": {
+                    "description": "[24] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "dtChan": {
+                    "description": "[10] dt_chan                                        TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "failed": {
+                    "description": "[ 6] failed                                         BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "failedAt": {
+                    "description": "[ 9] failed_at                                      TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "lastMessage": {
+                    "description": "[15] last_message                                   TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "miner": {
+                    "description": "[ 4] miner                                          TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "minerVersion": {
+                    "description": "[17] miner_version                                  TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "nodeInfo": {
+                    "description": "[18] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "onChainAt": {
+                    "description": "[13] on_chain_at                                    TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "propCid": {
+                    "description": "[ 2] prop_cid                                       TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requesterInfo": {
+                    "description": "[19] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requestingAPIKey": {
+                    "description": "[20] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "sealedAt": {
+                    "description": "[14] sealed_at                                      TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "slashed": {
+                    "description": "[ 8] slashed                                        BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "systemContentDealID": {
+                    "description": "[21] system_content_deal_id                         INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "transferFinished": {
+                    "description": "[12] transfer_finished                              TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "transferStarted": {
+                    "description": "[11] transfer_started                               TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "[23] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "verified": {
+                    "description": "[ 7] verified                                       BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                }
+            }
+        },
+        "model.ContentDealProposalLogs": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "[ 1] content                                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "createdAt": {
+                    "description": "[ 9] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "deltaNodeUUID": {
+                    "description": "[11] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "meta": {
+                    "description": "[ 4] meta                                           TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "nodeInfo": {
+                    "description": "[ 5] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requesterInfo": {
+                    "description": "[ 6] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requestingAPIKey": {
+                    "description": "[ 7] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "signed": {
+                    "description": "[ 3] signed                                         TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "systemContentDealProposalID": {
+                    "description": "[ 8] system_content_deal_proposal_id                INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "unsigned": {
+                    "description": "[ 2] unsigned                                       TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "updatedAt": {
+                    "description": "[10] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                }
+            }
+        },
+        "model.ContentDealProposalParametersLogs": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "[ 1] content                                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "createdAt": {
+                    "description": "[13] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "deltaNodeUUID": {
+                    "description": "[15] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "duration": {
+                    "description": "[ 3] duration                                       INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "endEpoch": {
+                    "description": "[ 5] end_epoch                                      INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "label": {
+                    "description": "[ 2] label                                          TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "nodeInfo": {
+                    "description": "[ 9] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "removeUnsealedCopy": {
+                    "description": "[ 7] remove_unsealed_copy                           BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "requesterInfo": {
+                    "description": "[10] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requestingAPIKey": {
+                    "description": "[11] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "skipIPNiAnnounce": {
+                    "description": "[ 8] skip_ip_ni_announce                            BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "startEpoch": {
+                    "description": "[ 4] start_epoch                                    INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "systemContentDealProposalParametersID": {
+                    "description": "[12] system_content_deal_proposal_parameters_id     INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "transferParams": {
+                    "description": "[ 6] transfer_params                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "updatedAt": {
+                    "description": "[14] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                }
+            }
+        },
+        "model.ContentLogs": {
+            "type": "object",
+            "properties": {
+                "cid": {
+                    "description": "[ 3] cid                                            TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "connectionMode": {
+                    "description": "[ 7] connection_mode                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "createdAt": {
+                    "description": "[12] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "deltaNodeUUID": {
+                    "description": "[14] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "lastMessage": {
+                    "description": "[ 8] last_message                                   TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "name": {
+                    "description": "[ 1] name                                           TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "nodeInfo": {
+                    "description": "[ 9] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "pieceCommitmentID": {
+                    "description": "[ 5] piece_commitment_id                            INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "requesterInfo": {
+                    "description": "[10] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requestingAPIKey": {
+                    "description": "[ 4] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "size": {
+                    "description": "[ 2] size                                           INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "status": {
+                    "description": "[ 6] status                                         TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "systemContentID": {
+                    "description": "[11] system_content_id                              INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "updatedAt": {
+                    "description": "[13] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                }
+            }
+        },
+        "model.ContentMinerLogs": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "[ 1] content                                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "createdAt": {
+                    "description": "[ 7] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "deltaNodeUUID": {
+                    "description": "[ 9] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "miner": {
+                    "description": "[ 2] miner                                          TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "nodeInfo": {
+                    "description": "[ 3] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requesterInfo": {
+                    "description": "[ 4] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requestingAPIKey": {
+                    "description": "[ 5] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "systemContentMinerID": {
+                    "description": "[ 6] system_content_miner_id                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "updatedAt": {
+                    "description": "[ 8] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                }
+            }
+        },
+        "model.ContentWalletLogs": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "[ 1] content                                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "createdAt": {
+                    "description": "[ 7] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "deltaNodeUUID": {
+                    "description": "[ 9] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "nodeInfo": {
+                    "description": "[ 3] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requesterInfo": {
+                    "description": "[ 4] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requestingAPIKey": {
+                    "description": "[ 5] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "systemContentWalletID": {
+                    "description": "[ 6] system_content_wallet_id                       INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "updatedAt": {
+                    "description": "[ 8] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "wallet": {
+                    "description": "[ 2] wallet                                         TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "walletID": {
+                    "description": "[10] wallet_id                                      INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                }
+            }
+        },
+        "model.DeltaNodeGeoLocations": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "description": "[ 3] city                                           TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "country": {
+                    "description": "[ 2] country                                        TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "createdAt": {
+                    "description": "[ 8] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "ip": {
+                    "description": "[ 1] ip                                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "lat": {
+                    "description": "[ 6] lat                                            NUMERIC              null: true   primary: false  isArray: false  auto: false  col: NUMERIC         len: -1      default: []",
+                    "$ref": "#/definitions/null.Float"
+                },
+                "lon": {
+                    "description": "[ 7] lon                                            NUMERIC              null: true   primary: false  isArray: false  auto: false  col: NUMERIC         len: -1      default: []",
+                    "$ref": "#/definitions/null.Float"
+                },
+                "region": {
+                    "description": "[ 4] region                                         TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "updatedAt": {
+                    "description": "[ 9] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "zip": {
+                    "description": "[ 5] zip                                            TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                }
+            }
+        },
+        "model.DeltaStartupLogs": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "description": "[ 4] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "deltaNodeUUID": {
+                    "description": "[ 6] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "ipaddress": {
+                    "description": "[ 3] ip_address                                     TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "nodeInfo": {
+                    "description": "[ 1] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "osDetails": {
+                    "description": "[ 2] os_details                                     TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "updatedAt": {
+                    "description": "[ 5] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                }
+            }
+        },
+        "model.InstanceMetaLogs": {
+            "type": "object",
+            "properties": {
+                "bytesPerCPU": {
+                    "description": "[21] bytes_per_cpu                                  INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "cpulimit": {
+                    "description": "[ 7] cpu_limit                                      INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "createdAt": {
+                    "description": "[26] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "deltaNodeUUID": {
+                    "description": "[24] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "disableCommitmentPieceGeneration": {
+                    "description": "[10] disable_commitment_piece_generation            BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "disableOfflineDeals": {
+                    "description": "[13] disable_offline_deals                          BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "disableOnlineDeals": {
+                    "description": "[12] disable_online_deals                           BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "disableRequest": {
+                    "description": "[ 9] disable_request                                BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "disableStorageDeal": {
+                    "description": "[11] disable_storage_deal                           BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "heapInUse": {
+                    "description": "[18] heap_in_use                                    INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "heapMemory": {
+                    "description": "[17] heap_memory                                    INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "instanceHostName": {
+                    "description": "[ 2] instance_host_name                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "instanceNodeName": {
+                    "description": "[ 3] instance_node_name                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "instanceStart": {
+                    "description": "[20] instance_start                                 TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "instanceUUID": {
+                    "description": "[ 1] instance_uuid                                  TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "memoryLimit": {
+                    "description": "[ 6] memory_limit                                   INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "nodeInfo": {
+                    "description": "[22] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "numberOfCpus": {
+                    "description": "[14] number_of_cpus                                 INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "osDetails": {
+                    "description": "[ 4] os_details                                     TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "publicIP": {
+                    "description": "[ 5] public_ip                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requesterInfo": {
+                    "description": "[23] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "stackInUse": {
+                    "description": "[19] stack_in_use                                   INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "storageInBytes": {
+                    "description": "[15] storage_in_bytes                               INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "storageLimit": {
+                    "description": "[ 8] storage_limit                                  INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "systemInstanceMetaID": {
+                    "description": "[25] system_instance_meta_id                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "systemMemory": {
+                    "description": "[16] system_memory                                  INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "updatedAt": {
+                    "description": "[27] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                }
+            }
+        },
+        "model.LogEvents": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "description": "[ 5] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "deltaUUID": {
+                    "description": "[ 9] delta_uuid                                     TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "logEvent": {
+                    "description": "[ 4] log_event                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "logEventID": {
+                    "description": "[ 3] log_event_id                                   INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "logEventObject": {
+                    "description": "[ 2] log_event_object                               BYTEA                null: true   primary: false  isArray: false  auto: false  col: BYTEA           len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "logEventType": {
+                    "description": "[ 1] log_event_type                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "sourceHost": {
+                    "description": "[ 7] source_host                                    TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "sourceIP": {
+                    "description": "[ 8] source_ip                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "updatedAt": {
+                    "description": "[ 6] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                }
+            }
+        },
+        "model.PieceCommitmentLogs": {
+            "type": "object",
+            "properties": {
+                "cid": {
+                    "description": "[ 1] cid                                            TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "createdAt": {
+                    "description": "[12] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "deltaNodeUUID": {
+                    "description": "[14] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "lastMessage": {
+                    "description": "[ 7] last_message                                   TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "nodeInfo": {
+                    "description": "[ 8] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "paddedPieceSize": {
+                    "description": "[ 4] padded_piece_size                              INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "piece": {
+                    "description": "[ 2] piece                                          TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requesterInfo": {
+                    "description": "[ 9] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requestingAPIKey": {
+                    "description": "[10] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "size": {
+                    "description": "[ 3] size                                           INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "status": {
+                    "description": "[ 6] status                                         TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "systemContentPieceCommitmentID": {
+                    "description": "[11] system_content_piece_commitment_id             INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "unPaddedPieceSize": {
+                    "description": "[ 5] un_padded_piece_size                           INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "updatedAt": {
+                    "description": "[13] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                }
+            }
+        },
+        "model.TableInfo": {
+            "type": "object",
+            "properties": {
+                "columns": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ColumnInfo"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.WalletLogs": {
+            "type": "object",
+            "properties": {
+                "addr": {
+                    "description": "[ 2] addr                                           TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "createdAt": {
+                    "description": "[10] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "deltaNodeUUID": {
+                    "description": "[12] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "id": {
+                    "description": "[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "type": "integer"
+                },
+                "keyType": {
+                    "description": "[ 4] key_type                                       TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "nodeInfo": {
+                    "description": "[ 6] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "owner": {
+                    "description": "[ 3] owner                                          TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "privateKey": {
+                    "description": "[ 5] private_key                                    TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requesterInfo": {
+                    "description": "[ 7] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "requestingAPIKey": {
+                    "description": "[ 8] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                },
+                "systemWalletID": {
+                    "description": "[ 9] system_wallet_id                               INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "updatedAt": {
+                    "description": "[11] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []",
+                    "type": "string"
+                },
+                "uuID": {
+                    "description": "[ 1] uu_id                                          TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []",
+                    "$ref": "#/definitions/null.String"
+                }
+            }
+        },
+        "null.Float": {
+            "type": "object",
+            "properties": {
+                "float64": {
+                    "type": "number"
+                },
+                "valid": {
+                    "description": "Valid is true if Float64 is not NULL",
+                    "type": "boolean"
+                }
+            }
+        },
+        "null.Int": {
+            "type": "object",
+            "properties": {
+                "int64": {
+                    "type": "integer"
+                },
+                "valid": {
+                    "description": "Valid is true if Int64 is not NULL",
+                    "type": "boolean"
+                }
+            }
+        },
+        "null.String": {
+            "type": "object",
+            "properties": {
+                "string": {
+                    "type": "string"
+                },
+                "valid": {
+                    "description": "Valid is true if String is not NULL",
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}

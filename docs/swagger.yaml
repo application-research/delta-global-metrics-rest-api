@@ -1,0 +1,3107 @@
+basePath: /
+definitions:
+  api.CrudAPI:
+    properties:
+      createUrl:
+        type: string
+      deleteUrl:
+        type: string
+      fetchDdlUrl:
+        type: string
+      name:
+        type: string
+      retrieveManyUrl:
+        type: string
+      retrieveOneUrl:
+        type: string
+      tableInfo:
+        $ref: '#/definitions/model.TableInfo'
+      updateUrl:
+        type: string
+    type: object
+  api.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  api.PagedResults:
+    properties:
+      data: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      totalRecords:
+        type: integer
+    type: object
+  model.ColumnInfo:
+    properties:
+      columnLength:
+        type: integer
+      columnType:
+        type: string
+      comment:
+        type: string
+      databaseTypeName:
+        type: string
+      databaseTypePretty:
+        type: string
+      defaultValue:
+        type: string
+      goFieldName:
+        type: string
+      goFieldType:
+        type: string
+      index:
+        type: integer
+      isArray:
+        type: boolean
+      isAutoIncrement:
+        type: boolean
+      isNullable:
+        type: boolean
+      isPrimaryKey:
+        type: boolean
+      jsonFieldName:
+        type: string
+      name:
+        type: string
+      notes:
+        type: string
+      protobufFieldName:
+        type: string
+      protobufFieldPos:
+        type: integer
+      protobufFieldType:
+        type: string
+    type: object
+  model.ContentDealLogs:
+    properties:
+      content:
+        $ref: '#/definitions/null.Int'
+        description: '[ 1] content                                        INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      createdAt:
+        description: '[22] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      dealID:
+        $ref: '#/definitions/null.Int'
+        description: '[ 5] deal_id                                        INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      dealProtocolVersion:
+        $ref: '#/definitions/null.String'
+        description: '[16] deal_protocol_version                          TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      dealUUID:
+        $ref: '#/definitions/null.String'
+        description: '[ 3] deal_uuid                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      deltaNodeUUID:
+        $ref: '#/definitions/null.String'
+        description: '[24] delta_node_uuid                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      dtChan:
+        $ref: '#/definitions/null.String'
+        description: '[10] dt_chan                                        TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      failed:
+        $ref: '#/definitions/null.Int'
+        description: '[ 6] failed                                         BOOL                 null:
+          true   primary: false  isArray: false  auto: false  col: BOOL            len:
+          -1      default: []'
+      failedAt:
+        description: '[ 9] failed_at                                      TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      lastMessage:
+        $ref: '#/definitions/null.String'
+        description: '[15] last_message                                   TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      miner:
+        $ref: '#/definitions/null.String'
+        description: '[ 4] miner                                          TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      minerVersion:
+        $ref: '#/definitions/null.String'
+        description: '[17] miner_version                                  TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      nodeInfo:
+        $ref: '#/definitions/null.String'
+        description: '[18] node_info                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      onChainAt:
+        description: '[13] on_chain_at                                    TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      propCid:
+        $ref: '#/definitions/null.String'
+        description: '[ 2] prop_cid                                       TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requesterInfo:
+        $ref: '#/definitions/null.String'
+        description: '[19] requester_info                                 TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requestingAPIKey:
+        $ref: '#/definitions/null.String'
+        description: '[20] requesting_api_key                             TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      sealedAt:
+        description: '[14] sealed_at                                      TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      slashed:
+        $ref: '#/definitions/null.Int'
+        description: '[ 8] slashed                                        BOOL                 null:
+          true   primary: false  isArray: false  auto: false  col: BOOL            len:
+          -1      default: []'
+      systemContentDealID:
+        $ref: '#/definitions/null.Int'
+        description: '[21] system_content_deal_id                         INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      transferFinished:
+        description: '[12] transfer_finished                              TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      transferStarted:
+        description: '[11] transfer_started                               TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      updatedAt:
+        description: '[23] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      verified:
+        $ref: '#/definitions/null.Int'
+        description: '[ 7] verified                                       BOOL                 null:
+          true   primary: false  isArray: false  auto: false  col: BOOL            len:
+          -1      default: []'
+    type: object
+  model.ContentDealProposalLogs:
+    properties:
+      content:
+        $ref: '#/definitions/null.Int'
+        description: '[ 1] content                                        INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      createdAt:
+        description: '[ 9] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      deltaNodeUUID:
+        $ref: '#/definitions/null.String'
+        description: '[11] delta_node_uuid                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      meta:
+        $ref: '#/definitions/null.String'
+        description: '[ 4] meta                                           TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      nodeInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 5] node_info                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requesterInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 6] requester_info                                 TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requestingAPIKey:
+        $ref: '#/definitions/null.String'
+        description: '[ 7] requesting_api_key                             TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      signed:
+        $ref: '#/definitions/null.String'
+        description: '[ 3] signed                                         TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      systemContentDealProposalID:
+        $ref: '#/definitions/null.Int'
+        description: '[ 8] system_content_deal_proposal_id                INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      unsigned:
+        $ref: '#/definitions/null.String'
+        description: '[ 2] unsigned                                       TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      updatedAt:
+        description: '[10] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+    type: object
+  model.ContentDealProposalParametersLogs:
+    properties:
+      content:
+        $ref: '#/definitions/null.Int'
+        description: '[ 1] content                                        INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      createdAt:
+        description: '[13] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      deltaNodeUUID:
+        $ref: '#/definitions/null.String'
+        description: '[15] delta_node_uuid                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      duration:
+        $ref: '#/definitions/null.Int'
+        description: '[ 3] duration                                       INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      endEpoch:
+        $ref: '#/definitions/null.Int'
+        description: '[ 5] end_epoch                                      INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      label:
+        $ref: '#/definitions/null.String'
+        description: '[ 2] label                                          TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      nodeInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 9] node_info                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      removeUnsealedCopy:
+        $ref: '#/definitions/null.Int'
+        description: '[ 7] remove_unsealed_copy                           BOOL                 null:
+          true   primary: false  isArray: false  auto: false  col: BOOL            len:
+          -1      default: []'
+      requesterInfo:
+        $ref: '#/definitions/null.String'
+        description: '[10] requester_info                                 TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requestingAPIKey:
+        $ref: '#/definitions/null.String'
+        description: '[11] requesting_api_key                             TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      skipIPNiAnnounce:
+        $ref: '#/definitions/null.Int'
+        description: '[ 8] skip_ip_ni_announce                            BOOL                 null:
+          true   primary: false  isArray: false  auto: false  col: BOOL            len:
+          -1      default: []'
+      startEpoch:
+        $ref: '#/definitions/null.Int'
+        description: '[ 4] start_epoch                                    INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      systemContentDealProposalParametersID:
+        $ref: '#/definitions/null.Int'
+        description: '[12] system_content_deal_proposal_parameters_id     INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      transferParams:
+        $ref: '#/definitions/null.String'
+        description: '[ 6] transfer_params                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      updatedAt:
+        description: '[14] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+    type: object
+  model.ContentLogs:
+    properties:
+      cid:
+        $ref: '#/definitions/null.String'
+        description: '[ 3] cid                                            TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      connectionMode:
+        $ref: '#/definitions/null.String'
+        description: '[ 7] connection_mode                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      createdAt:
+        description: '[12] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      deltaNodeUUID:
+        $ref: '#/definitions/null.String'
+        description: '[14] delta_node_uuid                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      lastMessage:
+        $ref: '#/definitions/null.String'
+        description: '[ 8] last_message                                   TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      name:
+        $ref: '#/definitions/null.String'
+        description: '[ 1] name                                           TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      nodeInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 9] node_info                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      pieceCommitmentID:
+        $ref: '#/definitions/null.Int'
+        description: '[ 5] piece_commitment_id                            INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      requesterInfo:
+        $ref: '#/definitions/null.String'
+        description: '[10] requester_info                                 TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requestingAPIKey:
+        $ref: '#/definitions/null.String'
+        description: '[ 4] requesting_api_key                             TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      size:
+        $ref: '#/definitions/null.Int'
+        description: '[ 2] size                                           INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      status:
+        $ref: '#/definitions/null.String'
+        description: '[ 6] status                                         TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      systemContentID:
+        $ref: '#/definitions/null.Int'
+        description: '[11] system_content_id                              INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      updatedAt:
+        description: '[13] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+    type: object
+  model.ContentMinerLogs:
+    properties:
+      content:
+        $ref: '#/definitions/null.Int'
+        description: '[ 1] content                                        INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      createdAt:
+        description: '[ 7] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      deltaNodeUUID:
+        $ref: '#/definitions/null.String'
+        description: '[ 9] delta_node_uuid                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      miner:
+        $ref: '#/definitions/null.String'
+        description: '[ 2] miner                                          TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      nodeInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 3] node_info                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requesterInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 4] requester_info                                 TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requestingAPIKey:
+        $ref: '#/definitions/null.String'
+        description: '[ 5] requesting_api_key                             TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      systemContentMinerID:
+        $ref: '#/definitions/null.Int'
+        description: '[ 6] system_content_miner_id                        INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      updatedAt:
+        description: '[ 8] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+    type: object
+  model.ContentWalletLogs:
+    properties:
+      content:
+        $ref: '#/definitions/null.Int'
+        description: '[ 1] content                                        INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      createdAt:
+        description: '[ 7] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      deltaNodeUUID:
+        $ref: '#/definitions/null.String'
+        description: '[ 9] delta_node_uuid                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      nodeInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 3] node_info                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requesterInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 4] requester_info                                 TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requestingAPIKey:
+        $ref: '#/definitions/null.String'
+        description: '[ 5] requesting_api_key                             TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      systemContentWalletID:
+        $ref: '#/definitions/null.Int'
+        description: '[ 6] system_content_wallet_id                       INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      updatedAt:
+        description: '[ 8] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      wallet:
+        $ref: '#/definitions/null.String'
+        description: '[ 2] wallet                                         TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      walletID:
+        $ref: '#/definitions/null.Int'
+        description: '[10] wallet_id                                      INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+    type: object
+  model.DeltaNodeGeoLocations:
+    properties:
+      city:
+        $ref: '#/definitions/null.String'
+        description: '[ 3] city                                           TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      country:
+        $ref: '#/definitions/null.String'
+        description: '[ 2] country                                        TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      createdAt:
+        description: '[ 8] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      ip:
+        $ref: '#/definitions/null.String'
+        description: '[ 1] ip                                             TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      lat:
+        $ref: '#/definitions/null.Float'
+        description: '[ 6] lat                                            NUMERIC              null:
+          true   primary: false  isArray: false  auto: false  col: NUMERIC         len:
+          -1      default: []'
+      lon:
+        $ref: '#/definitions/null.Float'
+        description: '[ 7] lon                                            NUMERIC              null:
+          true   primary: false  isArray: false  auto: false  col: NUMERIC         len:
+          -1      default: []'
+      region:
+        $ref: '#/definitions/null.String'
+        description: '[ 4] region                                         TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      updatedAt:
+        description: '[ 9] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      zip:
+        $ref: '#/definitions/null.String'
+        description: '[ 5] zip                                            TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+    type: object
+  model.DeltaStartupLogs:
+    properties:
+      createdAt:
+        description: '[ 4] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      deltaNodeUUID:
+        $ref: '#/definitions/null.String'
+        description: '[ 6] delta_node_uuid                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      ipaddress:
+        $ref: '#/definitions/null.String'
+        description: '[ 3] ip_address                                     TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      nodeInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 1] node_info                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      osDetails:
+        $ref: '#/definitions/null.String'
+        description: '[ 2] os_details                                     TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      updatedAt:
+        description: '[ 5] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+    type: object
+  model.InstanceMetaLogs:
+    properties:
+      bytesPerCPU:
+        $ref: '#/definitions/null.Int'
+        description: '[21] bytes_per_cpu                                  INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      cpulimit:
+        $ref: '#/definitions/null.Int'
+        description: '[ 7] cpu_limit                                      INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      createdAt:
+        description: '[26] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      deltaNodeUUID:
+        $ref: '#/definitions/null.String'
+        description: '[24] delta_node_uuid                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      disableCommitmentPieceGeneration:
+        $ref: '#/definitions/null.Int'
+        description: '[10] disable_commitment_piece_generation            BOOL                 null:
+          true   primary: false  isArray: false  auto: false  col: BOOL            len:
+          -1      default: []'
+      disableOfflineDeals:
+        $ref: '#/definitions/null.Int'
+        description: '[13] disable_offline_deals                          BOOL                 null:
+          true   primary: false  isArray: false  auto: false  col: BOOL            len:
+          -1      default: []'
+      disableOnlineDeals:
+        $ref: '#/definitions/null.Int'
+        description: '[12] disable_online_deals                           BOOL                 null:
+          true   primary: false  isArray: false  auto: false  col: BOOL            len:
+          -1      default: []'
+      disableRequest:
+        $ref: '#/definitions/null.Int'
+        description: '[ 9] disable_request                                BOOL                 null:
+          true   primary: false  isArray: false  auto: false  col: BOOL            len:
+          -1      default: []'
+      disableStorageDeal:
+        $ref: '#/definitions/null.Int'
+        description: '[11] disable_storage_deal                           BOOL                 null:
+          true   primary: false  isArray: false  auto: false  col: BOOL            len:
+          -1      default: []'
+      heapInUse:
+        $ref: '#/definitions/null.Int'
+        description: '[18] heap_in_use                                    INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      heapMemory:
+        $ref: '#/definitions/null.Int'
+        description: '[17] heap_memory                                    INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      instanceHostName:
+        $ref: '#/definitions/null.String'
+        description: '[ 2] instance_host_name                             TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      instanceNodeName:
+        $ref: '#/definitions/null.String'
+        description: '[ 3] instance_node_name                             TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      instanceStart:
+        description: '[20] instance_start                                 TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      instanceUUID:
+        $ref: '#/definitions/null.String'
+        description: '[ 1] instance_uuid                                  TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      memoryLimit:
+        $ref: '#/definitions/null.Int'
+        description: '[ 6] memory_limit                                   INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      nodeInfo:
+        $ref: '#/definitions/null.String'
+        description: '[22] node_info                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      numberOfCpus:
+        $ref: '#/definitions/null.Int'
+        description: '[14] number_of_cpus                                 INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      osDetails:
+        $ref: '#/definitions/null.String'
+        description: '[ 4] os_details                                     TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      publicIP:
+        $ref: '#/definitions/null.String'
+        description: '[ 5] public_ip                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requesterInfo:
+        $ref: '#/definitions/null.String'
+        description: '[23] requester_info                                 TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      stackInUse:
+        $ref: '#/definitions/null.Int'
+        description: '[19] stack_in_use                                   INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      storageInBytes:
+        $ref: '#/definitions/null.Int'
+        description: '[15] storage_in_bytes                               INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      storageLimit:
+        $ref: '#/definitions/null.Int'
+        description: '[ 8] storage_limit                                  INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      systemInstanceMetaID:
+        $ref: '#/definitions/null.Int'
+        description: '[25] system_instance_meta_id                        INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      systemMemory:
+        $ref: '#/definitions/null.Int'
+        description: '[16] system_memory                                  INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      updatedAt:
+        description: '[27] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+    type: object
+  model.LogEvents:
+    properties:
+      createdAt:
+        description: '[ 5] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      deltaUUID:
+        $ref: '#/definitions/null.String'
+        description: '[ 9] delta_uuid                                     TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      logEvent:
+        $ref: '#/definitions/null.String'
+        description: '[ 4] log_event                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      logEventID:
+        $ref: '#/definitions/null.Int'
+        description: '[ 3] log_event_id                                   INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      logEventObject:
+        $ref: '#/definitions/null.String'
+        description: '[ 2] log_event_object                               BYTEA                null:
+          true   primary: false  isArray: false  auto: false  col: BYTEA           len:
+          -1      default: []'
+      logEventType:
+        $ref: '#/definitions/null.String'
+        description: '[ 1] log_event_type                                 TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      sourceHost:
+        $ref: '#/definitions/null.String'
+        description: '[ 7] source_host                                    TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      sourceIP:
+        $ref: '#/definitions/null.String'
+        description: '[ 8] source_ip                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      updatedAt:
+        description: '[ 6] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+    type: object
+  model.PieceCommitmentLogs:
+    properties:
+      cid:
+        $ref: '#/definitions/null.String'
+        description: '[ 1] cid                                            TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      createdAt:
+        description: '[12] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      deltaNodeUUID:
+        $ref: '#/definitions/null.String'
+        description: '[14] delta_node_uuid                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      lastMessage:
+        $ref: '#/definitions/null.String'
+        description: '[ 7] last_message                                   TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      nodeInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 8] node_info                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      paddedPieceSize:
+        $ref: '#/definitions/null.Int'
+        description: '[ 4] padded_piece_size                              INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      piece:
+        $ref: '#/definitions/null.String'
+        description: '[ 2] piece                                          TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requesterInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 9] requester_info                                 TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requestingAPIKey:
+        $ref: '#/definitions/null.String'
+        description: '[10] requesting_api_key                             TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      size:
+        $ref: '#/definitions/null.Int'
+        description: '[ 3] size                                           INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      status:
+        $ref: '#/definitions/null.String'
+        description: '[ 6] status                                         TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      systemContentPieceCommitmentID:
+        $ref: '#/definitions/null.Int'
+        description: '[11] system_content_piece_commitment_id             INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      unPaddedPieceSize:
+        $ref: '#/definitions/null.Int'
+        description: '[ 5] un_padded_piece_size                           INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      updatedAt:
+        description: '[13] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+    type: object
+  model.TableInfo:
+    properties:
+      columns:
+        items:
+          $ref: '#/definitions/model.ColumnInfo'
+        type: array
+      name:
+        type: string
+    type: object
+  model.WalletLogs:
+    properties:
+      addr:
+        $ref: '#/definitions/null.String'
+        description: '[ 2] addr                                           TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      createdAt:
+        description: '[10] created_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      deltaNodeUUID:
+        $ref: '#/definitions/null.String'
+        description: '[12] delta_node_uuid                                TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      id:
+        description: '[ 0] id                                             INT8                 null:
+          false  primary: true   isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+        type: integer
+      keyType:
+        $ref: '#/definitions/null.String'
+        description: '[ 4] key_type                                       TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      nodeInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 6] node_info                                      TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      owner:
+        $ref: '#/definitions/null.String'
+        description: '[ 3] owner                                          TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      privateKey:
+        $ref: '#/definitions/null.String'
+        description: '[ 5] private_key                                    TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requesterInfo:
+        $ref: '#/definitions/null.String'
+        description: '[ 7] requester_info                                 TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      requestingAPIKey:
+        $ref: '#/definitions/null.String'
+        description: '[ 8] requesting_api_key                             TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+      systemWalletID:
+        $ref: '#/definitions/null.Int'
+        description: '[ 9] system_wallet_id                               INT8                 null:
+          true   primary: false  isArray: false  auto: false  col: INT8            len:
+          -1      default: []'
+      updatedAt:
+        description: '[11] updated_at                                     TIMESTAMPTZ          null:
+          true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len:
+          -1      default: []'
+        type: string
+      uuID:
+        $ref: '#/definitions/null.String'
+        description: '[ 1] uu_id                                          TEXT                 null:
+          true   primary: false  isArray: false  auto: false  col: TEXT            len:
+          -1      default: []'
+    type: object
+  null.Float:
+    properties:
+      float64:
+        type: number
+      valid:
+        description: Valid is true if Float64 is not NULL
+        type: boolean
+    type: object
+  null.Int:
+    properties:
+      int64:
+        type: integer
+      valid:
+        description: Valid is true if Int64 is not NULL
+        type: boolean
+    type: object
+  null.String:
+    properties:
+      string:
+        type: string
+      valid:
+        description: Valid is true if String is not NULL
+        type: boolean
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: alvin@protocol.ai
+    name: Me
+    url: http://me.com/terms.html
+  description: Sample CRUD api for estuary db
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Sample CRUD api for estuary db
+  version: "1.0"
+paths:
+  /contentdeallogs:
+    get:
+      consumes:
+      - application/json
+      description: GetAllContentDealLogs is a handler to get a slice of record(s)
+        from content_deal_logs table in the estuary database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.ContentDealLogs'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of ContentDealLogs
+      tags:
+      - ContentDealLogs
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to content_deal_logs table in the estuary
+        database
+      parameters:
+      - description: Add ContentDealLogs
+        in: body
+        name: ContentDealLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentDealLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentDealLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to content_deal_logs table
+      tags:
+      - ContentDealLogs
+  /contentdeallogs/{contentDealLogsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from content_deal_logs table in the estuary
+        database
+      parameters:
+      - description: id
+        in: path
+        name: contentDealLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ContentDealLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from content_deal_logs
+      tags:
+      - ContentDealLogs
+    get:
+      consumes:
+      - application/json
+      description: GetContentDealLogs is a function to get a single record from the
+        content_deal_logs table in the estuary database
+      operationId: contentDealLogsID
+      parameters:
+      - description: id
+        in: path
+        name: contentDealLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentDealLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table ContentDealLogs by  contentDealLogsID
+      tags:
+      - ContentDealLogs
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from content_deal_logs table in the estuary
+        database
+      parameters:
+      - description: id
+        in: path
+        name: contentDealLogsID
+        required: true
+        type: integer
+      - description: Update ContentDealLogs record
+        in: body
+        name: ContentDealLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentDealLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentDealLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table content_deal_logs
+      tags:
+      - ContentDealLogs
+  /contentdealproposallogs:
+    get:
+      consumes:
+      - application/json
+      description: GetAllContentDealProposalLogs is a handler to get a slice of record(s)
+        from content_deal_proposal_logs table in the estuary database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.ContentDealProposalLogs'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of ContentDealProposalLogs
+      tags:
+      - ContentDealProposalLogs
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to content_deal_proposal_logs table
+        in the estuary database
+      parameters:
+      - description: Add ContentDealProposalLogs
+        in: body
+        name: ContentDealProposalLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentDealProposalLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentDealProposalLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to content_deal_proposal_logs table
+      tags:
+      - ContentDealProposalLogs
+  /contentdealproposallogs/{contentDealProposalLogsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from content_deal_proposal_logs table in
+        the estuary database
+      parameters:
+      - description: id
+        in: path
+        name: contentDealProposalLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ContentDealProposalLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from content_deal_proposal_logs
+      tags:
+      - ContentDealProposalLogs
+    get:
+      consumes:
+      - application/json
+      description: GetContentDealProposalLogs is a function to get a single record
+        from the content_deal_proposal_logs table in the estuary database
+      operationId: contentDealProposalLogsID
+      parameters:
+      - description: id
+        in: path
+        name: contentDealProposalLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentDealProposalLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table ContentDealProposalLogs by  contentDealProposalLogsID
+      tags:
+      - ContentDealProposalLogs
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from content_deal_proposal_logs table in
+        the estuary database
+      parameters:
+      - description: id
+        in: path
+        name: contentDealProposalLogsID
+        required: true
+        type: integer
+      - description: Update ContentDealProposalLogs record
+        in: body
+        name: ContentDealProposalLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentDealProposalLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentDealProposalLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table content_deal_proposal_logs
+      tags:
+      - ContentDealProposalLogs
+  /contentdealproposalparameterslogs:
+    get:
+      consumes:
+      - application/json
+      description: GetAllContentDealProposalParametersLogs is a handler to get a slice
+        of record(s) from content_deal_proposal_parameters_logs table in the estuary
+        database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.ContentDealProposalParametersLogs'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of ContentDealProposalParametersLogs
+      tags:
+      - ContentDealProposalParametersLogs
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to content_deal_proposal_parameters_logs
+        table in the estuary database
+      parameters:
+      - description: Add ContentDealProposalParametersLogs
+        in: body
+        name: ContentDealProposalParametersLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentDealProposalParametersLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentDealProposalParametersLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to content_deal_proposal_parameters_logs table
+      tags:
+      - ContentDealProposalParametersLogs
+  /contentdealproposalparameterslogs/{contentDealProposalParametersLogsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from content_deal_proposal_parameters_logs
+        table in the estuary database
+      parameters:
+      - description: id
+        in: path
+        name: contentDealProposalParametersLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ContentDealProposalParametersLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from content_deal_proposal_parameters_logs
+      tags:
+      - ContentDealProposalParametersLogs
+    get:
+      consumes:
+      - application/json
+      description: GetContentDealProposalParametersLogs is a function to get a single
+        record from the content_deal_proposal_parameters_logs table in the estuary
+        database
+      operationId: contentDealProposalParametersLogsID
+      parameters:
+      - description: id
+        in: path
+        name: contentDealProposalParametersLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentDealProposalParametersLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table ContentDealProposalParametersLogs by  contentDealProposalParametersLogsID
+      tags:
+      - ContentDealProposalParametersLogs
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from content_deal_proposal_parameters_logs
+        table in the estuary database
+      parameters:
+      - description: id
+        in: path
+        name: contentDealProposalParametersLogsID
+        required: true
+        type: integer
+      - description: Update ContentDealProposalParametersLogs record
+        in: body
+        name: ContentDealProposalParametersLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentDealProposalParametersLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentDealProposalParametersLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table content_deal_proposal_parameters_logs
+      tags:
+      - ContentDealProposalParametersLogs
+  /contentlogs:
+    get:
+      consumes:
+      - application/json
+      description: GetAllContentLogs is a handler to get a slice of record(s) from
+        content_logs table in the estuary database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.ContentLogs'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of ContentLogs
+      tags:
+      - ContentLogs
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to content_logs table in the estuary
+        database
+      parameters:
+      - description: Add ContentLogs
+        in: body
+        name: ContentLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to content_logs table
+      tags:
+      - ContentLogs
+  /contentlogs/{contenDealLogsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from content_logs table in the estuary database
+      parameters:
+      - description: id
+        in: path
+        name: contenDealLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ContentLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from content_logs
+      tags:
+      - ContentLogs
+    get:
+      consumes:
+      - application/json
+      description: GetContentLogs is a function to get a single record from the content_logs
+        table in the estuary database
+      operationId: contenDealLogsID
+      parameters:
+      - description: id
+        in: path
+        name: contenDealLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table ContentLogs by  contenDealLogsID
+      tags:
+      - ContentLogs
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from content_logs table in the estuary database
+      parameters:
+      - description: id
+        in: path
+        name: contenDealLogsID
+        required: true
+        type: integer
+      - description: Update ContentLogs record
+        in: body
+        name: ContentLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table content_logs
+      tags:
+      - ContentLogs
+  /contentminerlogs:
+    get:
+      consumes:
+      - application/json
+      description: GetAllContentMinerLogs is a handler to get a slice of record(s)
+        from content_miner_logs table in the estuary database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.ContentMinerLogs'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of ContentMinerLogs
+      tags:
+      - ContentMinerLogs
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to content_miner_logs table in the estuary
+        database
+      parameters:
+      - description: Add ContentMinerLogs
+        in: body
+        name: ContentMinerLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentMinerLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentMinerLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to content_miner_logs table
+      tags:
+      - ContentMinerLogs
+  /contentminerlogs/{contenMinerLogsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from content_miner_logs table in the estuary
+        database
+      parameters:
+      - description: id
+        in: path
+        name: contenMinerLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ContentMinerLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from content_miner_logs
+      tags:
+      - ContentMinerLogs
+    get:
+      consumes:
+      - application/json
+      description: GetContentMinerLogs is a function to get a single record from the
+        content_miner_logs table in the estuary database
+      operationId: contenMinerLogsID
+      parameters:
+      - description: id
+        in: path
+        name: contenMinerLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentMinerLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table ContentMinerLogs by  contenMinerLogsID
+      tags:
+      - ContentMinerLogs
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from content_miner_logs table in the estuary
+        database
+      parameters:
+      - description: id
+        in: path
+        name: contenMinerLogsID
+        required: true
+        type: integer
+      - description: Update ContentMinerLogs record
+        in: body
+        name: ContentMinerLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentMinerLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentMinerLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table content_miner_logs
+      tags:
+      - ContentMinerLogs
+  /contentwalletlogs:
+    get:
+      consumes:
+      - application/json
+      description: GetAllContentWalletLogs is a handler to get a slice of record(s)
+        from content_wallet_logs table in the estuary database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.ContentWalletLogs'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of ContentWalletLogs
+      tags:
+      - ContentWalletLogs
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to content_wallet_logs table in the
+        estuary database
+      parameters:
+      - description: Add ContentWalletLogs
+        in: body
+        name: ContentWalletLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentWalletLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentWalletLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to content_wallet_logs table
+      tags:
+      - ContentWalletLogs
+  /contentwalletlogs/{contenWalletLogsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from content_wallet_logs table in the estuary
+        database
+      parameters:
+      - description: id
+        in: path
+        name: contenWalletLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ContentWalletLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from content_wallet_logs
+      tags:
+      - ContentWalletLogs
+    get:
+      consumes:
+      - application/json
+      description: GetContentWalletLogs is a function to get a single record from
+        the content_wallet_logs table in the estuary database
+      operationId: contenWalletLogsID
+      parameters:
+      - description: id
+        in: path
+        name: contenWalletLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentWalletLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table ContentWalletLogs by  contenWalletLogsID
+      tags:
+      - ContentWalletLogs
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from content_wallet_logs table in the estuary
+        database
+      parameters:
+      - description: id
+        in: path
+        name: contenWalletLogsID
+        required: true
+        type: integer
+      - description: Update ContentWalletLogs record
+        in: body
+        name: ContentWalletLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContentWalletLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContentWalletLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table content_wallet_logs
+      tags:
+      - ContentWalletLogs
+  /ddl:
+    get:
+      consumes:
+      - application/json
+      description: GetDdlEndpoints is a function to get a list of ddl endpoints available
+        for tables in the estuary database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.CrudAPI'
+      summary: Gets a list of ddl endpoints available for tables in the estuary database
+      tags:
+      - TableInfo
+  /ddl/{argID}:
+    get:
+      consumes:
+      - application/json
+      description: GetDdl is a function to get table info for a table in the estuary
+        database
+      operationId: argID
+      parameters:
+      - description: id
+        in: path
+        name: argID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.CrudAPI'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get table info for a table in the estuary database by argID
+      tags:
+      - TableInfo
+  /deltanodegeolocations:
+    get:
+      consumes:
+      - application/json
+      description: GetAllDeltaNodeGeoLocations is a handler to get a slice of record(s)
+        from delta_node_geo_locations table in the estuary database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.DeltaNodeGeoLocations'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of DeltaNodeGeoLocations
+      tags:
+      - DeltaNodeGeoLocations
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to delta_node_geo_locations table in
+        the estuary database
+      parameters:
+      - description: Add DeltaNodeGeoLocations
+        in: body
+        name: DeltaNodeGeoLocations
+        required: true
+        schema:
+          $ref: '#/definitions/model.DeltaNodeGeoLocations'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.DeltaNodeGeoLocations'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to delta_node_geo_locations table
+      tags:
+      - DeltaNodeGeoLocations
+  /deltanodegeolocations/{deltaNodeGeoLocationsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from delta_node_geo_locations table in the
+        estuary database
+      parameters:
+      - description: id
+        in: path
+        name: deltaNodeGeoLocationsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.DeltaNodeGeoLocations'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from delta_node_geo_locations
+      tags:
+      - DeltaNodeGeoLocations
+    get:
+      consumes:
+      - application/json
+      description: GetDeltaNodeGeoLocations is a function to get a single record from
+        the delta_node_geo_locations table in the estuary database
+      operationId: deltaNodeGeoLocationsID
+      parameters:
+      - description: id
+        in: path
+        name: deltaNodeGeoLocationsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.DeltaNodeGeoLocations'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table DeltaNodeGeoLocations by  deltaNodeGeoLocationsID
+      tags:
+      - DeltaNodeGeoLocations
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from delta_node_geo_locations table in the
+        estuary database
+      parameters:
+      - description: id
+        in: path
+        name: deltaNodeGeoLocationsID
+        required: true
+        type: integer
+      - description: Update DeltaNodeGeoLocations record
+        in: body
+        name: DeltaNodeGeoLocations
+        required: true
+        schema:
+          $ref: '#/definitions/model.DeltaNodeGeoLocations'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.DeltaNodeGeoLocations'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table delta_node_geo_locations
+      tags:
+      - DeltaNodeGeoLocations
+  /deltastartuplogs:
+    get:
+      consumes:
+      - application/json
+      description: GetAllDeltaStartupLogs is a handler to get a slice of record(s)
+        from delta_startup_logs table in the estuary database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.DeltaStartupLogs'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of DeltaStartupLogs
+      tags:
+      - DeltaStartupLogs
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to delta_startup_logs table in the estuary
+        database
+      parameters:
+      - description: Add DeltaStartupLogs
+        in: body
+        name: DeltaStartupLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.DeltaStartupLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.DeltaStartupLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to delta_startup_logs table
+      tags:
+      - DeltaStartupLogs
+  /deltastartuplogs/{deltaStartupLogsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from delta_startup_logs table in the estuary
+        database
+      parameters:
+      - description: id
+        in: path
+        name: deltaStartupLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.DeltaStartupLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from delta_startup_logs
+      tags:
+      - DeltaStartupLogs
+    get:
+      consumes:
+      - application/json
+      description: GetDeltaStartupLogs is a function to get a single record from the
+        delta_startup_logs table in the estuary database
+      operationId: deltaStartupLogsID
+      parameters:
+      - description: id
+        in: path
+        name: deltaStartupLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.DeltaStartupLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table DeltaStartupLogs by  deltaStartupLogsID
+      tags:
+      - DeltaStartupLogs
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from delta_startup_logs table in the estuary
+        database
+      parameters:
+      - description: id
+        in: path
+        name: deltaStartupLogsID
+        required: true
+        type: integer
+      - description: Update DeltaStartupLogs record
+        in: body
+        name: DeltaStartupLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.DeltaStartupLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.DeltaStartupLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table delta_startup_logs
+      tags:
+      - DeltaStartupLogs
+  /instancemetalogs:
+    get:
+      consumes:
+      - application/json
+      description: GetAllInstanceMetaLogs is a handler to get a slice of record(s)
+        from instance_meta_logs table in the estuary database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.InstanceMetaLogs'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of InstanceMetaLogs
+      tags:
+      - InstanceMetaLogs
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to instance_meta_logs table in the estuary
+        database
+      parameters:
+      - description: Add InstanceMetaLogs
+        in: body
+        name: InstanceMetaLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.InstanceMetaLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.InstanceMetaLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to instance_meta_logs table
+      tags:
+      - InstanceMetaLogs
+  /instancemetalogs/{instanceMetaLogsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from instance_meta_logs table in the estuary
+        database
+      parameters:
+      - description: id
+        in: path
+        name: instanceMetaLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.InstanceMetaLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from instance_meta_logs
+      tags:
+      - InstanceMetaLogs
+    get:
+      consumes:
+      - application/json
+      description: GetInstanceMetaLogs is a function to get a single record from the
+        instance_meta_logs table in the estuary database
+      operationId: instanceMetaLogsID
+      parameters:
+      - description: id
+        in: path
+        name: instanceMetaLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.InstanceMetaLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table InstanceMetaLogs by  instanceMetaLogsID
+      tags:
+      - InstanceMetaLogs
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from instance_meta_logs table in the estuary
+        database
+      parameters:
+      - description: id
+        in: path
+        name: instanceMetaLogsID
+        required: true
+        type: integer
+      - description: Update InstanceMetaLogs record
+        in: body
+        name: InstanceMetaLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.InstanceMetaLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.InstanceMetaLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table instance_meta_logs
+      tags:
+      - InstanceMetaLogs
+  /logevents:
+    get:
+      consumes:
+      - application/json
+      description: GetAllLogEvents is a handler to get a slice of record(s) from log_events
+        table in the estuary database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.LogEvents'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of LogEvents
+      tags:
+      - LogEvents
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to log_events table in the estuary database
+      parameters:
+      - description: Add LogEvents
+        in: body
+        name: LogEvents
+        required: true
+        schema:
+          $ref: '#/definitions/model.LogEvents'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.LogEvents'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to log_events table
+      tags:
+      - LogEvents
+  /logevents/{logEventsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from log_events table in the estuary database
+      parameters:
+      - description: id
+        in: path
+        name: logEventsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.LogEvents'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from log_events
+      tags:
+      - LogEvents
+    get:
+      consumes:
+      - application/json
+      description: GetLogEvents is a function to get a single record from the log_events
+        table in the estuary database
+      operationId: logEventsID
+      parameters:
+      - description: id
+        in: path
+        name: logEventsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.LogEvents'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table LogEvents by  logEventsID
+      tags:
+      - LogEvents
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from log_events table in the estuary database
+      parameters:
+      - description: id
+        in: path
+        name: logEventsID
+        required: true
+        type: integer
+      - description: Update LogEvents record
+        in: body
+        name: LogEvents
+        required: true
+        schema:
+          $ref: '#/definitions/model.LogEvents'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.LogEvents'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table log_events
+      tags:
+      - LogEvents
+  /piececommitmentlogs:
+    get:
+      consumes:
+      - application/json
+      description: GetAllPieceCommitmentLogs is a handler to get a slice of record(s)
+        from piece_commitment_logs table in the estuary database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.PieceCommitmentLogs'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of PieceCommitmentLogs
+      tags:
+      - PieceCommitmentLogs
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to piece_commitment_logs table in the
+        estuary database
+      parameters:
+      - description: Add PieceCommitmentLogs
+        in: body
+        name: PieceCommitmentLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.PieceCommitmentLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.PieceCommitmentLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to piece_commitment_logs table
+      tags:
+      - PieceCommitmentLogs
+  /piececommitmentlogs/{pieceCommitmentLogsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from piece_commitment_logs table in the
+        estuary database
+      parameters:
+      - description: id
+        in: path
+        name: pieceCommitmentLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.PieceCommitmentLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from piece_commitment_logs
+      tags:
+      - PieceCommitmentLogs
+    get:
+      consumes:
+      - application/json
+      description: GetPieceCommitmentLogs is a function to get a single record from
+        the piece_commitment_logs table in the estuary database
+      operationId: pieceCommitmentLogsID
+      parameters:
+      - description: id
+        in: path
+        name: pieceCommitmentLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.PieceCommitmentLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table PieceCommitmentLogs by  pieceCommitmentLogsID
+      tags:
+      - PieceCommitmentLogs
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from piece_commitment_logs table in the
+        estuary database
+      parameters:
+      - description: id
+        in: path
+        name: pieceCommitmentLogsID
+        required: true
+        type: integer
+      - description: Update PieceCommitmentLogs record
+        in: body
+        name: PieceCommitmentLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.PieceCommitmentLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.PieceCommitmentLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table piece_commitment_logs
+      tags:
+      - PieceCommitmentLogs
+  /walletlogs:
+    get:
+      consumes:
+      - application/json
+      description: GetAllWalletLogs is a handler to get a slice of record(s) from
+        wallet_logs table in the estuary database
+      parameters:
+      - description: page requested (defaults to 0)
+        in: query
+        name: page
+        type: integer
+      - description: number of records in a page  (defaults to 20)
+        in: query
+        name: pagesize
+        type: integer
+      - description: db sort order column
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.PagedResults'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.WalletLogs'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get list of WalletLogs
+      tags:
+      - WalletLogs
+    post:
+      consumes:
+      - application/json
+      description: add to add a single record to wallet_logs table in the estuary
+        database
+      parameters:
+      - description: Add WalletLogs
+        in: body
+        name: WalletLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.WalletLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WalletLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Add an record to wallet_logs table
+      tags:
+      - WalletLogs
+  /walletlogs/{walletLogsID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a single record from wallet_logs table in the estuary database
+      parameters:
+      - description: id
+        in: path
+        name: walletLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.WalletLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Delete a record from wallet_logs
+      tags:
+      - WalletLogs
+    get:
+      consumes:
+      - application/json
+      description: GetWalletLogs is a function to get a single record from the wallet_logs
+        table in the estuary database
+      operationId: walletLogsID
+      parameters:
+      - description: id
+        in: path
+        name: walletLogsID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WalletLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: ErrNotFound, db record for id not found - returns NotFound
+            HTTP 404 not found error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Get record from table WalletLogs by  walletLogsID
+      tags:
+      - WalletLogs
+    put:
+      consumes:
+      - application/json
+      description: Update a single record from wallet_logs table in the estuary database
+      parameters:
+      - description: id
+        in: path
+        name: walletLogsID
+        required: true
+        type: integer
+      - description: Update WalletLogs record
+        in: body
+        name: WalletLogs
+        required: true
+        schema:
+          $ref: '#/definitions/model.WalletLogs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WalletLogs'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: Update an record in table wallet_logs
+      tags:
+      - WalletLogs
+swagger: "2.0"

@@ -17,18 +17,12 @@ var (
 
 func configWalletLogsRouter(router *httprouter.Router) {
 	router.GET("/walletlogs", GetAllWalletLogs)
-	router.POST("/walletlogs", AddWalletLogs)
-	router.GET("/walletlogs/:argID", GetWalletLogs)
-	router.PUT("/walletlogs/:argID", UpdateWalletLogs)
-	router.DELETE("/walletlogs/:argID", DeleteWalletLogs)
+	router.GET("/walletlogs/:walletLogsID", GetWalletLogs)
 }
 
 func configGinWalletLogsRouter(router gin.IRoutes) {
 	router.GET("/walletlogs", ConverHttprouterToGin(GetAllWalletLogs))
-	router.POST("/walletlogs", ConverHttprouterToGin(AddWalletLogs))
-	router.GET("/walletlogs/:argID", ConverHttprouterToGin(GetWalletLogs))
-	router.PUT("/walletlogs/:argID", ConverHttprouterToGin(UpdateWalletLogs))
-	router.DELETE("/walletlogs/:argID", ConverHttprouterToGin(DeleteWalletLogs))
+	router.GET("/walletlogs/:walletLogsID", ConverHttprouterToGin(GetWalletLogs))
 }
 
 // GetAllWalletLogs is a function to get a slice of record(s) from wallet_logs table in the estuary database
@@ -77,22 +71,22 @@ func GetAllWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 }
 
 // GetWalletLogs is a function to get a single record from the wallet_logs table in the estuary database
-// @Summary Get record from table WalletLogs by  argID
+// @Summary Get record from table WalletLogs by  walletLogsID
 // @Tags WalletLogs
-// @ID argID
+// @ID walletLogsID
 // @Description GetWalletLogs is a function to get a single record from the wallet_logs table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  walletLogsID path int64 true "id"
 // @Success 200 {object} model.WalletLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /walletlogs/{argID} [get]
+// @Router /walletlogs/{walletLogsID} [get]
 // http "http://localhost:8080/walletlogs/1" X-Api-User:user123
 func GetWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	walletLogsID, err := parseInt64(ps, "walletLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params)
 		return
 	}
 
-	record, err := dao.GetWalletLogs(ctx, argID)
+	record, err := dao.GetWalletLogs(ctx, walletLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params)
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /walletlogs [post]
-// echo '{"id": 91,"uu_id": "cSPqDInnUCcpbDAmBOZaVvAOk","addr": "uAKwIKMigAcDoaniswuHEpLyk","owner": "MFjujRvaHPJvnYVCqsZikVXBD","key_type": "GsAKUbVMEAubZxEDDDrAqQGtG","private_key": "fXKujNchwKqimxMFvhflvVylr","node_info": "iaoWVnvacvZASYueskgQlULsQ","requester_info": "CRhHWgtTwaXQtbuAyFjsnmIwf","requesting_api_key": "uhDdMUkIhxkNvySVicLZHDWnh","system_wallet_id": 72,"created_at": "2043-05-31T02:35:05.956558122-04:00","updated_at": "2225-04-02T04:00:20.955268059-04:00","delta_node_uuid": "gHCjAZsyEKkMrELNIUwoccdsy"}' | http POST "http://localhost:8080/walletlogs" X-Api-User:user123
+// echo '{"id": 80,"uuId": "peFbMgHivRACqmNCvSorweBqP","addr": "DZHnFIoBEmueGkCKsbhBavqtY","owner": "EiInDJEyANGkwlltXGTjhuYGx","keyType": "vDZKOPdjBbTrnnYuaGJHQaYtJ","privateKey": "wUkalhcPceXJobZGwJmepOywB","nodeInfo": "vgQknMVpqfrrAcQbfEKeknEyr","requesterInfo": "oByfGPwsEqniJLssjQCfDFPAQ","requestingApiKey": "MRemQfcdJkewUiFHrosfOFoKp","systemWalletId": 70,"createdAt": "2067-08-04T12:59:08.474556194-04:00","updatedAt": "2094-09-21T03:52:50.420485709-04:00","deltaNodeUuid": "BJLhHabuFNncXQTqTrxbJQkLE"}' | http POST "http://localhost:8080/walletlogs" X-Api-User:user123
 func AddWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	walletlogs := &model.WalletLogs{}
@@ -165,17 +159,17 @@ func AddWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params)
 // @Tags WalletLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  walletLogsID path int64 true "id"
 // @Param  WalletLogs body model.WalletLogs true "Update WalletLogs record"
 // @Success 200 {object} model.WalletLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /walletlogs/{argID} [put]
-// echo '{"id": 91,"uu_id": "cSPqDInnUCcpbDAmBOZaVvAOk","addr": "uAKwIKMigAcDoaniswuHEpLyk","owner": "MFjujRvaHPJvnYVCqsZikVXBD","key_type": "GsAKUbVMEAubZxEDDDrAqQGtG","private_key": "fXKujNchwKqimxMFvhflvVylr","node_info": "iaoWVnvacvZASYueskgQlULsQ","requester_info": "CRhHWgtTwaXQtbuAyFjsnmIwf","requesting_api_key": "uhDdMUkIhxkNvySVicLZHDWnh","system_wallet_id": 72,"created_at": "2043-05-31T02:35:05.956558122-04:00","updated_at": "2225-04-02T04:00:20.955268059-04:00","delta_node_uuid": "gHCjAZsyEKkMrELNIUwoccdsy"}' | http PUT "http://localhost:8080/walletlogs/1"  X-Api-User:user123
+// @Router /walletlogs/{walletLogsID} [put]
+// echo '{"id": 80,"uuId": "peFbMgHivRACqmNCvSorweBqP","addr": "DZHnFIoBEmueGkCKsbhBavqtY","owner": "EiInDJEyANGkwlltXGTjhuYGx","keyType": "vDZKOPdjBbTrnnYuaGJHQaYtJ","privateKey": "wUkalhcPceXJobZGwJmepOywB","nodeInfo": "vgQknMVpqfrrAcQbfEKeknEyr","requesterInfo": "oByfGPwsEqniJLssjQCfDFPAQ","requestingApiKey": "MRemQfcdJkewUiFHrosfOFoKp","systemWalletId": 70,"createdAt": "2067-08-04T12:59:08.474556194-04:00","updatedAt": "2094-09-21T03:52:50.420485709-04:00","deltaNodeUuid": "BJLhHabuFNncXQTqTrxbJQkLE"}' | http PUT "http://localhost:8080/walletlogs/1"  X-Api-User:user123
 func UpdateWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	walletLogsID, err := parseInt64(ps, "walletLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdateWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 	}
 
 	walletlogs, _, err = dao.UpdateWalletLogs(ctx,
-		argID,
+		walletLogsID,
 		walletlogs)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdateWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 // @Tags WalletLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  walletLogsID path int64 true "id"
 // @Success 204 {object} model.WalletLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /walletlogs/{argID} [delete]
+// @Router /walletlogs/{walletLogsID} [delete]
 // http DELETE "http://localhost:8080/walletlogs/1" X-Api-User:user123
 func DeleteWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	walletLogsID, err := parseInt64(ps, "walletLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeleteWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 		return
 	}
 
-	rowsAffected, err := dao.DeleteWalletLogs(ctx, argID)
+	rowsAffected, err := dao.DeleteWalletLogs(ctx, walletLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

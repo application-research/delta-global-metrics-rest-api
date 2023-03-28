@@ -17,18 +17,12 @@ var (
 
 func configInstanceMetaLogsRouter(router *httprouter.Router) {
 	router.GET("/instancemetalogs", GetAllInstanceMetaLogs)
-	router.POST("/instancemetalogs", AddInstanceMetaLogs)
-	router.GET("/instancemetalogs/:argID", GetInstanceMetaLogs)
-	router.PUT("/instancemetalogs/:argID", UpdateInstanceMetaLogs)
-	router.DELETE("/instancemetalogs/:argID", DeleteInstanceMetaLogs)
+	router.GET("/instancemetalogs/:instanceMetaLogsID", GetInstanceMetaLogs)
 }
 
 func configGinInstanceMetaLogsRouter(router gin.IRoutes) {
 	router.GET("/instancemetalogs", ConverHttprouterToGin(GetAllInstanceMetaLogs))
-	router.POST("/instancemetalogs", ConverHttprouterToGin(AddInstanceMetaLogs))
-	router.GET("/instancemetalogs/:argID", ConverHttprouterToGin(GetInstanceMetaLogs))
-	router.PUT("/instancemetalogs/:argID", ConverHttprouterToGin(UpdateInstanceMetaLogs))
-	router.DELETE("/instancemetalogs/:argID", ConverHttprouterToGin(DeleteInstanceMetaLogs))
+	router.GET("/instancemetalogs/:instanceMetaLogsID", ConverHttprouterToGin(GetInstanceMetaLogs))
 }
 
 // GetAllInstanceMetaLogs is a function to get a slice of record(s) from instance_meta_logs table in the estuary database
@@ -77,22 +71,22 @@ func GetAllInstanceMetaLogs(w http.ResponseWriter, r *http.Request, ps httproute
 }
 
 // GetInstanceMetaLogs is a function to get a single record from the instance_meta_logs table in the estuary database
-// @Summary Get record from table InstanceMetaLogs by  argID
+// @Summary Get record from table InstanceMetaLogs by  instanceMetaLogsID
 // @Tags InstanceMetaLogs
-// @ID argID
+// @ID instanceMetaLogsID
 // @Description GetInstanceMetaLogs is a function to get a single record from the instance_meta_logs table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  instanceMetaLogsID path int64 true "id"
 // @Success 200 {object} model.InstanceMetaLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /instancemetalogs/{argID} [get]
+// @Router /instancemetalogs/{instanceMetaLogsID} [get]
 // http "http://localhost:8080/instancemetalogs/1" X-Api-User:user123
 func GetInstanceMetaLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	instanceMetaLogsID, err := parseInt64(ps, "instanceMetaLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetInstanceMetaLogs(w http.ResponseWriter, r *http.Request, ps httprouter.P
 		return
 	}
 
-	record, err := dao.GetInstanceMetaLogs(ctx, argID)
+	record, err := dao.GetInstanceMetaLogs(ctx, instanceMetaLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetInstanceMetaLogs(w http.ResponseWriter, r *http.Request, ps httprouter.P
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /instancemetalogs [post]
-// echo '{"id": 13,"instance_uuid": "QZqJQFhMxvKdcoPYRhoYIGKXY","instance_host_name": "NkObRXNTrSgVTmrnWfaqQtSMG","instance_node_name": "uUtfSFLYSNkXgRVjSHnQbEUPM","os_details": "IOJXCpfFNFyWWXWGtwIamAglk","public_ip": "GJlJfHlSXyKHEaurudKHiDnHf","memory_limit": 16,"cpu_limit": 6,"storage_limit": 58,"disable_request": true,"disable_commitment_piece_generation": true,"disable_storage_deal": false,"disable_online_deals": true,"disable_offline_deals": true,"number_of_cpus": 60,"storage_in_bytes": 55,"system_memory": 96,"heap_memory": 50,"heap_in_use": 76,"stack_in_use": 52,"instance_start": "2097-04-10T11:10:18.072518734-04:00","bytes_per_cpu": 62,"node_info": "wOyeKPZPqxkMJQmhilThcIMoZ","requester_info": "njINpEXWJnnqYmgtpxmHybHPq","delta_node_uuid": "yhiYTereSvRGaSamamuAPWUPV","system_instance_meta_id": 5,"created_at": "2147-06-07T15:53:28.278550966-04:00","updated_at": "2070-01-08T01:13:47.373733577-05:00"}' | http POST "http://localhost:8080/instancemetalogs" X-Api-User:user123
+// echo '{"id": 93,"instanceUuid": "BMIMASFbwVoZulNBUFGZhfSVW","instanceHostName": "CxuBGAQEDwdvgxuJhqFibVCfh","instanceNodeName": "IZJXagGdYFLncCRDLYwhmfkZS","osDetails": "nnstxhjfCoqFGQIwDGWKcfbsV","publicIp": "BycLLOtyYWbmWyCoxUhEubLWN","memoryLimit": 62,"cpuLimit": 10,"storageLimit": 26,"disableRequest": true,"disableCommitmentPieceGeneration": true,"disableStorageDeal": true,"disableOnlineDeals": false,"disableOfflineDeals": false,"numberOfCpus": 78,"storageInBytes": 41,"systemMemory": 30,"heapMemory": 10,"heapInUse": 97,"stackInUse": 65,"instanceStart": "2253-01-06T10:26:22.503703655-05:00","bytesPerCpu": 75,"nodeInfo": "shManTAukFURoYpTdAIePHgKx","requesterInfo": "WKdYjoCMUgHxZWUuYUJLMmuJt","deltaNodeUuid": "ioDKKXECtpdyPvcQOFnHjpXai","systemInstanceMetaId": 64,"createdAt": "2153-05-14T11:36:44.108263386-04:00","updatedAt": "2109-10-16T05:28:35.049000199-04:00"}' | http POST "http://localhost:8080/instancemetalogs" X-Api-User:user123
 func AddInstanceMetaLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	instancemetalogs := &model.InstanceMetaLogs{}
@@ -165,17 +159,17 @@ func AddInstanceMetaLogs(w http.ResponseWriter, r *http.Request, ps httprouter.P
 // @Tags InstanceMetaLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  instanceMetaLogsID path int64 true "id"
 // @Param  InstanceMetaLogs body model.InstanceMetaLogs true "Update InstanceMetaLogs record"
 // @Success 200 {object} model.InstanceMetaLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /instancemetalogs/{argID} [put]
-// echo '{"id": 13,"instance_uuid": "QZqJQFhMxvKdcoPYRhoYIGKXY","instance_host_name": "NkObRXNTrSgVTmrnWfaqQtSMG","instance_node_name": "uUtfSFLYSNkXgRVjSHnQbEUPM","os_details": "IOJXCpfFNFyWWXWGtwIamAglk","public_ip": "GJlJfHlSXyKHEaurudKHiDnHf","memory_limit": 16,"cpu_limit": 6,"storage_limit": 58,"disable_request": true,"disable_commitment_piece_generation": true,"disable_storage_deal": false,"disable_online_deals": true,"disable_offline_deals": true,"number_of_cpus": 60,"storage_in_bytes": 55,"system_memory": 96,"heap_memory": 50,"heap_in_use": 76,"stack_in_use": 52,"instance_start": "2097-04-10T11:10:18.072518734-04:00","bytes_per_cpu": 62,"node_info": "wOyeKPZPqxkMJQmhilThcIMoZ","requester_info": "njINpEXWJnnqYmgtpxmHybHPq","delta_node_uuid": "yhiYTereSvRGaSamamuAPWUPV","system_instance_meta_id": 5,"created_at": "2147-06-07T15:53:28.278550966-04:00","updated_at": "2070-01-08T01:13:47.373733577-05:00"}' | http PUT "http://localhost:8080/instancemetalogs/1"  X-Api-User:user123
+// @Router /instancemetalogs/{instanceMetaLogsID} [put]
+// echo '{"id": 93,"instanceUuid": "BMIMASFbwVoZulNBUFGZhfSVW","instanceHostName": "CxuBGAQEDwdvgxuJhqFibVCfh","instanceNodeName": "IZJXagGdYFLncCRDLYwhmfkZS","osDetails": "nnstxhjfCoqFGQIwDGWKcfbsV","publicIp": "BycLLOtyYWbmWyCoxUhEubLWN","memoryLimit": 62,"cpuLimit": 10,"storageLimit": 26,"disableRequest": true,"disableCommitmentPieceGeneration": true,"disableStorageDeal": true,"disableOnlineDeals": false,"disableOfflineDeals": false,"numberOfCpus": 78,"storageInBytes": 41,"systemMemory": 30,"heapMemory": 10,"heapInUse": 97,"stackInUse": 65,"instanceStart": "2253-01-06T10:26:22.503703655-05:00","bytesPerCpu": 75,"nodeInfo": "shManTAukFURoYpTdAIePHgKx","requesterInfo": "WKdYjoCMUgHxZWUuYUJLMmuJt","deltaNodeUuid": "ioDKKXECtpdyPvcQOFnHjpXai","systemInstanceMetaId": 64,"createdAt": "2153-05-14T11:36:44.108263386-04:00","updatedAt": "2109-10-16T05:28:35.049000199-04:00"}' | http PUT "http://localhost:8080/instancemetalogs/1"  X-Api-User:user123
 func UpdateInstanceMetaLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	instanceMetaLogsID, err := parseInt64(ps, "instanceMetaLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdateInstanceMetaLogs(w http.ResponseWriter, r *http.Request, ps httproute
 	}
 
 	instancemetalogs, _, err = dao.UpdateInstanceMetaLogs(ctx,
-		argID,
+		instanceMetaLogsID,
 		instancemetalogs)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdateInstanceMetaLogs(w http.ResponseWriter, r *http.Request, ps httproute
 // @Tags InstanceMetaLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  instanceMetaLogsID path int64 true "id"
 // @Success 204 {object} model.InstanceMetaLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /instancemetalogs/{argID} [delete]
+// @Router /instancemetalogs/{instanceMetaLogsID} [delete]
 // http DELETE "http://localhost:8080/instancemetalogs/1" X-Api-User:user123
 func DeleteInstanceMetaLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	instanceMetaLogsID, err := parseInt64(ps, "instanceMetaLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeleteInstanceMetaLogs(w http.ResponseWriter, r *http.Request, ps httproute
 		return
 	}
 
-	rowsAffected, err := dao.DeleteInstanceMetaLogs(ctx, argID)
+	rowsAffected, err := dao.DeleteInstanceMetaLogs(ctx, instanceMetaLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

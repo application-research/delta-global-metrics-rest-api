@@ -17,18 +17,12 @@ var (
 
 func configContentDealProposalParametersLogsRouter(router *httprouter.Router) {
 	router.GET("/contentdealproposalparameterslogs", GetAllContentDealProposalParametersLogs)
-	router.POST("/contentdealproposalparameterslogs", AddContentDealProposalParametersLogs)
-	router.GET("/contentdealproposalparameterslogs/:argID", GetContentDealProposalParametersLogs)
-	router.PUT("/contentdealproposalparameterslogs/:argID", UpdateContentDealProposalParametersLogs)
-	router.DELETE("/contentdealproposalparameterslogs/:argID", DeleteContentDealProposalParametersLogs)
+	router.GET("/contentdealproposalparameterslogs/:contentDealProposalParametersLogsID", GetContentDealProposalParametersLogs)
 }
 
 func configGinContentDealProposalParametersLogsRouter(router gin.IRoutes) {
 	router.GET("/contentdealproposalparameterslogs", ConverHttprouterToGin(GetAllContentDealProposalParametersLogs))
-	router.POST("/contentdealproposalparameterslogs", ConverHttprouterToGin(AddContentDealProposalParametersLogs))
-	router.GET("/contentdealproposalparameterslogs/:argID", ConverHttprouterToGin(GetContentDealProposalParametersLogs))
-	router.PUT("/contentdealproposalparameterslogs/:argID", ConverHttprouterToGin(UpdateContentDealProposalParametersLogs))
-	router.DELETE("/contentdealproposalparameterslogs/:argID", ConverHttprouterToGin(DeleteContentDealProposalParametersLogs))
+	router.GET("/contentdealproposalparameterslogs/:contentDealProposalParametersLogsID", ConverHttprouterToGin(GetContentDealProposalParametersLogs))
 }
 
 // GetAllContentDealProposalParametersLogs is a function to get a slice of record(s) from content_deal_proposal_parameters_logs table in the estuary database
@@ -77,22 +71,22 @@ func GetAllContentDealProposalParametersLogs(w http.ResponseWriter, r *http.Requ
 }
 
 // GetContentDealProposalParametersLogs is a function to get a single record from the content_deal_proposal_parameters_logs table in the estuary database
-// @Summary Get record from table ContentDealProposalParametersLogs by  argID
+// @Summary Get record from table ContentDealProposalParametersLogs by  contentDealProposalParametersLogsID
 // @Tags ContentDealProposalParametersLogs
-// @ID argID
+// @ID contentDealProposalParametersLogsID
 // @Description GetContentDealProposalParametersLogs is a function to get a single record from the content_deal_proposal_parameters_logs table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contentDealProposalParametersLogsID path int64 true "id"
 // @Success 200 {object} model.ContentDealProposalParametersLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /contentdealproposalparameterslogs/{argID} [get]
+// @Router /contentdealproposalparameterslogs/{contentDealProposalParametersLogsID} [get]
 // http "http://localhost:8080/contentdealproposalparameterslogs/1" X-Api-User:user123
 func GetContentDealProposalParametersLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contentDealProposalParametersLogsID, err := parseInt64(ps, "contentDealProposalParametersLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetContentDealProposalParametersLogs(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	record, err := dao.GetContentDealProposalParametersLogs(ctx, argID)
+	record, err := dao.GetContentDealProposalParametersLogs(ctx, contentDealProposalParametersLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetContentDealProposalParametersLogs(w http.ResponseWriter, r *http.Request
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /contentdealproposalparameterslogs [post]
-// echo '{"id": 79,"content": 27,"label": "TGKBXMsLffqmOVsZYoeTNDive","duration": 73,"start_epoch": 47,"end_epoch": 86,"transfer_params": "WpMPvCtTZoJomXavYlqZbBNxF","remove_unsealed_copy": false,"skip_ip_ni_announce": true,"node_info": "dNcquanpkcUJpmUEERUAatKXA","requester_info": "XMHaKbKpreLvYjeJvnyEJuFOj","requesting_api_key": "VSygsWKMxqBbsmqCXmGPwoldX","system_content_deal_proposal_parameters_id": 4,"created_at": "2200-11-27T04:06:47.214934775-05:00","updated_at": "2284-03-31T09:39:16.663154075-04:00","delta_node_uuid": "ZWNplgCUcugrHxYFSChKHjowb"}' | http POST "http://localhost:8080/contentdealproposalparameterslogs" X-Api-User:user123
+// echo '{"id": 11,"content": 28,"label": "gbgXFsMvnaClNRAqhtQdtFhNQ","duration": 43,"startEpoch": 93,"endEpoch": 15,"transferParams": "hDsSoFfCmVRZJFXIPJYBAxGLK","removeUnsealedCopy": false,"skipIpNiAnnounce": true,"nodeInfo": "idaYRkrLBhLFHYQAZbeFIkcXi","requesterInfo": "IwXjAiusvSYuTSiLFiYOJTTCO","requestingApiKey": "TfZrGwdaEivZEPgRZouqkMoVs","systemContentDealProposalParametersId": 54,"createdAt": "2051-07-18T14:58:51.12809116-04:00","updatedAt": "2196-07-15T21:02:52.682828298-04:00","deltaNodeUuid": "vXwPAuNtmYAUodvoDsZMFPAjG"}' | http POST "http://localhost:8080/contentdealproposalparameterslogs" X-Api-User:user123
 func AddContentDealProposalParametersLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	contentdealproposalparameterslogs := &model.ContentDealProposalParametersLogs{}
@@ -165,17 +159,17 @@ func AddContentDealProposalParametersLogs(w http.ResponseWriter, r *http.Request
 // @Tags ContentDealProposalParametersLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contentDealProposalParametersLogsID path int64 true "id"
 // @Param  ContentDealProposalParametersLogs body model.ContentDealProposalParametersLogs true "Update ContentDealProposalParametersLogs record"
 // @Success 200 {object} model.ContentDealProposalParametersLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /contentdealproposalparameterslogs/{argID} [put]
-// echo '{"id": 79,"content": 27,"label": "TGKBXMsLffqmOVsZYoeTNDive","duration": 73,"start_epoch": 47,"end_epoch": 86,"transfer_params": "WpMPvCtTZoJomXavYlqZbBNxF","remove_unsealed_copy": false,"skip_ip_ni_announce": true,"node_info": "dNcquanpkcUJpmUEERUAatKXA","requester_info": "XMHaKbKpreLvYjeJvnyEJuFOj","requesting_api_key": "VSygsWKMxqBbsmqCXmGPwoldX","system_content_deal_proposal_parameters_id": 4,"created_at": "2200-11-27T04:06:47.214934775-05:00","updated_at": "2284-03-31T09:39:16.663154075-04:00","delta_node_uuid": "ZWNplgCUcugrHxYFSChKHjowb"}' | http PUT "http://localhost:8080/contentdealproposalparameterslogs/1"  X-Api-User:user123
+// @Router /contentdealproposalparameterslogs/{contentDealProposalParametersLogsID} [put]
+// echo '{"id": 11,"content": 28,"label": "gbgXFsMvnaClNRAqhtQdtFhNQ","duration": 43,"startEpoch": 93,"endEpoch": 15,"transferParams": "hDsSoFfCmVRZJFXIPJYBAxGLK","removeUnsealedCopy": false,"skipIpNiAnnounce": true,"nodeInfo": "idaYRkrLBhLFHYQAZbeFIkcXi","requesterInfo": "IwXjAiusvSYuTSiLFiYOJTTCO","requestingApiKey": "TfZrGwdaEivZEPgRZouqkMoVs","systemContentDealProposalParametersId": 54,"createdAt": "2051-07-18T14:58:51.12809116-04:00","updatedAt": "2196-07-15T21:02:52.682828298-04:00","deltaNodeUuid": "vXwPAuNtmYAUodvoDsZMFPAjG"}' | http PUT "http://localhost:8080/contentdealproposalparameterslogs/1"  X-Api-User:user123
 func UpdateContentDealProposalParametersLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contentDealProposalParametersLogsID, err := parseInt64(ps, "contentDealProposalParametersLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdateContentDealProposalParametersLogs(w http.ResponseWriter, r *http.Requ
 	}
 
 	contentdealproposalparameterslogs, _, err = dao.UpdateContentDealProposalParametersLogs(ctx,
-		argID,
+		contentDealProposalParametersLogsID,
 		contentdealproposalparameterslogs)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdateContentDealProposalParametersLogs(w http.ResponseWriter, r *http.Requ
 // @Tags ContentDealProposalParametersLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contentDealProposalParametersLogsID path int64 true "id"
 // @Success 204 {object} model.ContentDealProposalParametersLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /contentdealproposalparameterslogs/{argID} [delete]
+// @Router /contentdealproposalparameterslogs/{contentDealProposalParametersLogsID} [delete]
 // http DELETE "http://localhost:8080/contentdealproposalparameterslogs/1" X-Api-User:user123
 func DeleteContentDealProposalParametersLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contentDealProposalParametersLogsID, err := parseInt64(ps, "contentDealProposalParametersLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeleteContentDealProposalParametersLogs(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	rowsAffected, err := dao.DeleteContentDealProposalParametersLogs(ctx, argID)
+	rowsAffected, err := dao.DeleteContentDealProposalParametersLogs(ctx, contentDealProposalParametersLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

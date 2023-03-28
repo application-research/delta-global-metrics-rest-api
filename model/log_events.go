@@ -35,7 +35,7 @@ Table: log_events
 
 JSON Sample
 -------------------------------------
-{    "id": 11,    "log_event_type": "uyyLXoTOHPGWXqVxXckCQQAuQ",    "log_event_object": "RNJLyPQifgmctXJNKsJvZbVqX",    "log_event_id": 62,    "log_event": "fLQatFEAiSKfXHdWYvunYuFMc",    "created_at": "2140-03-02T22:33:04.953051372-05:00",    "updated_at": "2150-12-01T18:34:50.455994227-05:00",    "source_host": "idmdsCnJFbunBjhqoTJgJlaTj",    "source_ip": "VhmfVFliJKccuPvAVdyQiWYkg",    "delta_uuid": "jBKgFYnDUiTtDBSCYUeLANrkg"}
+{    "id": 40,    "logEventType": "utLCvdSTXAVpXmZBtJIFHfJTD",    "logEventObject": "WnAJsllMZuniavJewVbJDhPaM",    "logEventId": 11,    "logEvent": "VoWiowlmuxqWgHNwOMrwCMnWt",    "createdAt": "2079-09-24T02:09:13.876912282-04:00",    "updatedAt": "2148-01-31T17:30:24.030190491-05:00",    "sourceHost": "rgljTEOgYPOGyYOxsLgOFLfQs",    "sourceIp": "rYhpAoCBhenbrcXTiOGyqTQMH",    "deltaUuid": "cyFGOCqwcETcuaAJpREQqAylk"}
 
 
 
@@ -46,23 +46,23 @@ type LogEvents struct {
 	//[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []
 	ID int64 `gorm:"primary_key;column:id;type:INT8;"`
 	//[ 1] log_event_type                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	LogEventType sql.NullString `gorm:"column:log_event_type;type:TEXT;"`
+	LogEventType null.String `gorm:"column:log_event_type;type:TEXT;"`
 	//[ 2] log_event_object                               BYTEA                null: true   primary: false  isArray: false  auto: false  col: BYTEA           len: -1      default: []
-	LogEventObject sql.NullString `gorm:"column:log_event_object;type:BYTEA;"`
+	LogEventObject null.String `gorm:"column:log_event_object;type:BYTEA;"`
 	//[ 3] log_event_id                                   INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	LogEventID sql.NullInt64 `gorm:"column:log_event_id;type:INT8;"`
+	LogEventID null.Int `gorm:"column:log_event_id;type:INT8;"`
 	//[ 4] log_event                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	LogEvent sql.NullString `gorm:"column:log_event;type:TEXT;"`
+	LogEvent null.String `gorm:"column:log_event;type:TEXT;"`
 	//[ 5] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	CreatedAt time.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
+	CreatedAt null.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
 	//[ 6] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	UpdatedAt time.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
+	UpdatedAt null.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
 	//[ 7] source_host                                    TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	SourceHost sql.NullString `gorm:"column:source_host;type:TEXT;"`
+	SourceHost null.String `gorm:"column:source_host;type:TEXT;"`
 	//[ 8] source_ip                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	SourceIP sql.NullString `gorm:"column:source_ip;type:TEXT;"`
+	SourceIP null.String `gorm:"column:source_ip;type:TEXT;"`
 	//[ 9] delta_uuid                                     TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	DeltaUUID sql.NullString `gorm:"column:delta_uuid;type:TEXT;"`
+	DeltaUUID null.String `gorm:"column:delta_uuid;type:TEXT;"`
 }
 
 var log_eventsTableInfo = &TableInfo{
@@ -104,8 +104,8 @@ var log_eventsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "LogEventType",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "log_event_type",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "logEventType",
 			ProtobufFieldName:  "log_event_type",
 			ProtobufType:       "string",
 			ProtobufPos:        2,
@@ -125,8 +125,8 @@ var log_eventsTableInfo = &TableInfo{
 			ColumnType:         "BYTEA",
 			ColumnLength:       -1,
 			GoFieldName:        "LogEventObject",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "log_event_object",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "logEventObject",
 			ProtobufFieldName:  "log_event_object",
 			ProtobufType:       "string",
 			ProtobufPos:        3,
@@ -146,8 +146,8 @@ var log_eventsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "LogEventID",
-			GoFieldType:        "sql.NullInt64",
-			JSONFieldName:      "log_event_id",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "logEventId",
 			ProtobufFieldName:  "log_event_id",
 			ProtobufType:       "int32",
 			ProtobufPos:        4,
@@ -167,8 +167,8 @@ var log_eventsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "LogEvent",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "log_event",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "logEvent",
 			ProtobufFieldName:  "log_event",
 			ProtobufType:       "string",
 			ProtobufPos:        5,
@@ -188,8 +188,8 @@ var log_eventsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "CreatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "created_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "createdAt",
 			ProtobufFieldName:  "created_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        6,
@@ -209,8 +209,8 @@ var log_eventsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "UpdatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "updated_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "updatedAt",
 			ProtobufFieldName:  "updated_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        7,
@@ -230,8 +230,8 @@ var log_eventsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "SourceHost",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "source_host",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "sourceHost",
 			ProtobufFieldName:  "source_host",
 			ProtobufType:       "string",
 			ProtobufPos:        8,
@@ -251,8 +251,8 @@ var log_eventsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "SourceIP",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "source_ip",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "sourceIp",
 			ProtobufFieldName:  "source_ip",
 			ProtobufType:       "string",
 			ProtobufPos:        9,
@@ -272,8 +272,8 @@ var log_eventsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "DeltaUUID",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "delta_uuid",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "deltaUuid",
 			ProtobufFieldName:  "delta_uuid",
 			ProtobufType:       "string",
 			ProtobufPos:        10,

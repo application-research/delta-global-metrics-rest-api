@@ -17,18 +17,12 @@ var (
 
 func configContentDealProposalLogsRouter(router *httprouter.Router) {
 	router.GET("/contentdealproposallogs", GetAllContentDealProposalLogs)
-	router.POST("/contentdealproposallogs", AddContentDealProposalLogs)
-	router.GET("/contentdealproposallogs/:argID", GetContentDealProposalLogs)
-	router.PUT("/contentdealproposallogs/:argID", UpdateContentDealProposalLogs)
-	router.DELETE("/contentdealproposallogs/:argID", DeleteContentDealProposalLogs)
+	router.GET("/contentdealproposallogs/:contentDealProposalLogsID", GetContentDealProposalLogs)
 }
 
 func configGinContentDealProposalLogsRouter(router gin.IRoutes) {
 	router.GET("/contentdealproposallogs", ConverHttprouterToGin(GetAllContentDealProposalLogs))
-	router.POST("/contentdealproposallogs", ConverHttprouterToGin(AddContentDealProposalLogs))
-	router.GET("/contentdealproposallogs/:argID", ConverHttprouterToGin(GetContentDealProposalLogs))
-	router.PUT("/contentdealproposallogs/:argID", ConverHttprouterToGin(UpdateContentDealProposalLogs))
-	router.DELETE("/contentdealproposallogs/:argID", ConverHttprouterToGin(DeleteContentDealProposalLogs))
+	router.GET("/contentdealproposallogs/:contentDealProposalLogsID", ConverHttprouterToGin(GetContentDealProposalLogs))
 }
 
 // GetAllContentDealProposalLogs is a function to get a slice of record(s) from content_deal_proposal_logs table in the estuary database
@@ -77,22 +71,22 @@ func GetAllContentDealProposalLogs(w http.ResponseWriter, r *http.Request, ps ht
 }
 
 // GetContentDealProposalLogs is a function to get a single record from the content_deal_proposal_logs table in the estuary database
-// @Summary Get record from table ContentDealProposalLogs by  argID
+// @Summary Get record from table ContentDealProposalLogs by  contentDealProposalLogsID
 // @Tags ContentDealProposalLogs
-// @ID argID
+// @ID contentDealProposalLogsID
 // @Description GetContentDealProposalLogs is a function to get a single record from the content_deal_proposal_logs table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contentDealProposalLogsID path int64 true "id"
 // @Success 200 {object} model.ContentDealProposalLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /contentdealproposallogs/{argID} [get]
+// @Router /contentdealproposallogs/{contentDealProposalLogsID} [get]
 // http "http://localhost:8080/contentdealproposallogs/1" X-Api-User:user123
 func GetContentDealProposalLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contentDealProposalLogsID, err := parseInt64(ps, "contentDealProposalLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetContentDealProposalLogs(w http.ResponseWriter, r *http.Request, ps httpr
 		return
 	}
 
-	record, err := dao.GetContentDealProposalLogs(ctx, argID)
+	record, err := dao.GetContentDealProposalLogs(ctx, contentDealProposalLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetContentDealProposalLogs(w http.ResponseWriter, r *http.Request, ps httpr
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /contentdealproposallogs [post]
-// echo '{"id": 95,"content": 54,"unsigned": "BdPlZSqEDRmQVZWRcAStrfDVo","signed": "TFZfPHSlKLHIbkpGDLiTMOFBG","meta": "agqScMxqrltdqEfAJEnKPZNXY","node_info": "UGOjVwkfRJGHIvoIEhmErJIAJ","requester_info": "BcLEWYWZcXWfMctbJSsEjJEwE","requesting_api_key": "EtByipcglOXRuXtLBXFvEXUxv","system_content_deal_proposal_id": 89,"created_at": "2155-03-27T07:30:00.872085132-04:00","updated_at": "2158-08-27T22:03:34.596286539-04:00","delta_node_uuid": "xFrsHASTncOBrVcYtmntQWTIC"}' | http POST "http://localhost:8080/contentdealproposallogs" X-Api-User:user123
+// echo '{"id": 89,"content": 22,"unsigned": "xhLCNmWsKJXMHJNVLbAotRLvd","signed": "NxnPbbAOrCWuUhNAZUWYCNTuH","meta": "avAOXCQJeaIngfaCMYmrBKVIH","nodeInfo": "HkcLsmLFptkoieXngLbnaaiMB","requesterInfo": "YvKDCcffBbTWqYIcjlqQEIfHI","requestingApiKey": "IJnyUdtVENbXQgBgMUQBdJmua","systemContentDealProposalId": 33,"createdAt": "2202-05-29T02:34:23.990453036-04:00","updatedAt": "2299-05-12T06:26:46.780123564-04:00","deltaNodeUuid": "PmcqKEJNODZQUWfKVDYGPgcMv"}' | http POST "http://localhost:8080/contentdealproposallogs" X-Api-User:user123
 func AddContentDealProposalLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	contentdealproposallogs := &model.ContentDealProposalLogs{}
@@ -165,17 +159,17 @@ func AddContentDealProposalLogs(w http.ResponseWriter, r *http.Request, ps httpr
 // @Tags ContentDealProposalLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contentDealProposalLogsID path int64 true "id"
 // @Param  ContentDealProposalLogs body model.ContentDealProposalLogs true "Update ContentDealProposalLogs record"
 // @Success 200 {object} model.ContentDealProposalLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /contentdealproposallogs/{argID} [put]
-// echo '{"id": 95,"content": 54,"unsigned": "BdPlZSqEDRmQVZWRcAStrfDVo","signed": "TFZfPHSlKLHIbkpGDLiTMOFBG","meta": "agqScMxqrltdqEfAJEnKPZNXY","node_info": "UGOjVwkfRJGHIvoIEhmErJIAJ","requester_info": "BcLEWYWZcXWfMctbJSsEjJEwE","requesting_api_key": "EtByipcglOXRuXtLBXFvEXUxv","system_content_deal_proposal_id": 89,"created_at": "2155-03-27T07:30:00.872085132-04:00","updated_at": "2158-08-27T22:03:34.596286539-04:00","delta_node_uuid": "xFrsHASTncOBrVcYtmntQWTIC"}' | http PUT "http://localhost:8080/contentdealproposallogs/1"  X-Api-User:user123
+// @Router /contentdealproposallogs/{contentDealProposalLogsID} [put]
+// echo '{"id": 89,"content": 22,"unsigned": "xhLCNmWsKJXMHJNVLbAotRLvd","signed": "NxnPbbAOrCWuUhNAZUWYCNTuH","meta": "avAOXCQJeaIngfaCMYmrBKVIH","nodeInfo": "HkcLsmLFptkoieXngLbnaaiMB","requesterInfo": "YvKDCcffBbTWqYIcjlqQEIfHI","requestingApiKey": "IJnyUdtVENbXQgBgMUQBdJmua","systemContentDealProposalId": 33,"createdAt": "2202-05-29T02:34:23.990453036-04:00","updatedAt": "2299-05-12T06:26:46.780123564-04:00","deltaNodeUuid": "PmcqKEJNODZQUWfKVDYGPgcMv"}' | http PUT "http://localhost:8080/contentdealproposallogs/1"  X-Api-User:user123
 func UpdateContentDealProposalLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contentDealProposalLogsID, err := parseInt64(ps, "contentDealProposalLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdateContentDealProposalLogs(w http.ResponseWriter, r *http.Request, ps ht
 	}
 
 	contentdealproposallogs, _, err = dao.UpdateContentDealProposalLogs(ctx,
-		argID,
+		contentDealProposalLogsID,
 		contentdealproposallogs)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdateContentDealProposalLogs(w http.ResponseWriter, r *http.Request, ps ht
 // @Tags ContentDealProposalLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contentDealProposalLogsID path int64 true "id"
 // @Success 204 {object} model.ContentDealProposalLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /contentdealproposallogs/{argID} [delete]
+// @Router /contentdealproposallogs/{contentDealProposalLogsID} [delete]
 // http DELETE "http://localhost:8080/contentdealproposallogs/1" X-Api-User:user123
 func DeleteContentDealProposalLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contentDealProposalLogsID, err := parseInt64(ps, "contentDealProposalLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeleteContentDealProposalLogs(w http.ResponseWriter, r *http.Request, ps ht
 		return
 	}
 
-	rowsAffected, err := dao.DeleteContentDealProposalLogs(ctx, argID)
+	rowsAffected, err := dao.DeleteContentDealProposalLogs(ctx, contentDealProposalLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

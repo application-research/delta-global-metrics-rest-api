@@ -35,7 +35,7 @@ Table: delta_node_geo_locations
 
 JSON Sample
 -------------------------------------
-{    "id": 29,    "ip": "AoFZjasOXLsPPxMGoCMNahbty",    "country": "eAdelWAlBUZegkeKfJGvqvGuF",    "city": "bELhkxHYWYaUkwlwokyEMCSiW",    "region": "LwtRiOAMdQARxrHrblpBlBUPV",    "zip": "ybMAKDYjSrGUXrUHAsykuqqAs",    "lat": 0.5675549651243351,    "lon": 0.3986043435344051,    "created_at": "2213-10-23T16:18:24.751263651-04:00",    "updated_at": "2026-02-19T10:08:50.904405976-05:00"}
+{    "id": 89,    "ip": "uwpBtXBntBWgkCKraXSpkctDe",    "country": "GHPtnoTwpFebPPVvcspCrMqZE",    "city": "kNBasfOCYAWmojkCMuiBaimiw",    "region": "vbJjsoGjvIDUSYIYsbvtGKygD",    "zip": "VRnvGNQBsiJRbbUgODZEJDkcB",    "lat": 0.2523771892476505,    "lon": 0.8991950175159545,    "createdAt": "2205-06-16T18:43:47.606371433-04:00",    "updatedAt": "2166-09-03T02:07:18.062428741-04:00"}
 
 
 
@@ -46,23 +46,23 @@ type DeltaNodeGeoLocations struct {
 	//[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []
 	ID int64 `gorm:"primary_key;column:id;type:INT8;"`
 	//[ 1] ip                                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	IP sql.NullString `gorm:"column:ip;type:TEXT;"`
+	IP null.String `gorm:"column:ip;type:TEXT;"`
 	//[ 2] country                                        TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	Country sql.NullString `gorm:"column:country;type:TEXT;"`
+	Country null.String `gorm:"column:country;type:TEXT;"`
 	//[ 3] city                                           TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	City sql.NullString `gorm:"column:city;type:TEXT;"`
+	City null.String `gorm:"column:city;type:TEXT;"`
 	//[ 4] region                                         TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	Region sql.NullString `gorm:"column:region;type:TEXT;"`
+	Region null.String `gorm:"column:region;type:TEXT;"`
 	//[ 5] zip                                            TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	Zip sql.NullString `gorm:"column:zip;type:TEXT;"`
+	Zip null.String `gorm:"column:zip;type:TEXT;"`
 	//[ 6] lat                                            NUMERIC              null: true   primary: false  isArray: false  auto: false  col: NUMERIC         len: -1      default: []
-	Lat sql.NullFloat64 `gorm:"column:lat;type:NUMERIC;"`
+	Lat null.Float `gorm:"column:lat;type:NUMERIC;"`
 	//[ 7] lon                                            NUMERIC              null: true   primary: false  isArray: false  auto: false  col: NUMERIC         len: -1      default: []
-	Lon sql.NullFloat64 `gorm:"column:lon;type:NUMERIC;"`
+	Lon null.Float `gorm:"column:lon;type:NUMERIC;"`
 	//[ 8] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	CreatedAt time.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
+	CreatedAt null.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
 	//[ 9] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	UpdatedAt time.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
+	UpdatedAt null.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
 }
 
 var delta_node_geo_locationsTableInfo = &TableInfo{
@@ -104,7 +104,7 @@ var delta_node_geo_locationsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "IP",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "ip",
 			ProtobufFieldName:  "ip",
 			ProtobufType:       "string",
@@ -125,7 +125,7 @@ var delta_node_geo_locationsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "Country",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "country",
 			ProtobufFieldName:  "country",
 			ProtobufType:       "string",
@@ -146,7 +146,7 @@ var delta_node_geo_locationsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "City",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "city",
 			ProtobufFieldName:  "city",
 			ProtobufType:       "string",
@@ -167,7 +167,7 @@ var delta_node_geo_locationsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "Region",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "region",
 			ProtobufFieldName:  "region",
 			ProtobufType:       "string",
@@ -188,7 +188,7 @@ var delta_node_geo_locationsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "Zip",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "zip",
 			ProtobufFieldName:  "zip",
 			ProtobufType:       "string",
@@ -209,7 +209,7 @@ var delta_node_geo_locationsTableInfo = &TableInfo{
 			ColumnType:         "NUMERIC",
 			ColumnLength:       -1,
 			GoFieldName:        "Lat",
-			GoFieldType:        "sql.NullFloat64",
+			GoFieldType:        "null.Float",
 			JSONFieldName:      "lat",
 			ProtobufFieldName:  "lat",
 			ProtobufType:       "float",
@@ -230,7 +230,7 @@ var delta_node_geo_locationsTableInfo = &TableInfo{
 			ColumnType:         "NUMERIC",
 			ColumnLength:       -1,
 			GoFieldName:        "Lon",
-			GoFieldType:        "sql.NullFloat64",
+			GoFieldType:        "null.Float",
 			JSONFieldName:      "lon",
 			ProtobufFieldName:  "lon",
 			ProtobufType:       "float",
@@ -251,8 +251,8 @@ var delta_node_geo_locationsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "CreatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "created_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "createdAt",
 			ProtobufFieldName:  "created_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        9,
@@ -272,8 +272,8 @@ var delta_node_geo_locationsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "UpdatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "updated_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "updatedAt",
 			ProtobufFieldName:  "updated_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        10,

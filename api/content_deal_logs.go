@@ -17,18 +17,12 @@ var (
 
 func configContentDealLogsRouter(router *httprouter.Router) {
 	router.GET("/contentdeallogs", GetAllContentDealLogs)
-	router.POST("/contentdeallogs", AddContentDealLogs)
-	router.GET("/contentdeallogs/:argID", GetContentDealLogs)
-	router.PUT("/contentdeallogs/:argID", UpdateContentDealLogs)
-	router.DELETE("/contentdeallogs/:argID", DeleteContentDealLogs)
+	router.GET("/contentdeallogs/:contentDealLogsID", GetContentDealLogs)
 }
 
 func configGinContentDealLogsRouter(router gin.IRoutes) {
 	router.GET("/contentdeallogs", ConverHttprouterToGin(GetAllContentDealLogs))
-	router.POST("/contentdeallogs", ConverHttprouterToGin(AddContentDealLogs))
-	router.GET("/contentdeallogs/:argID", ConverHttprouterToGin(GetContentDealLogs))
-	router.PUT("/contentdeallogs/:argID", ConverHttprouterToGin(UpdateContentDealLogs))
-	router.DELETE("/contentdeallogs/:argID", ConverHttprouterToGin(DeleteContentDealLogs))
+	router.GET("/contentdeallogs/:contentDealLogsID", ConverHttprouterToGin(GetContentDealLogs))
 }
 
 // GetAllContentDealLogs is a function to get a slice of record(s) from content_deal_logs table in the estuary database
@@ -77,22 +71,22 @@ func GetAllContentDealLogs(w http.ResponseWriter, r *http.Request, ps httprouter
 }
 
 // GetContentDealLogs is a function to get a single record from the content_deal_logs table in the estuary database
-// @Summary Get record from table ContentDealLogs by  argID
+// @Summary Get record from table ContentDealLogs by  contentDealLogsID
 // @Tags ContentDealLogs
-// @ID argID
+// @ID contentDealLogsID
 // @Description GetContentDealLogs is a function to get a single record from the content_deal_logs table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contentDealLogsID path int64 true "id"
 // @Success 200 {object} model.ContentDealLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /contentdeallogs/{argID} [get]
+// @Router /contentdeallogs/{contentDealLogsID} [get]
 // http "http://localhost:8080/contentdeallogs/1" X-Api-User:user123
 func GetContentDealLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contentDealLogsID, err := parseInt64(ps, "contentDealLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetContentDealLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Pa
 		return
 	}
 
-	record, err := dao.GetContentDealLogs(ctx, argID)
+	record, err := dao.GetContentDealLogs(ctx, contentDealLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetContentDealLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Pa
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /contentdeallogs [post]
-// echo '{"id": 78,"content": 50,"prop_cid": "wPitHmApMJNqFkbCVCEXLPOgO","deal_uuid": "KfpfjKjQsUEdUlCKdpDmZPHSm","miner": "oNPSjFMgtvtqevtwSaCronoHs","deal_id": 69,"failed": false,"verified": false,"slashed": false,"failed_at": "2073-03-13T07:58:47.787105952-04:00","dt_chan": "gbajoJITYJHctKypowgyQwouy","transfer_started": "2288-03-25T04:38:08.461808637-04:00","transfer_finished": "2054-06-03T09:38:09.659274379-04:00","on_chain_at": "2242-09-05T02:11:35.872053883-04:00","sealed_at": "2029-08-07T07:31:54.707466325-04:00","last_message": "fJmUPhsRNdLSGkcfdTaGGgnAX","deal_protocol_version": "etTRJJaJfuZJNqcywDOanNvWe","miner_version": "XjJCulvZcXNXKflGaedJVMgFF","node_info": "onYUJQpmPnpMgOHnWwjaWDeUd","requester_info": "NGGHKoXWAibSANLnomZsFWOQB","requesting_api_key": "njTDXKscmeIOOHGiipNNRcYyH","system_content_deal_id": 1,"created_at": "2226-07-15T00:10:30.581336342-04:00","updated_at": "2098-07-14T10:42:36.953905498-04:00","delta_node_uuid": "HbTqKrUqmSCnaYUYmRoPtipKX"}' | http POST "http://localhost:8080/contentdeallogs" X-Api-User:user123
+// echo '{"id": 99,"content": 55,"propCid": "xknsQTytaZWgYojHSDkHVfPHa","dealUuid": "GxKYowuykjCRKgEIOgeQqqsen","miner": "OInOCDbSbQxplmMthtVnPierV","dealId": 85,"failed": true,"verified": false,"slashed": false,"failedAt": "2104-07-28T14:23:06.964124494-04:00","dtChan": "AcIPDCIUYkjdwjTvidljlPmEx","transferStarted": "2255-11-25T21:46:23.259616019-05:00","transferFinished": "2185-12-19T08:50:07.455413034-05:00","onChainAt": "2029-02-05T01:46:10.623356801-05:00","sealedAt": "2028-02-10T19:11:30.660121509-05:00","lastMessage": "vNFrivKDIRlSgyxmVrQZtcNPp","dealProtocolVersion": "SrvIxXavVsTojSXZWVUyHfVsG","minerVersion": "dZasDhnmXPWxsTJTkkjqsXekw","nodeInfo": "eaPQgRleeUStfJjFeLaqbMGAl","requesterInfo": "IPnKALNplIsAFbfNNEJjxEEbV","requestingApiKey": "GfxZduGGhytByYTANrfWicIOx","systemContentDealId": 68,"createdAt": "2236-06-18T16:44:22.565027633-04:00","updatedAt": "2108-07-24T20:06:59.490583119-04:00","deltaNodeUuid": "DBoqKOqeVRvCTTBXExXyHoKfB"}' | http POST "http://localhost:8080/contentdeallogs" X-Api-User:user123
 func AddContentDealLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	contentdeallogs := &model.ContentDealLogs{}
@@ -165,17 +159,17 @@ func AddContentDealLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Pa
 // @Tags ContentDealLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contentDealLogsID path int64 true "id"
 // @Param  ContentDealLogs body model.ContentDealLogs true "Update ContentDealLogs record"
 // @Success 200 {object} model.ContentDealLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /contentdeallogs/{argID} [put]
-// echo '{"id": 78,"content": 50,"prop_cid": "wPitHmApMJNqFkbCVCEXLPOgO","deal_uuid": "KfpfjKjQsUEdUlCKdpDmZPHSm","miner": "oNPSjFMgtvtqevtwSaCronoHs","deal_id": 69,"failed": false,"verified": false,"slashed": false,"failed_at": "2073-03-13T07:58:47.787105952-04:00","dt_chan": "gbajoJITYJHctKypowgyQwouy","transfer_started": "2288-03-25T04:38:08.461808637-04:00","transfer_finished": "2054-06-03T09:38:09.659274379-04:00","on_chain_at": "2242-09-05T02:11:35.872053883-04:00","sealed_at": "2029-08-07T07:31:54.707466325-04:00","last_message": "fJmUPhsRNdLSGkcfdTaGGgnAX","deal_protocol_version": "etTRJJaJfuZJNqcywDOanNvWe","miner_version": "XjJCulvZcXNXKflGaedJVMgFF","node_info": "onYUJQpmPnpMgOHnWwjaWDeUd","requester_info": "NGGHKoXWAibSANLnomZsFWOQB","requesting_api_key": "njTDXKscmeIOOHGiipNNRcYyH","system_content_deal_id": 1,"created_at": "2226-07-15T00:10:30.581336342-04:00","updated_at": "2098-07-14T10:42:36.953905498-04:00","delta_node_uuid": "HbTqKrUqmSCnaYUYmRoPtipKX"}' | http PUT "http://localhost:8080/contentdeallogs/1"  X-Api-User:user123
+// @Router /contentdeallogs/{contentDealLogsID} [put]
+// echo '{"id": 99,"content": 55,"propCid": "xknsQTytaZWgYojHSDkHVfPHa","dealUuid": "GxKYowuykjCRKgEIOgeQqqsen","miner": "OInOCDbSbQxplmMthtVnPierV","dealId": 85,"failed": true,"verified": false,"slashed": false,"failedAt": "2104-07-28T14:23:06.964124494-04:00","dtChan": "AcIPDCIUYkjdwjTvidljlPmEx","transferStarted": "2255-11-25T21:46:23.259616019-05:00","transferFinished": "2185-12-19T08:50:07.455413034-05:00","onChainAt": "2029-02-05T01:46:10.623356801-05:00","sealedAt": "2028-02-10T19:11:30.660121509-05:00","lastMessage": "vNFrivKDIRlSgyxmVrQZtcNPp","dealProtocolVersion": "SrvIxXavVsTojSXZWVUyHfVsG","minerVersion": "dZasDhnmXPWxsTJTkkjqsXekw","nodeInfo": "eaPQgRleeUStfJjFeLaqbMGAl","requesterInfo": "IPnKALNplIsAFbfNNEJjxEEbV","requestingApiKey": "GfxZduGGhytByYTANrfWicIOx","systemContentDealId": 68,"createdAt": "2236-06-18T16:44:22.565027633-04:00","updatedAt": "2108-07-24T20:06:59.490583119-04:00","deltaNodeUuid": "DBoqKOqeVRvCTTBXExXyHoKfB"}' | http PUT "http://localhost:8080/contentdeallogs/1"  X-Api-User:user123
 func UpdateContentDealLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contentDealLogsID, err := parseInt64(ps, "contentDealLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdateContentDealLogs(w http.ResponseWriter, r *http.Request, ps httprouter
 	}
 
 	contentdeallogs, _, err = dao.UpdateContentDealLogs(ctx,
-		argID,
+		contentDealLogsID,
 		contentdeallogs)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdateContentDealLogs(w http.ResponseWriter, r *http.Request, ps httprouter
 // @Tags ContentDealLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contentDealLogsID path int64 true "id"
 // @Success 204 {object} model.ContentDealLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /contentdeallogs/{argID} [delete]
+// @Router /contentdeallogs/{contentDealLogsID} [delete]
 // http DELETE "http://localhost:8080/contentdeallogs/1" X-Api-User:user123
 func DeleteContentDealLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contentDealLogsID, err := parseInt64(ps, "contentDealLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeleteContentDealLogs(w http.ResponseWriter, r *http.Request, ps httprouter
 		return
 	}
 
-	rowsAffected, err := dao.DeleteContentDealLogs(ctx, argID)
+	rowsAffected, err := dao.DeleteContentDealLogs(ctx, contentDealLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

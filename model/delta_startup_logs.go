@@ -32,7 +32,7 @@ Table: delta_startup_logs
 
 JSON Sample
 -------------------------------------
-{    "id": 67,    "node_info": "VuCOeiOMORdNPHWHwREfHTDEH",    "os_details": "hGmgoOjoQaSaJKdpOXsUYgAwx",    "ip_address": "pvVEwkihlHbEHaxpKlcMDvJwv",    "created_at": "2092-09-29T08:13:19.236325037-04:00",    "updated_at": "2171-06-30T17:41:38.561843374-04:00",    "delta_node_uuid": "FIfUaOCwBBFjaistfNtfNmmUk"}
+{    "id": 17,    "nodeInfo": "MiifxOjnqsUpOjndrGokBhUuL",    "osDetails": "fIDOfHOZfJMMKAdBmIxiBvYpC",    "ipAddress": "VogTZvQFdkLBQruBIclgLKiTa",    "createdAt": "2299-11-22T20:06:45.836550913-05:00",    "updatedAt": "2059-05-30T21:42:11.112312668-04:00",    "deltaNodeUuid": "DSimhMAQGdBANWNucLQNitfKW"}
 
 
 
@@ -43,17 +43,17 @@ type DeltaStartupLogs struct {
 	//[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []
 	ID int64 `gorm:"primary_key;column:id;type:INT8;"`
 	//[ 1] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	NodeInfo sql.NullString `gorm:"column:node_info;type:TEXT;"`
+	NodeInfo null.String `gorm:"column:node_info;type:TEXT;"`
 	//[ 2] os_details                                     TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	OsDetails sql.NullString `gorm:"column:os_details;type:TEXT;"`
+	OsDetails null.String `gorm:"column:os_details;type:TEXT;"`
 	//[ 3] ip_address                                     TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	IPAddress sql.NullString `gorm:"column:ip_address;type:TEXT;"`
+	IPAddress null.String `gorm:"column:ip_address;type:TEXT;"`
 	//[ 4] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	CreatedAt time.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
+	CreatedAt null.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
 	//[ 5] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	UpdatedAt time.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
+	UpdatedAt null.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
 	//[ 6] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	DeltaNodeUUID sql.NullString `gorm:"column:delta_node_uuid;type:TEXT;"`
+	DeltaNodeUUID null.String `gorm:"column:delta_node_uuid;type:TEXT;"`
 }
 
 var delta_startup_logsTableInfo = &TableInfo{
@@ -95,8 +95,8 @@ var delta_startup_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "NodeInfo",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "node_info",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "nodeInfo",
 			ProtobufFieldName:  "node_info",
 			ProtobufType:       "string",
 			ProtobufPos:        2,
@@ -116,8 +116,8 @@ var delta_startup_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "OsDetails",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "os_details",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "osDetails",
 			ProtobufFieldName:  "os_details",
 			ProtobufType:       "string",
 			ProtobufPos:        3,
@@ -137,8 +137,8 @@ var delta_startup_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "IPAddress",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "ip_address",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "ipAddress",
 			ProtobufFieldName:  "ip_address",
 			ProtobufType:       "string",
 			ProtobufPos:        4,
@@ -158,8 +158,8 @@ var delta_startup_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "CreatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "created_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "createdAt",
 			ProtobufFieldName:  "created_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        5,
@@ -179,8 +179,8 @@ var delta_startup_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "UpdatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "updated_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "updatedAt",
 			ProtobufFieldName:  "updated_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        6,
@@ -200,8 +200,8 @@ var delta_startup_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "DeltaNodeUUID",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "delta_node_uuid",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "deltaNodeUuid",
 			ProtobufFieldName:  "delta_node_uuid",
 			ProtobufType:       "string",
 			ProtobufPos:        7,

@@ -40,7 +40,7 @@ Table: piece_commitment_logs
 
 JSON Sample
 -------------------------------------
-{    "id": 86,    "cid": "qRUteRlRXGcyLokuPpjrmlfvK",    "piece": "DblvAxOOtZwafRuEqMFmgmfDj",    "size": 85,    "padded_piece_size": 72,    "un_padded_piece_size": 19,    "status": "ayWhOePyeOPayKljuMuTYQJhl",    "last_message": "oFYeOwcrQyNkggsaErpJhcxBF",    "node_info": "gexEZEduBpjHefawmXyxXmXyJ",    "requester_info": "awyaJkeXWxghxtnwBxfneEEmK",    "requesting_api_key": "jjVxvtZoFjUpnjqUortLfsXJt",    "system_content_piece_commitment_id": 99,    "created_at": "2159-09-10T22:34:07.302731963-04:00",    "updated_at": "2041-03-01T11:32:13.914140422-05:00",    "delta_node_uuid": "aIcUVKRcZwfQEJiWbYeIXKkoY"}
+{    "id": 96,    "cid": "lSpleRdPmtqSgPIPaupwBTuyl",    "piece": "rdrggiHeNdpKHBfFylyCggASX",    "size": 54,    "paddedPieceSize": 34,    "unPaddedPieceSize": 67,    "status": "rZcNQmBiCIqntDBaEJOEBDeUU",    "lastMessage": "nMdhoVjfwPSQpWiVwprTHtQDv",    "nodeInfo": "hgMKEJrQUrKFCsxmSNhmKrfns",    "requesterInfo": "gjlGNNmhGjgIZlGkkRLInnaIl",    "requestingApiKey": "OdFJvYFetTPCvOnNtqEEefDtu",    "systemContentPieceCommitmentId": 41,    "createdAt": "2263-03-20T02:46:34.0114278-04:00",    "updatedAt": "2233-07-09T11:09:29.842592668-04:00",    "deltaNodeUuid": "BHSEdeJWRcPaiTAwASdFCrYor"}
 
 
 
@@ -51,33 +51,33 @@ type PieceCommitmentLogs struct {
 	//[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []
 	ID int64 `gorm:"primary_key;column:id;type:INT8;"`
 	//[ 1] cid                                            TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	Cid sql.NullString `gorm:"column:cid;type:TEXT;"`
+	Cid null.String `gorm:"column:cid;type:TEXT;"`
 	//[ 2] piece                                          TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	Piece sql.NullString `gorm:"column:piece;type:TEXT;"`
+	Piece null.String `gorm:"column:piece;type:TEXT;"`
 	//[ 3] size                                           INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	Size sql.NullInt64 `gorm:"column:size;type:INT8;"`
+	Size null.Int `gorm:"column:size;type:INT8;"`
 	//[ 4] padded_piece_size                              INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	PaddedPieceSize sql.NullInt64 `gorm:"column:padded_piece_size;type:INT8;"`
+	PaddedPieceSize null.Int `gorm:"column:padded_piece_size;type:INT8;"`
 	//[ 5] un_padded_piece_size                           INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	UnPaddedPieceSize sql.NullInt64 `gorm:"column:un_padded_piece_size;type:INT8;"`
+	UnPaddedPieceSize null.Int `gorm:"column:un_padded_piece_size;type:INT8;"`
 	//[ 6] status                                         TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	Status sql.NullString `gorm:"column:status;type:TEXT;"`
+	Status null.String `gorm:"column:status;type:TEXT;"`
 	//[ 7] last_message                                   TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	LastMessage sql.NullString `gorm:"column:last_message;type:TEXT;"`
+	LastMessage null.String `gorm:"column:last_message;type:TEXT;"`
 	//[ 8] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	NodeInfo sql.NullString `gorm:"column:node_info;type:TEXT;"`
+	NodeInfo null.String `gorm:"column:node_info;type:TEXT;"`
 	//[ 9] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	RequesterInfo sql.NullString `gorm:"column:requester_info;type:TEXT;"`
+	RequesterInfo null.String `gorm:"column:requester_info;type:TEXT;"`
 	//[10] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	RequestingAPIKey sql.NullString `gorm:"column:requesting_api_key;type:TEXT;"`
+	RequestingAPIKey null.String `gorm:"column:requesting_api_key;type:TEXT;"`
 	//[11] system_content_piece_commitment_id             INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	SystemContentPieceCommitmentID sql.NullInt64 `gorm:"column:system_content_piece_commitment_id;type:INT8;"`
+	SystemContentPieceCommitmentID null.Int `gorm:"column:system_content_piece_commitment_id;type:INT8;"`
 	//[12] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	CreatedAt time.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
+	CreatedAt null.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
 	//[13] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	UpdatedAt time.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
+	UpdatedAt null.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
 	//[14] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	DeltaNodeUUID sql.NullString `gorm:"column:delta_node_uuid;type:TEXT;"`
+	DeltaNodeUUID null.String `gorm:"column:delta_node_uuid;type:TEXT;"`
 }
 
 var piece_commitment_logsTableInfo = &TableInfo{
@@ -119,7 +119,7 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "Cid",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "cid",
 			ProtobufFieldName:  "cid",
 			ProtobufType:       "string",
@@ -140,7 +140,7 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "Piece",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "piece",
 			ProtobufFieldName:  "piece",
 			ProtobufType:       "string",
@@ -161,7 +161,7 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "Size",
-			GoFieldType:        "sql.NullInt64",
+			GoFieldType:        "null.Int",
 			JSONFieldName:      "size",
 			ProtobufFieldName:  "size",
 			ProtobufType:       "int32",
@@ -182,8 +182,8 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "PaddedPieceSize",
-			GoFieldType:        "sql.NullInt64",
-			JSONFieldName:      "padded_piece_size",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "paddedPieceSize",
 			ProtobufFieldName:  "padded_piece_size",
 			ProtobufType:       "int32",
 			ProtobufPos:        5,
@@ -203,8 +203,8 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "UnPaddedPieceSize",
-			GoFieldType:        "sql.NullInt64",
-			JSONFieldName:      "un_padded_piece_size",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "unPaddedPieceSize",
 			ProtobufFieldName:  "un_padded_piece_size",
 			ProtobufType:       "int32",
 			ProtobufPos:        6,
@@ -224,7 +224,7 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "Status",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "status",
 			ProtobufFieldName:  "status",
 			ProtobufType:       "string",
@@ -245,8 +245,8 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "LastMessage",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "last_message",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "lastMessage",
 			ProtobufFieldName:  "last_message",
 			ProtobufType:       "string",
 			ProtobufPos:        8,
@@ -266,8 +266,8 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "NodeInfo",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "node_info",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "nodeInfo",
 			ProtobufFieldName:  "node_info",
 			ProtobufType:       "string",
 			ProtobufPos:        9,
@@ -287,8 +287,8 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "RequesterInfo",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "requester_info",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "requesterInfo",
 			ProtobufFieldName:  "requester_info",
 			ProtobufType:       "string",
 			ProtobufPos:        10,
@@ -308,8 +308,8 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "RequestingAPIKey",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "requesting_api_key",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "requestingApiKey",
 			ProtobufFieldName:  "requesting_api_key",
 			ProtobufType:       "string",
 			ProtobufPos:        11,
@@ -329,8 +329,8 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "SystemContentPieceCommitmentID",
-			GoFieldType:        "sql.NullInt64",
-			JSONFieldName:      "system_content_piece_commitment_id",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "systemContentPieceCommitmentId",
 			ProtobufFieldName:  "system_content_piece_commitment_id",
 			ProtobufType:       "int32",
 			ProtobufPos:        12,
@@ -350,8 +350,8 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "CreatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "created_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "createdAt",
 			ProtobufFieldName:  "created_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        13,
@@ -371,8 +371,8 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "UpdatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "updated_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "updatedAt",
 			ProtobufFieldName:  "updated_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        14,
@@ -392,8 +392,8 @@ var piece_commitment_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "DeltaNodeUUID",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "delta_node_uuid",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "deltaNodeUuid",
 			ProtobufFieldName:  "delta_node_uuid",
 			ProtobufType:       "string",
 			ProtobufPos:        15,

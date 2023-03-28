@@ -41,7 +41,7 @@ Table: content_deal_proposal_parameters_logs
 
 JSON Sample
 -------------------------------------
-{    "id": 79,    "content": 27,    "label": "TGKBXMsLffqmOVsZYoeTNDive",    "duration": 73,    "start_epoch": 47,    "end_epoch": 86,    "transfer_params": "WpMPvCtTZoJomXavYlqZbBNxF",    "remove_unsealed_copy": false,    "skip_ip_ni_announce": true,    "node_info": "dNcquanpkcUJpmUEERUAatKXA",    "requester_info": "XMHaKbKpreLvYjeJvnyEJuFOj",    "requesting_api_key": "VSygsWKMxqBbsmqCXmGPwoldX",    "system_content_deal_proposal_parameters_id": 4,    "created_at": "2200-11-27T04:06:47.214934775-05:00",    "updated_at": "2284-03-31T09:39:16.663154075-04:00",    "delta_node_uuid": "ZWNplgCUcugrHxYFSChKHjowb"}
+{    "id": 11,    "content": 28,    "label": "gbgXFsMvnaClNRAqhtQdtFhNQ",    "duration": 43,    "startEpoch": 93,    "endEpoch": 15,    "transferParams": "hDsSoFfCmVRZJFXIPJYBAxGLK",    "removeUnsealedCopy": false,    "skipIpNiAnnounce": true,    "nodeInfo": "idaYRkrLBhLFHYQAZbeFIkcXi",    "requesterInfo": "IwXjAiusvSYuTSiLFiYOJTTCO",    "requestingApiKey": "TfZrGwdaEivZEPgRZouqkMoVs",    "systemContentDealProposalParametersId": 54,    "createdAt": "2051-07-18T14:58:51.12809116-04:00",    "updatedAt": "2196-07-15T21:02:52.682828298-04:00",    "deltaNodeUuid": "vXwPAuNtmYAUodvoDsZMFPAjG"}
 
 
 
@@ -52,35 +52,35 @@ type ContentDealProposalParametersLogs struct {
 	//[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []
 	ID int64 `gorm:"primary_key;column:id;type:INT8;"`
 	//[ 1] content                                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	Content sql.NullInt64 `gorm:"column:content;type:INT8;"`
+	Content null.Int `gorm:"column:content;type:INT8;"`
 	//[ 2] label                                          TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	Label sql.NullString `gorm:"column:label;type:TEXT;"`
+	Label null.String `gorm:"column:label;type:TEXT;"`
 	//[ 3] duration                                       INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	Duration sql.NullInt64 `gorm:"column:duration;type:INT8;"`
+	Duration null.Int `gorm:"column:duration;type:INT8;"`
 	//[ 4] start_epoch                                    INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	StartEpoch sql.NullInt64 `gorm:"column:start_epoch;type:INT8;"`
+	StartEpoch null.Int `gorm:"column:start_epoch;type:INT8;"`
 	//[ 5] end_epoch                                      INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	EndEpoch sql.NullInt64 `gorm:"column:end_epoch;type:INT8;"`
+	EndEpoch null.Int `gorm:"column:end_epoch;type:INT8;"`
 	//[ 6] transfer_params                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	TransferParams sql.NullString `gorm:"column:transfer_params;type:TEXT;"`
+	TransferParams null.String `gorm:"column:transfer_params;type:TEXT;"`
 	//[ 7] remove_unsealed_copy                           BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []
-	RemoveUnsealedCopy sql.NullBool `gorm:"column:remove_unsealed_copy;type:BOOL;"`
+	RemoveUnsealedCopy null.Int `gorm:"column:remove_unsealed_copy;type:BOOL;"`
 	//[ 8] skip_ip_ni_announce                            BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []
-	SkipIPNiAnnounce sql.NullBool `gorm:"column:skip_ip_ni_announce;type:BOOL;"`
+	SkipIPNiAnnounce null.Int `gorm:"column:skip_ip_ni_announce;type:BOOL;"`
 	//[ 9] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	NodeInfo sql.NullString `gorm:"column:node_info;type:TEXT;"`
+	NodeInfo null.String `gorm:"column:node_info;type:TEXT;"`
 	//[10] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	RequesterInfo sql.NullString `gorm:"column:requester_info;type:TEXT;"`
+	RequesterInfo null.String `gorm:"column:requester_info;type:TEXT;"`
 	//[11] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	RequestingAPIKey sql.NullString `gorm:"column:requesting_api_key;type:TEXT;"`
+	RequestingAPIKey null.String `gorm:"column:requesting_api_key;type:TEXT;"`
 	//[12] system_content_deal_proposal_parameters_id     INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	SystemContentDealProposalParametersID sql.NullInt64 `gorm:"column:system_content_deal_proposal_parameters_id;type:INT8;"`
+	SystemContentDealProposalParametersID null.Int `gorm:"column:system_content_deal_proposal_parameters_id;type:INT8;"`
 	//[13] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	CreatedAt time.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
+	CreatedAt null.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
 	//[14] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	UpdatedAt time.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
+	UpdatedAt null.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
 	//[15] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	DeltaNodeUUID sql.NullString `gorm:"column:delta_node_uuid;type:TEXT;"`
+	DeltaNodeUUID null.String `gorm:"column:delta_node_uuid;type:TEXT;"`
 }
 
 var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
@@ -122,7 +122,7 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "Content",
-			GoFieldType:        "sql.NullInt64",
+			GoFieldType:        "null.Int",
 			JSONFieldName:      "content",
 			ProtobufFieldName:  "content",
 			ProtobufType:       "int32",
@@ -143,7 +143,7 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "Label",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "label",
 			ProtobufFieldName:  "label",
 			ProtobufType:       "string",
@@ -164,7 +164,7 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "Duration",
-			GoFieldType:        "sql.NullInt64",
+			GoFieldType:        "null.Int",
 			JSONFieldName:      "duration",
 			ProtobufFieldName:  "duration",
 			ProtobufType:       "int32",
@@ -185,8 +185,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "StartEpoch",
-			GoFieldType:        "sql.NullInt64",
-			JSONFieldName:      "start_epoch",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "startEpoch",
 			ProtobufFieldName:  "start_epoch",
 			ProtobufType:       "int32",
 			ProtobufPos:        5,
@@ -206,8 +206,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "EndEpoch",
-			GoFieldType:        "sql.NullInt64",
-			JSONFieldName:      "end_epoch",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "endEpoch",
 			ProtobufFieldName:  "end_epoch",
 			ProtobufType:       "int32",
 			ProtobufPos:        6,
@@ -227,8 +227,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "TransferParams",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "transfer_params",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "transferParams",
 			ProtobufFieldName:  "transfer_params",
 			ProtobufType:       "string",
 			ProtobufPos:        7,
@@ -248,8 +248,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "BOOL",
 			ColumnLength:       -1,
 			GoFieldName:        "RemoveUnsealedCopy",
-			GoFieldType:        "sql.NullBool",
-			JSONFieldName:      "remove_unsealed_copy",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "removeUnsealedCopy",
 			ProtobufFieldName:  "remove_unsealed_copy",
 			ProtobufType:       "bool",
 			ProtobufPos:        8,
@@ -269,8 +269,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "BOOL",
 			ColumnLength:       -1,
 			GoFieldName:        "SkipIPNiAnnounce",
-			GoFieldType:        "sql.NullBool",
-			JSONFieldName:      "skip_ip_ni_announce",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "skipIpNiAnnounce",
 			ProtobufFieldName:  "skip_ip_ni_announce",
 			ProtobufType:       "bool",
 			ProtobufPos:        9,
@@ -290,8 +290,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "NodeInfo",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "node_info",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "nodeInfo",
 			ProtobufFieldName:  "node_info",
 			ProtobufType:       "string",
 			ProtobufPos:        10,
@@ -311,8 +311,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "RequesterInfo",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "requester_info",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "requesterInfo",
 			ProtobufFieldName:  "requester_info",
 			ProtobufType:       "string",
 			ProtobufPos:        11,
@@ -332,8 +332,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "RequestingAPIKey",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "requesting_api_key",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "requestingApiKey",
 			ProtobufFieldName:  "requesting_api_key",
 			ProtobufType:       "string",
 			ProtobufPos:        12,
@@ -353,8 +353,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "SystemContentDealProposalParametersID",
-			GoFieldType:        "sql.NullInt64",
-			JSONFieldName:      "system_content_deal_proposal_parameters_id",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "systemContentDealProposalParametersId",
 			ProtobufFieldName:  "system_content_deal_proposal_parameters_id",
 			ProtobufType:       "int32",
 			ProtobufPos:        13,
@@ -374,8 +374,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "CreatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "created_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "createdAt",
 			ProtobufFieldName:  "created_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        14,
@@ -395,8 +395,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "UpdatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "updated_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "updatedAt",
 			ProtobufFieldName:  "updated_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        15,
@@ -416,8 +416,8 @@ var content_deal_proposal_parameters_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "DeltaNodeUUID",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "delta_node_uuid",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "deltaNodeUuid",
 			ProtobufFieldName:  "delta_node_uuid",
 			ProtobufType:       "string",
 			ProtobufPos:        16,

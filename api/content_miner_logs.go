@@ -17,18 +17,12 @@ var (
 
 func configContentMinerLogsRouter(router *httprouter.Router) {
 	router.GET("/contentminerlogs", GetAllContentMinerLogs)
-	router.POST("/contentminerlogs", AddContentMinerLogs)
-	router.GET("/contentminerlogs/:argID", GetContentMinerLogs)
-	router.PUT("/contentminerlogs/:argID", UpdateContentMinerLogs)
-	router.DELETE("/contentminerlogs/:argID", DeleteContentMinerLogs)
+	router.GET("/contentminerlogs/:contenMinerLogsID", GetContentMinerLogs)
 }
 
 func configGinContentMinerLogsRouter(router gin.IRoutes) {
 	router.GET("/contentminerlogs", ConverHttprouterToGin(GetAllContentMinerLogs))
-	router.POST("/contentminerlogs", ConverHttprouterToGin(AddContentMinerLogs))
-	router.GET("/contentminerlogs/:argID", ConverHttprouterToGin(GetContentMinerLogs))
-	router.PUT("/contentminerlogs/:argID", ConverHttprouterToGin(UpdateContentMinerLogs))
-	router.DELETE("/contentminerlogs/:argID", ConverHttprouterToGin(DeleteContentMinerLogs))
+	router.GET("/contentminerlogs/:contenMinerLogsID", ConverHttprouterToGin(GetContentMinerLogs))
 }
 
 // GetAllContentMinerLogs is a function to get a slice of record(s) from content_miner_logs table in the estuary database
@@ -77,22 +71,22 @@ func GetAllContentMinerLogs(w http.ResponseWriter, r *http.Request, ps httproute
 }
 
 // GetContentMinerLogs is a function to get a single record from the content_miner_logs table in the estuary database
-// @Summary Get record from table ContentMinerLogs by  argID
+// @Summary Get record from table ContentMinerLogs by  contenMinerLogsID
 // @Tags ContentMinerLogs
-// @ID argID
+// @ID contenMinerLogsID
 // @Description GetContentMinerLogs is a function to get a single record from the content_miner_logs table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contenMinerLogsID path int64 true "id"
 // @Success 200 {object} model.ContentMinerLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /contentminerlogs/{argID} [get]
+// @Router /contentminerlogs/{contenMinerLogsID} [get]
 // http "http://localhost:8080/contentminerlogs/1" X-Api-User:user123
 func GetContentMinerLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contenMinerLogsID, err := parseInt64(ps, "contenMinerLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetContentMinerLogs(w http.ResponseWriter, r *http.Request, ps httprouter.P
 		return
 	}
 
-	record, err := dao.GetContentMinerLogs(ctx, argID)
+	record, err := dao.GetContentMinerLogs(ctx, contenMinerLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetContentMinerLogs(w http.ResponseWriter, r *http.Request, ps httprouter.P
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /contentminerlogs [post]
-// echo '{"id": 55,"content": 74,"miner": "eZUwbMvFVdQoZqjpXohTQQJUW","node_info": "VKEmWOogdcixMZtPKIEItLOWX","requester_info": "QDsVNtMlcnNtHaPOtrHocJZQI","requesting_api_key": "oxFMmJQdJwRSCxfjFEOEMBPNF","system_content_miner_id": 77,"created_at": "2042-06-30T04:08:40.293262949-04:00","updated_at": "2063-06-07T15:45:47.396911388-04:00","delta_node_uuid": "sDGcAFphRhhGDXdUNJSYGLjiL"}' | http POST "http://localhost:8080/contentminerlogs" X-Api-User:user123
+// echo '{"id": 69,"content": 0,"miner": "NXGJnUGafqmmNBPShVEUEfmmp","nodeInfo": "WDxXEDCrIJYyvsBAVKmNeiPEZ","requesterInfo": "DFRSNyUcGDJhibePMKhtctiaZ","requestingApiKey": "xNwUUtBHNrehAgaLbqFLwmxgh","systemContentMinerId": 7,"createdAt": "2257-06-15T10:59:42.700134707-04:00","updatedAt": "2207-11-18T23:49:37.467225423-05:00","deltaNodeUuid": "jIkpxjIHoCSjlPeyacQcPuKtJ"}' | http POST "http://localhost:8080/contentminerlogs" X-Api-User:user123
 func AddContentMinerLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	contentminerlogs := &model.ContentMinerLogs{}
@@ -165,17 +159,17 @@ func AddContentMinerLogs(w http.ResponseWriter, r *http.Request, ps httprouter.P
 // @Tags ContentMinerLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contenMinerLogsID path int64 true "id"
 // @Param  ContentMinerLogs body model.ContentMinerLogs true "Update ContentMinerLogs record"
 // @Success 200 {object} model.ContentMinerLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /contentminerlogs/{argID} [put]
-// echo '{"id": 55,"content": 74,"miner": "eZUwbMvFVdQoZqjpXohTQQJUW","node_info": "VKEmWOogdcixMZtPKIEItLOWX","requester_info": "QDsVNtMlcnNtHaPOtrHocJZQI","requesting_api_key": "oxFMmJQdJwRSCxfjFEOEMBPNF","system_content_miner_id": 77,"created_at": "2042-06-30T04:08:40.293262949-04:00","updated_at": "2063-06-07T15:45:47.396911388-04:00","delta_node_uuid": "sDGcAFphRhhGDXdUNJSYGLjiL"}' | http PUT "http://localhost:8080/contentminerlogs/1"  X-Api-User:user123
+// @Router /contentminerlogs/{contenMinerLogsID} [put]
+// echo '{"id": 69,"content": 0,"miner": "NXGJnUGafqmmNBPShVEUEfmmp","nodeInfo": "WDxXEDCrIJYyvsBAVKmNeiPEZ","requesterInfo": "DFRSNyUcGDJhibePMKhtctiaZ","requestingApiKey": "xNwUUtBHNrehAgaLbqFLwmxgh","systemContentMinerId": 7,"createdAt": "2257-06-15T10:59:42.700134707-04:00","updatedAt": "2207-11-18T23:49:37.467225423-05:00","deltaNodeUuid": "jIkpxjIHoCSjlPeyacQcPuKtJ"}' | http PUT "http://localhost:8080/contentminerlogs/1"  X-Api-User:user123
 func UpdateContentMinerLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contenMinerLogsID, err := parseInt64(ps, "contenMinerLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdateContentMinerLogs(w http.ResponseWriter, r *http.Request, ps httproute
 	}
 
 	contentminerlogs, _, err = dao.UpdateContentMinerLogs(ctx,
-		argID,
+		contenMinerLogsID,
 		contentminerlogs)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdateContentMinerLogs(w http.ResponseWriter, r *http.Request, ps httproute
 // @Tags ContentMinerLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contenMinerLogsID path int64 true "id"
 // @Success 204 {object} model.ContentMinerLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /contentminerlogs/{argID} [delete]
+// @Router /contentminerlogs/{contenMinerLogsID} [delete]
 // http DELETE "http://localhost:8080/contentminerlogs/1" X-Api-User:user123
 func DeleteContentMinerLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contenMinerLogsID, err := parseInt64(ps, "contenMinerLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeleteContentMinerLogs(w http.ResponseWriter, r *http.Request, ps httproute
 		return
 	}
 
-	rowsAffected, err := dao.DeleteContentMinerLogs(ctx, argID)
+	rowsAffected, err := dao.DeleteContentMinerLogs(ctx, contenMinerLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

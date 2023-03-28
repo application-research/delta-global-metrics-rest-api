@@ -17,18 +17,12 @@ var (
 
 func configLogEventsRouter(router *httprouter.Router) {
 	router.GET("/logevents", GetAllLogEvents)
-	router.POST("/logevents", AddLogEvents)
-	router.GET("/logevents/:argID", GetLogEvents)
-	router.PUT("/logevents/:argID", UpdateLogEvents)
-	router.DELETE("/logevents/:argID", DeleteLogEvents)
+	router.GET("/logevents/:logEventsID", GetLogEvents)
 }
 
 func configGinLogEventsRouter(router gin.IRoutes) {
 	router.GET("/logevents", ConverHttprouterToGin(GetAllLogEvents))
-	router.POST("/logevents", ConverHttprouterToGin(AddLogEvents))
-	router.GET("/logevents/:argID", ConverHttprouterToGin(GetLogEvents))
-	router.PUT("/logevents/:argID", ConverHttprouterToGin(UpdateLogEvents))
-	router.DELETE("/logevents/:argID", ConverHttprouterToGin(DeleteLogEvents))
+	router.GET("/logevents/:logEventsID", ConverHttprouterToGin(GetLogEvents))
 }
 
 // GetAllLogEvents is a function to get a slice of record(s) from log_events table in the estuary database
@@ -77,22 +71,22 @@ func GetAllLogEvents(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 }
 
 // GetLogEvents is a function to get a single record from the log_events table in the estuary database
-// @Summary Get record from table LogEvents by  argID
+// @Summary Get record from table LogEvents by  logEventsID
 // @Tags LogEvents
-// @ID argID
+// @ID logEventsID
 // @Description GetLogEvents is a function to get a single record from the log_events table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  logEventsID path int64 true "id"
 // @Success 200 {object} model.LogEvents
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /logevents/{argID} [get]
+// @Router /logevents/{logEventsID} [get]
 // http "http://localhost:8080/logevents/1" X-Api-User:user123
 func GetLogEvents(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	logEventsID, err := parseInt64(ps, "logEventsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetLogEvents(w http.ResponseWriter, r *http.Request, ps httprouter.Params) 
 		return
 	}
 
-	record, err := dao.GetLogEvents(ctx, argID)
+	record, err := dao.GetLogEvents(ctx, logEventsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetLogEvents(w http.ResponseWriter, r *http.Request, ps httprouter.Params) 
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /logevents [post]
-// echo '{"id": 11,"log_event_type": "uyyLXoTOHPGWXqVxXckCQQAuQ","log_event_object": "RNJLyPQifgmctXJNKsJvZbVqX","log_event_id": 62,"log_event": "fLQatFEAiSKfXHdWYvunYuFMc","created_at": "2140-03-02T22:33:04.953051372-05:00","updated_at": "2150-12-01T18:34:50.455994227-05:00","source_host": "idmdsCnJFbunBjhqoTJgJlaTj","source_ip": "VhmfVFliJKccuPvAVdyQiWYkg","delta_uuid": "jBKgFYnDUiTtDBSCYUeLANrkg"}' | http POST "http://localhost:8080/logevents" X-Api-User:user123
+// echo '{"id": 40,"logEventType": "utLCvdSTXAVpXmZBtJIFHfJTD","logEventObject": "WnAJsllMZuniavJewVbJDhPaM","logEventId": 11,"logEvent": "VoWiowlmuxqWgHNwOMrwCMnWt","createdAt": "2079-09-24T02:09:13.876912282-04:00","updatedAt": "2148-01-31T17:30:24.030190491-05:00","sourceHost": "rgljTEOgYPOGyYOxsLgOFLfQs","sourceIp": "rYhpAoCBhenbrcXTiOGyqTQMH","deltaUuid": "cyFGOCqwcETcuaAJpREQqAylk"}' | http POST "http://localhost:8080/logevents" X-Api-User:user123
 func AddLogEvents(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	logevents := &model.LogEvents{}
@@ -165,17 +159,17 @@ func AddLogEvents(w http.ResponseWriter, r *http.Request, ps httprouter.Params) 
 // @Tags LogEvents
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  logEventsID path int64 true "id"
 // @Param  LogEvents body model.LogEvents true "Update LogEvents record"
 // @Success 200 {object} model.LogEvents
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /logevents/{argID} [put]
-// echo '{"id": 11,"log_event_type": "uyyLXoTOHPGWXqVxXckCQQAuQ","log_event_object": "RNJLyPQifgmctXJNKsJvZbVqX","log_event_id": 62,"log_event": "fLQatFEAiSKfXHdWYvunYuFMc","created_at": "2140-03-02T22:33:04.953051372-05:00","updated_at": "2150-12-01T18:34:50.455994227-05:00","source_host": "idmdsCnJFbunBjhqoTJgJlaTj","source_ip": "VhmfVFliJKccuPvAVdyQiWYkg","delta_uuid": "jBKgFYnDUiTtDBSCYUeLANrkg"}' | http PUT "http://localhost:8080/logevents/1"  X-Api-User:user123
+// @Router /logevents/{logEventsID} [put]
+// echo '{"id": 40,"logEventType": "utLCvdSTXAVpXmZBtJIFHfJTD","logEventObject": "WnAJsllMZuniavJewVbJDhPaM","logEventId": 11,"logEvent": "VoWiowlmuxqWgHNwOMrwCMnWt","createdAt": "2079-09-24T02:09:13.876912282-04:00","updatedAt": "2148-01-31T17:30:24.030190491-05:00","sourceHost": "rgljTEOgYPOGyYOxsLgOFLfQs","sourceIp": "rYhpAoCBhenbrcXTiOGyqTQMH","deltaUuid": "cyFGOCqwcETcuaAJpREQqAylk"}' | http PUT "http://localhost:8080/logevents/1"  X-Api-User:user123
 func UpdateLogEvents(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	logEventsID, err := parseInt64(ps, "logEventsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdateLogEvents(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 	}
 
 	logevents, _, err = dao.UpdateLogEvents(ctx,
-		argID,
+		logEventsID,
 		logevents)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdateLogEvents(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 // @Tags LogEvents
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  logEventsID path int64 true "id"
 // @Success 204 {object} model.LogEvents
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /logevents/{argID} [delete]
+// @Router /logevents/{logEventsID} [delete]
 // http DELETE "http://localhost:8080/logevents/1" X-Api-User:user123
 func DeleteLogEvents(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	logEventsID, err := parseInt64(ps, "logEventsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeleteLogEvents(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 		return
 	}
 
-	rowsAffected, err := dao.DeleteLogEvents(ctx, argID)
+	rowsAffected, err := dao.DeleteLogEvents(ctx, logEventsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

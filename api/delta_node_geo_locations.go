@@ -17,18 +17,12 @@ var (
 
 func configDeltaNodeGeoLocationsRouter(router *httprouter.Router) {
 	router.GET("/deltanodegeolocations", GetAllDeltaNodeGeoLocations)
-	router.POST("/deltanodegeolocations", AddDeltaNodeGeoLocations)
-	router.GET("/deltanodegeolocations/:argID", GetDeltaNodeGeoLocations)
-	router.PUT("/deltanodegeolocations/:argID", UpdateDeltaNodeGeoLocations)
-	router.DELETE("/deltanodegeolocations/:argID", DeleteDeltaNodeGeoLocations)
+	router.GET("/deltanodegeolocations/:deltaNodeGeoLocationsID", GetDeltaNodeGeoLocations)
 }
 
 func configGinDeltaNodeGeoLocationsRouter(router gin.IRoutes) {
 	router.GET("/deltanodegeolocations", ConverHttprouterToGin(GetAllDeltaNodeGeoLocations))
-	router.POST("/deltanodegeolocations", ConverHttprouterToGin(AddDeltaNodeGeoLocations))
-	router.GET("/deltanodegeolocations/:argID", ConverHttprouterToGin(GetDeltaNodeGeoLocations))
-	router.PUT("/deltanodegeolocations/:argID", ConverHttprouterToGin(UpdateDeltaNodeGeoLocations))
-	router.DELETE("/deltanodegeolocations/:argID", ConverHttprouterToGin(DeleteDeltaNodeGeoLocations))
+	router.GET("/deltanodegeolocations/:deltaNodeGeoLocationsID", ConverHttprouterToGin(GetDeltaNodeGeoLocations))
 }
 
 // GetAllDeltaNodeGeoLocations is a function to get a slice of record(s) from delta_node_geo_locations table in the estuary database
@@ -77,22 +71,22 @@ func GetAllDeltaNodeGeoLocations(w http.ResponseWriter, r *http.Request, ps http
 }
 
 // GetDeltaNodeGeoLocations is a function to get a single record from the delta_node_geo_locations table in the estuary database
-// @Summary Get record from table DeltaNodeGeoLocations by  argID
+// @Summary Get record from table DeltaNodeGeoLocations by  deltaNodeGeoLocationsID
 // @Tags DeltaNodeGeoLocations
-// @ID argID
+// @ID deltaNodeGeoLocationsID
 // @Description GetDeltaNodeGeoLocations is a function to get a single record from the delta_node_geo_locations table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  deltaNodeGeoLocationsID path int64 true "id"
 // @Success 200 {object} model.DeltaNodeGeoLocations
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /deltanodegeolocations/{argID} [get]
+// @Router /deltanodegeolocations/{deltaNodeGeoLocationsID} [get]
 // http "http://localhost:8080/deltanodegeolocations/1" X-Api-User:user123
 func GetDeltaNodeGeoLocations(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	deltaNodeGeoLocationsID, err := parseInt64(ps, "deltaNodeGeoLocationsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetDeltaNodeGeoLocations(w http.ResponseWriter, r *http.Request, ps httprou
 		return
 	}
 
-	record, err := dao.GetDeltaNodeGeoLocations(ctx, argID)
+	record, err := dao.GetDeltaNodeGeoLocations(ctx, deltaNodeGeoLocationsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetDeltaNodeGeoLocations(w http.ResponseWriter, r *http.Request, ps httprou
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /deltanodegeolocations [post]
-// echo '{"id": 29,"ip": "AoFZjasOXLsPPxMGoCMNahbty","country": "eAdelWAlBUZegkeKfJGvqvGuF","city": "bELhkxHYWYaUkwlwokyEMCSiW","region": "LwtRiOAMdQARxrHrblpBlBUPV","zip": "ybMAKDYjSrGUXrUHAsykuqqAs","lat": 0.5675549651243351,"lon": 0.3986043435344051,"created_at": "2213-10-23T16:18:24.751263651-04:00","updated_at": "2026-02-19T10:08:50.904405976-05:00"}' | http POST "http://localhost:8080/deltanodegeolocations" X-Api-User:user123
+// echo '{"id": 89,"ip": "uwpBtXBntBWgkCKraXSpkctDe","country": "GHPtnoTwpFebPPVvcspCrMqZE","city": "kNBasfOCYAWmojkCMuiBaimiw","region": "vbJjsoGjvIDUSYIYsbvtGKygD","zip": "VRnvGNQBsiJRbbUgODZEJDkcB","lat": 0.2523771892476505,"lon": 0.8991950175159545,"createdAt": "2205-06-16T18:43:47.606371433-04:00","updatedAt": "2166-09-03T02:07:18.062428741-04:00"}' | http POST "http://localhost:8080/deltanodegeolocations" X-Api-User:user123
 func AddDeltaNodeGeoLocations(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	deltanodegeolocations := &model.DeltaNodeGeoLocations{}
@@ -165,17 +159,17 @@ func AddDeltaNodeGeoLocations(w http.ResponseWriter, r *http.Request, ps httprou
 // @Tags DeltaNodeGeoLocations
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  deltaNodeGeoLocationsID path int64 true "id"
 // @Param  DeltaNodeGeoLocations body model.DeltaNodeGeoLocations true "Update DeltaNodeGeoLocations record"
 // @Success 200 {object} model.DeltaNodeGeoLocations
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /deltanodegeolocations/{argID} [put]
-// echo '{"id": 29,"ip": "AoFZjasOXLsPPxMGoCMNahbty","country": "eAdelWAlBUZegkeKfJGvqvGuF","city": "bELhkxHYWYaUkwlwokyEMCSiW","region": "LwtRiOAMdQARxrHrblpBlBUPV","zip": "ybMAKDYjSrGUXrUHAsykuqqAs","lat": 0.5675549651243351,"lon": 0.3986043435344051,"created_at": "2213-10-23T16:18:24.751263651-04:00","updated_at": "2026-02-19T10:08:50.904405976-05:00"}' | http PUT "http://localhost:8080/deltanodegeolocations/1"  X-Api-User:user123
+// @Router /deltanodegeolocations/{deltaNodeGeoLocationsID} [put]
+// echo '{"id": 89,"ip": "uwpBtXBntBWgkCKraXSpkctDe","country": "GHPtnoTwpFebPPVvcspCrMqZE","city": "kNBasfOCYAWmojkCMuiBaimiw","region": "vbJjsoGjvIDUSYIYsbvtGKygD","zip": "VRnvGNQBsiJRbbUgODZEJDkcB","lat": 0.2523771892476505,"lon": 0.8991950175159545,"createdAt": "2205-06-16T18:43:47.606371433-04:00","updatedAt": "2166-09-03T02:07:18.062428741-04:00"}' | http PUT "http://localhost:8080/deltanodegeolocations/1"  X-Api-User:user123
 func UpdateDeltaNodeGeoLocations(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	deltaNodeGeoLocationsID, err := parseInt64(ps, "deltaNodeGeoLocationsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdateDeltaNodeGeoLocations(w http.ResponseWriter, r *http.Request, ps http
 	}
 
 	deltanodegeolocations, _, err = dao.UpdateDeltaNodeGeoLocations(ctx,
-		argID,
+		deltaNodeGeoLocationsID,
 		deltanodegeolocations)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdateDeltaNodeGeoLocations(w http.ResponseWriter, r *http.Request, ps http
 // @Tags DeltaNodeGeoLocations
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  deltaNodeGeoLocationsID path int64 true "id"
 // @Success 204 {object} model.DeltaNodeGeoLocations
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /deltanodegeolocations/{argID} [delete]
+// @Router /deltanodegeolocations/{deltaNodeGeoLocationsID} [delete]
 // http DELETE "http://localhost:8080/deltanodegeolocations/1" X-Api-User:user123
 func DeleteDeltaNodeGeoLocations(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	deltaNodeGeoLocationsID, err := parseInt64(ps, "deltaNodeGeoLocationsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeleteDeltaNodeGeoLocations(w http.ResponseWriter, r *http.Request, ps http
 		return
 	}
 
-	rowsAffected, err := dao.DeleteDeltaNodeGeoLocations(ctx, argID)
+	rowsAffected, err := dao.DeleteDeltaNodeGeoLocations(ctx, deltaNodeGeoLocationsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

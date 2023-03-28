@@ -17,18 +17,12 @@ var (
 
 func configPieceCommitmentLogsRouter(router *httprouter.Router) {
 	router.GET("/piececommitmentlogs", GetAllPieceCommitmentLogs)
-	router.POST("/piececommitmentlogs", AddPieceCommitmentLogs)
-	router.GET("/piececommitmentlogs/:argID", GetPieceCommitmentLogs)
-	router.PUT("/piececommitmentlogs/:argID", UpdatePieceCommitmentLogs)
-	router.DELETE("/piececommitmentlogs/:argID", DeletePieceCommitmentLogs)
+	router.GET("/piececommitmentlogs/:pieceCommitmentLogsID", GetPieceCommitmentLogs)
 }
 
 func configGinPieceCommitmentLogsRouter(router gin.IRoutes) {
 	router.GET("/piececommitmentlogs", ConverHttprouterToGin(GetAllPieceCommitmentLogs))
-	router.POST("/piececommitmentlogs", ConverHttprouterToGin(AddPieceCommitmentLogs))
-	router.GET("/piececommitmentlogs/:argID", ConverHttprouterToGin(GetPieceCommitmentLogs))
-	router.PUT("/piececommitmentlogs/:argID", ConverHttprouterToGin(UpdatePieceCommitmentLogs))
-	router.DELETE("/piececommitmentlogs/:argID", ConverHttprouterToGin(DeletePieceCommitmentLogs))
+	router.GET("/piececommitmentlogs/:pieceCommitmentLogsID", ConverHttprouterToGin(GetPieceCommitmentLogs))
 }
 
 // GetAllPieceCommitmentLogs is a function to get a slice of record(s) from piece_commitment_logs table in the estuary database
@@ -77,22 +71,22 @@ func GetAllPieceCommitmentLogs(w http.ResponseWriter, r *http.Request, ps httpro
 }
 
 // GetPieceCommitmentLogs is a function to get a single record from the piece_commitment_logs table in the estuary database
-// @Summary Get record from table PieceCommitmentLogs by  argID
+// @Summary Get record from table PieceCommitmentLogs by  pieceCommitmentLogsID
 // @Tags PieceCommitmentLogs
-// @ID argID
+// @ID pieceCommitmentLogsID
 // @Description GetPieceCommitmentLogs is a function to get a single record from the piece_commitment_logs table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  pieceCommitmentLogsID path int64 true "id"
 // @Success 200 {object} model.PieceCommitmentLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /piececommitmentlogs/{argID} [get]
+// @Router /piececommitmentlogs/{pieceCommitmentLogsID} [get]
 // http "http://localhost:8080/piececommitmentlogs/1" X-Api-User:user123
 func GetPieceCommitmentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	pieceCommitmentLogsID, err := parseInt64(ps, "pieceCommitmentLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetPieceCommitmentLogs(w http.ResponseWriter, r *http.Request, ps httproute
 		return
 	}
 
-	record, err := dao.GetPieceCommitmentLogs(ctx, argID)
+	record, err := dao.GetPieceCommitmentLogs(ctx, pieceCommitmentLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetPieceCommitmentLogs(w http.ResponseWriter, r *http.Request, ps httproute
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /piececommitmentlogs [post]
-// echo '{"id": 86,"cid": "qRUteRlRXGcyLokuPpjrmlfvK","piece": "DblvAxOOtZwafRuEqMFmgmfDj","size": 85,"padded_piece_size": 72,"un_padded_piece_size": 19,"status": "ayWhOePyeOPayKljuMuTYQJhl","last_message": "oFYeOwcrQyNkggsaErpJhcxBF","node_info": "gexEZEduBpjHefawmXyxXmXyJ","requester_info": "awyaJkeXWxghxtnwBxfneEEmK","requesting_api_key": "jjVxvtZoFjUpnjqUortLfsXJt","system_content_piece_commitment_id": 99,"created_at": "2159-09-10T22:34:07.302731963-04:00","updated_at": "2041-03-01T11:32:13.914140422-05:00","delta_node_uuid": "aIcUVKRcZwfQEJiWbYeIXKkoY"}' | http POST "http://localhost:8080/piececommitmentlogs" X-Api-User:user123
+// echo '{"id": 96,"cid": "lSpleRdPmtqSgPIPaupwBTuyl","piece": "rdrggiHeNdpKHBfFylyCggASX","size": 54,"paddedPieceSize": 34,"unPaddedPieceSize": 67,"status": "rZcNQmBiCIqntDBaEJOEBDeUU","lastMessage": "nMdhoVjfwPSQpWiVwprTHtQDv","nodeInfo": "hgMKEJrQUrKFCsxmSNhmKrfns","requesterInfo": "gjlGNNmhGjgIZlGkkRLInnaIl","requestingApiKey": "OdFJvYFetTPCvOnNtqEEefDtu","systemContentPieceCommitmentId": 41,"createdAt": "2263-03-20T02:46:34.0114278-04:00","updatedAt": "2233-07-09T11:09:29.842592668-04:00","deltaNodeUuid": "BHSEdeJWRcPaiTAwASdFCrYor"}' | http POST "http://localhost:8080/piececommitmentlogs" X-Api-User:user123
 func AddPieceCommitmentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	piececommitmentlogs := &model.PieceCommitmentLogs{}
@@ -165,17 +159,17 @@ func AddPieceCommitmentLogs(w http.ResponseWriter, r *http.Request, ps httproute
 // @Tags PieceCommitmentLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  pieceCommitmentLogsID path int64 true "id"
 // @Param  PieceCommitmentLogs body model.PieceCommitmentLogs true "Update PieceCommitmentLogs record"
 // @Success 200 {object} model.PieceCommitmentLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /piececommitmentlogs/{argID} [put]
-// echo '{"id": 86,"cid": "qRUteRlRXGcyLokuPpjrmlfvK","piece": "DblvAxOOtZwafRuEqMFmgmfDj","size": 85,"padded_piece_size": 72,"un_padded_piece_size": 19,"status": "ayWhOePyeOPayKljuMuTYQJhl","last_message": "oFYeOwcrQyNkggsaErpJhcxBF","node_info": "gexEZEduBpjHefawmXyxXmXyJ","requester_info": "awyaJkeXWxghxtnwBxfneEEmK","requesting_api_key": "jjVxvtZoFjUpnjqUortLfsXJt","system_content_piece_commitment_id": 99,"created_at": "2159-09-10T22:34:07.302731963-04:00","updated_at": "2041-03-01T11:32:13.914140422-05:00","delta_node_uuid": "aIcUVKRcZwfQEJiWbYeIXKkoY"}' | http PUT "http://localhost:8080/piececommitmentlogs/1"  X-Api-User:user123
+// @Router /piececommitmentlogs/{pieceCommitmentLogsID} [put]
+// echo '{"id": 96,"cid": "lSpleRdPmtqSgPIPaupwBTuyl","piece": "rdrggiHeNdpKHBfFylyCggASX","size": 54,"paddedPieceSize": 34,"unPaddedPieceSize": 67,"status": "rZcNQmBiCIqntDBaEJOEBDeUU","lastMessage": "nMdhoVjfwPSQpWiVwprTHtQDv","nodeInfo": "hgMKEJrQUrKFCsxmSNhmKrfns","requesterInfo": "gjlGNNmhGjgIZlGkkRLInnaIl","requestingApiKey": "OdFJvYFetTPCvOnNtqEEefDtu","systemContentPieceCommitmentId": 41,"createdAt": "2263-03-20T02:46:34.0114278-04:00","updatedAt": "2233-07-09T11:09:29.842592668-04:00","deltaNodeUuid": "BHSEdeJWRcPaiTAwASdFCrYor"}' | http PUT "http://localhost:8080/piececommitmentlogs/1"  X-Api-User:user123
 func UpdatePieceCommitmentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	pieceCommitmentLogsID, err := parseInt64(ps, "pieceCommitmentLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdatePieceCommitmentLogs(w http.ResponseWriter, r *http.Request, ps httpro
 	}
 
 	piececommitmentlogs, _, err = dao.UpdatePieceCommitmentLogs(ctx,
-		argID,
+		pieceCommitmentLogsID,
 		piececommitmentlogs)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdatePieceCommitmentLogs(w http.ResponseWriter, r *http.Request, ps httpro
 // @Tags PieceCommitmentLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  pieceCommitmentLogsID path int64 true "id"
 // @Success 204 {object} model.PieceCommitmentLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /piececommitmentlogs/{argID} [delete]
+// @Router /piececommitmentlogs/{pieceCommitmentLogsID} [delete]
 // http DELETE "http://localhost:8080/piececommitmentlogs/1" X-Api-User:user123
 func DeletePieceCommitmentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	pieceCommitmentLogsID, err := parseInt64(ps, "pieceCommitmentLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeletePieceCommitmentLogs(w http.ResponseWriter, r *http.Request, ps httpro
 		return
 	}
 
-	rowsAffected, err := dao.DeletePieceCommitmentLogs(ctx, argID)
+	rowsAffected, err := dao.DeletePieceCommitmentLogs(ctx, pieceCommitmentLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

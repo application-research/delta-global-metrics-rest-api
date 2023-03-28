@@ -50,7 +50,7 @@ Table: content_deal_logs
 
 JSON Sample
 -------------------------------------
-{    "id": 78,    "content": 50,    "prop_cid": "wPitHmApMJNqFkbCVCEXLPOgO",    "deal_uuid": "KfpfjKjQsUEdUlCKdpDmZPHSm",    "miner": "oNPSjFMgtvtqevtwSaCronoHs",    "deal_id": 69,    "failed": false,    "verified": false,    "slashed": false,    "failed_at": "2073-03-13T07:58:47.787105952-04:00",    "dt_chan": "gbajoJITYJHctKypowgyQwouy",    "transfer_started": "2288-03-25T04:38:08.461808637-04:00",    "transfer_finished": "2054-06-03T09:38:09.659274379-04:00",    "on_chain_at": "2242-09-05T02:11:35.872053883-04:00",    "sealed_at": "2029-08-07T07:31:54.707466325-04:00",    "last_message": "fJmUPhsRNdLSGkcfdTaGGgnAX",    "deal_protocol_version": "etTRJJaJfuZJNqcywDOanNvWe",    "miner_version": "XjJCulvZcXNXKflGaedJVMgFF",    "node_info": "onYUJQpmPnpMgOHnWwjaWDeUd",    "requester_info": "NGGHKoXWAibSANLnomZsFWOQB",    "requesting_api_key": "njTDXKscmeIOOHGiipNNRcYyH",    "system_content_deal_id": 1,    "created_at": "2226-07-15T00:10:30.581336342-04:00",    "updated_at": "2098-07-14T10:42:36.953905498-04:00",    "delta_node_uuid": "HbTqKrUqmSCnaYUYmRoPtipKX"}
+{    "id": 99,    "content": 55,    "propCid": "xknsQTytaZWgYojHSDkHVfPHa",    "dealUuid": "GxKYowuykjCRKgEIOgeQqqsen",    "miner": "OInOCDbSbQxplmMthtVnPierV",    "dealId": 85,    "failed": true,    "verified": false,    "slashed": false,    "failedAt": "2104-07-28T14:23:06.964124494-04:00",    "dtChan": "AcIPDCIUYkjdwjTvidljlPmEx",    "transferStarted": "2255-11-25T21:46:23.259616019-05:00",    "transferFinished": "2185-12-19T08:50:07.455413034-05:00",    "onChainAt": "2029-02-05T01:46:10.623356801-05:00",    "sealedAt": "2028-02-10T19:11:30.660121509-05:00",    "lastMessage": "vNFrivKDIRlSgyxmVrQZtcNPp",    "dealProtocolVersion": "SrvIxXavVsTojSXZWVUyHfVsG",    "minerVersion": "dZasDhnmXPWxsTJTkkjqsXekw",    "nodeInfo": "eaPQgRleeUStfJjFeLaqbMGAl",    "requesterInfo": "IPnKALNplIsAFbfNNEJjxEEbV",    "requestingApiKey": "GfxZduGGhytByYTANrfWicIOx",    "systemContentDealId": 68,    "createdAt": "2236-06-18T16:44:22.565027633-04:00",    "updatedAt": "2108-07-24T20:06:59.490583119-04:00",    "deltaNodeUuid": "DBoqKOqeVRvCTTBXExXyHoKfB"}
 
 
 
@@ -61,53 +61,53 @@ type ContentDealLogs struct {
 	//[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []
 	ID int64 `gorm:"primary_key;column:id;type:INT8;"`
 	//[ 1] content                                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	Content sql.NullInt64 `gorm:"column:content;type:INT8;"`
+	Content null.Int `gorm:"column:content;type:INT8;"`
 	//[ 2] prop_cid                                       TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	PropCid sql.NullString `gorm:"column:prop_cid;type:TEXT;"`
+	PropCid null.String `gorm:"column:prop_cid;type:TEXT;"`
 	//[ 3] deal_uuid                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	DealUUID sql.NullString `gorm:"column:deal_uuid;type:TEXT;"`
+	DealUUID null.String `gorm:"column:deal_uuid;type:TEXT;"`
 	//[ 4] miner                                          TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	Miner sql.NullString `gorm:"column:miner;type:TEXT;"`
+	Miner null.String `gorm:"column:miner;type:TEXT;"`
 	//[ 5] deal_id                                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	DealID sql.NullInt64 `gorm:"column:deal_id;type:INT8;"`
+	DealID null.Int `gorm:"column:deal_id;type:INT8;"`
 	//[ 6] failed                                         BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []
-	Failed sql.NullBool `gorm:"column:failed;type:BOOL;"`
+	Failed null.Int `gorm:"column:failed;type:BOOL;"`
 	//[ 7] verified                                       BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []
-	Verified sql.NullBool `gorm:"column:verified;type:BOOL;"`
+	Verified null.Int `gorm:"column:verified;type:BOOL;"`
 	//[ 8] slashed                                        BOOL                 null: true   primary: false  isArray: false  auto: false  col: BOOL            len: -1      default: []
-	Slashed sql.NullBool `gorm:"column:slashed;type:BOOL;"`
+	Slashed null.Int `gorm:"column:slashed;type:BOOL;"`
 	//[ 9] failed_at                                      TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	FailedAt time.Time `gorm:"column:failed_at;type:TIMESTAMPTZ;"`
+	FailedAt null.Time `gorm:"column:failed_at;type:TIMESTAMPTZ;"`
 	//[10] dt_chan                                        TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	DtChan sql.NullString `gorm:"column:dt_chan;type:TEXT;"`
+	DtChan null.String `gorm:"column:dt_chan;type:TEXT;"`
 	//[11] transfer_started                               TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	TransferStarted time.Time `gorm:"column:transfer_started;type:TIMESTAMPTZ;"`
+	TransferStarted null.Time `gorm:"column:transfer_started;type:TIMESTAMPTZ;"`
 	//[12] transfer_finished                              TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	TransferFinished time.Time `gorm:"column:transfer_finished;type:TIMESTAMPTZ;"`
+	TransferFinished null.Time `gorm:"column:transfer_finished;type:TIMESTAMPTZ;"`
 	//[13] on_chain_at                                    TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	OnChainAt time.Time `gorm:"column:on_chain_at;type:TIMESTAMPTZ;"`
+	OnChainAt null.Time `gorm:"column:on_chain_at;type:TIMESTAMPTZ;"`
 	//[14] sealed_at                                      TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	SealedAt time.Time `gorm:"column:sealed_at;type:TIMESTAMPTZ;"`
+	SealedAt null.Time `gorm:"column:sealed_at;type:TIMESTAMPTZ;"`
 	//[15] last_message                                   TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	LastMessage sql.NullString `gorm:"column:last_message;type:TEXT;"`
+	LastMessage null.String `gorm:"column:last_message;type:TEXT;"`
 	//[16] deal_protocol_version                          TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	DealProtocolVersion sql.NullString `gorm:"column:deal_protocol_version;type:TEXT;"`
+	DealProtocolVersion null.String `gorm:"column:deal_protocol_version;type:TEXT;"`
 	//[17] miner_version                                  TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	MinerVersion sql.NullString `gorm:"column:miner_version;type:TEXT;"`
+	MinerVersion null.String `gorm:"column:miner_version;type:TEXT;"`
 	//[18] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	NodeInfo sql.NullString `gorm:"column:node_info;type:TEXT;"`
+	NodeInfo null.String `gorm:"column:node_info;type:TEXT;"`
 	//[19] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	RequesterInfo sql.NullString `gorm:"column:requester_info;type:TEXT;"`
+	RequesterInfo null.String `gorm:"column:requester_info;type:TEXT;"`
 	//[20] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	RequestingAPIKey sql.NullString `gorm:"column:requesting_api_key;type:TEXT;"`
+	RequestingAPIKey null.String `gorm:"column:requesting_api_key;type:TEXT;"`
 	//[21] system_content_deal_id                         INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	SystemContentDealID sql.NullInt64 `gorm:"column:system_content_deal_id;type:INT8;"`
+	SystemContentDealID null.Int `gorm:"column:system_content_deal_id;type:INT8;"`
 	//[22] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	CreatedAt time.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
+	CreatedAt null.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
 	//[23] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	UpdatedAt time.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
+	UpdatedAt null.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
 	//[24] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	DeltaNodeUUID sql.NullString `gorm:"column:delta_node_uuid;type:TEXT;"`
+	DeltaNodeUUID null.String `gorm:"column:delta_node_uuid;type:TEXT;"`
 }
 
 var content_deal_logsTableInfo = &TableInfo{
@@ -149,7 +149,7 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "Content",
-			GoFieldType:        "sql.NullInt64",
+			GoFieldType:        "null.Int",
 			JSONFieldName:      "content",
 			ProtobufFieldName:  "content",
 			ProtobufType:       "int32",
@@ -170,8 +170,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "PropCid",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "prop_cid",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "propCid",
 			ProtobufFieldName:  "prop_cid",
 			ProtobufType:       "string",
 			ProtobufPos:        3,
@@ -191,8 +191,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "DealUUID",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "deal_uuid",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "dealUuid",
 			ProtobufFieldName:  "deal_uuid",
 			ProtobufType:       "string",
 			ProtobufPos:        4,
@@ -212,7 +212,7 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "Miner",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "miner",
 			ProtobufFieldName:  "miner",
 			ProtobufType:       "string",
@@ -233,8 +233,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "DealID",
-			GoFieldType:        "sql.NullInt64",
-			JSONFieldName:      "deal_id",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "dealId",
 			ProtobufFieldName:  "deal_id",
 			ProtobufType:       "int32",
 			ProtobufPos:        6,
@@ -254,7 +254,7 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "BOOL",
 			ColumnLength:       -1,
 			GoFieldName:        "Failed",
-			GoFieldType:        "sql.NullBool",
+			GoFieldType:        "null.Int",
 			JSONFieldName:      "failed",
 			ProtobufFieldName:  "failed",
 			ProtobufType:       "bool",
@@ -275,7 +275,7 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "BOOL",
 			ColumnLength:       -1,
 			GoFieldName:        "Verified",
-			GoFieldType:        "sql.NullBool",
+			GoFieldType:        "null.Int",
 			JSONFieldName:      "verified",
 			ProtobufFieldName:  "verified",
 			ProtobufType:       "bool",
@@ -296,7 +296,7 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "BOOL",
 			ColumnLength:       -1,
 			GoFieldName:        "Slashed",
-			GoFieldType:        "sql.NullBool",
+			GoFieldType:        "null.Int",
 			JSONFieldName:      "slashed",
 			ProtobufFieldName:  "slashed",
 			ProtobufType:       "bool",
@@ -317,8 +317,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "FailedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "failed_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "failedAt",
 			ProtobufFieldName:  "failed_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        10,
@@ -338,8 +338,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "DtChan",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "dt_chan",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "dtChan",
 			ProtobufFieldName:  "dt_chan",
 			ProtobufType:       "string",
 			ProtobufPos:        11,
@@ -359,8 +359,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "TransferStarted",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "transfer_started",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "transferStarted",
 			ProtobufFieldName:  "transfer_started",
 			ProtobufType:       "uint64",
 			ProtobufPos:        12,
@@ -380,8 +380,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "TransferFinished",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "transfer_finished",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "transferFinished",
 			ProtobufFieldName:  "transfer_finished",
 			ProtobufType:       "uint64",
 			ProtobufPos:        13,
@@ -401,8 +401,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "OnChainAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "on_chain_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "onChainAt",
 			ProtobufFieldName:  "on_chain_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        14,
@@ -422,8 +422,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "SealedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "sealed_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "sealedAt",
 			ProtobufFieldName:  "sealed_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        15,
@@ -443,8 +443,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "LastMessage",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "last_message",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "lastMessage",
 			ProtobufFieldName:  "last_message",
 			ProtobufType:       "string",
 			ProtobufPos:        16,
@@ -464,8 +464,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "DealProtocolVersion",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "deal_protocol_version",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "dealProtocolVersion",
 			ProtobufFieldName:  "deal_protocol_version",
 			ProtobufType:       "string",
 			ProtobufPos:        17,
@@ -485,8 +485,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "MinerVersion",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "miner_version",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "minerVersion",
 			ProtobufFieldName:  "miner_version",
 			ProtobufType:       "string",
 			ProtobufPos:        18,
@@ -506,8 +506,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "NodeInfo",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "node_info",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "nodeInfo",
 			ProtobufFieldName:  "node_info",
 			ProtobufType:       "string",
 			ProtobufPos:        19,
@@ -527,8 +527,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "RequesterInfo",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "requester_info",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "requesterInfo",
 			ProtobufFieldName:  "requester_info",
 			ProtobufType:       "string",
 			ProtobufPos:        20,
@@ -548,8 +548,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "RequestingAPIKey",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "requesting_api_key",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "requestingApiKey",
 			ProtobufFieldName:  "requesting_api_key",
 			ProtobufType:       "string",
 			ProtobufPos:        21,
@@ -569,8 +569,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "SystemContentDealID",
-			GoFieldType:        "sql.NullInt64",
-			JSONFieldName:      "system_content_deal_id",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "systemContentDealId",
 			ProtobufFieldName:  "system_content_deal_id",
 			ProtobufType:       "int32",
 			ProtobufPos:        22,
@@ -590,8 +590,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "CreatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "created_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "createdAt",
 			ProtobufFieldName:  "created_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        23,
@@ -611,8 +611,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "UpdatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "updated_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "updatedAt",
 			ProtobufFieldName:  "updated_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        24,
@@ -632,8 +632,8 @@ var content_deal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "DeltaNodeUUID",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "delta_node_uuid",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "deltaNodeUuid",
 			ProtobufFieldName:  "delta_node_uuid",
 			ProtobufType:       "string",
 			ProtobufPos:        25,

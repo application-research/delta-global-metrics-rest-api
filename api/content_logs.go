@@ -17,18 +17,12 @@ var (
 
 func configContentLogsRouter(router *httprouter.Router) {
 	router.GET("/contentlogs", GetAllContentLogs)
-	router.POST("/contentlogs", AddContentLogs)
-	router.GET("/contentlogs/:argID", GetContentLogs)
-	router.PUT("/contentlogs/:argID", UpdateContentLogs)
-	router.DELETE("/contentlogs/:argID", DeleteContentLogs)
+	router.GET("/contentlogs/:contenDealLogsID", GetContentLogs)
 }
 
 func configGinContentLogsRouter(router gin.IRoutes) {
 	router.GET("/contentlogs", ConverHttprouterToGin(GetAllContentLogs))
-	router.POST("/contentlogs", ConverHttprouterToGin(AddContentLogs))
-	router.GET("/contentlogs/:argID", ConverHttprouterToGin(GetContentLogs))
-	router.PUT("/contentlogs/:argID", ConverHttprouterToGin(UpdateContentLogs))
-	router.DELETE("/contentlogs/:argID", ConverHttprouterToGin(DeleteContentLogs))
+	router.GET("/contentlogs/:contenDealLogsID", ConverHttprouterToGin(GetContentLogs))
 }
 
 // GetAllContentLogs is a function to get a slice of record(s) from content_logs table in the estuary database
@@ -77,22 +71,22 @@ func GetAllContentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 }
 
 // GetContentLogs is a function to get a single record from the content_logs table in the estuary database
-// @Summary Get record from table ContentLogs by  argID
+// @Summary Get record from table ContentLogs by  contenDealLogsID
 // @Tags ContentLogs
-// @ID argID
+// @ID contenDealLogsID
 // @Description GetContentLogs is a function to get a single record from the content_logs table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contenDealLogsID path int64 true "id"
 // @Success 200 {object} model.ContentLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /contentlogs/{argID} [get]
+// @Router /contentlogs/{contenDealLogsID} [get]
 // http "http://localhost:8080/contentlogs/1" X-Api-User:user123
 func GetContentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contenDealLogsID, err := parseInt64(ps, "contenDealLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetContentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 		return
 	}
 
-	record, err := dao.GetContentLogs(ctx, argID)
+	record, err := dao.GetContentLogs(ctx, contenDealLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetContentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /contentlogs [post]
-// echo '{"id": 90,"name": "ASnOqmbJwxJRhmRbnOGDJixaK","size": 46,"cid": "fwOkmQhekAyhfPXeyAsceSMfE","requesting_api_key": "wCYsLEJxerQPPSjbfZOpBkqRF","piece_commitment_id": 17,"status": "qFHjvjNejYOLPAmldrTyyCSRP","connection_mode": "yyLqyHFuEHxjlNPfNAvKCkmkY","last_message": "QoxDAOYZpaxSxYBDjRFERtYsJ","node_info": "GmPwLHeTToiHGixmnlFYsGyQW","requester_info": "qNmEOqjASNXSRExXKilJriyCh","system_content_id": 87,"created_at": "2224-09-27T23:57:35.226433687-04:00","updated_at": "2223-10-07T22:03:30.973380902-04:00","delta_node_uuid": "asobGhiCRNLAmxIUxePboDwlT"}' | http POST "http://localhost:8080/contentlogs" X-Api-User:user123
+// echo '{"id": 77,"name": "leHZJvoRmNXbjXOJdENbLsWRN","size": 65,"cid": "qgrbbLblRBssYZGIIKaPNTxns","requestingApiKey": "RBdHSptGHhqttthYcJIZBGkPW","pieceCommitmentId": 65,"status": "nEjQTflQVpBMtuUoWbcPZLFqo","connectionMode": "xYkfLUktrPeXAUyWJdjCjimaL","lastMessage": "qNgmgQHaBfXuFOTsVPJwRQgUn","nodeInfo": "AcfvdSMFXLkGuokpUfBsOKLjV","requesterInfo": "lvdKTxCjIQeRxfkTSTjQMYQrd","systemContentId": 80,"createdAt": "2028-02-09T06:37:50.943937692-05:00","updatedAt": "2056-05-09T02:45:27.67587013-04:00","deltaNodeUuid": "KaSLVGxVAIZMoHmpTNIrMZWYl"}' | http POST "http://localhost:8080/contentlogs" X-Api-User:user123
 func AddContentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	contentlogs := &model.ContentLogs{}
@@ -165,17 +159,17 @@ func AddContentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 // @Tags ContentLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contenDealLogsID path int64 true "id"
 // @Param  ContentLogs body model.ContentLogs true "Update ContentLogs record"
 // @Success 200 {object} model.ContentLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /contentlogs/{argID} [put]
-// echo '{"id": 90,"name": "ASnOqmbJwxJRhmRbnOGDJixaK","size": 46,"cid": "fwOkmQhekAyhfPXeyAsceSMfE","requesting_api_key": "wCYsLEJxerQPPSjbfZOpBkqRF","piece_commitment_id": 17,"status": "qFHjvjNejYOLPAmldrTyyCSRP","connection_mode": "yyLqyHFuEHxjlNPfNAvKCkmkY","last_message": "QoxDAOYZpaxSxYBDjRFERtYsJ","node_info": "GmPwLHeTToiHGixmnlFYsGyQW","requester_info": "qNmEOqjASNXSRExXKilJriyCh","system_content_id": 87,"created_at": "2224-09-27T23:57:35.226433687-04:00","updated_at": "2223-10-07T22:03:30.973380902-04:00","delta_node_uuid": "asobGhiCRNLAmxIUxePboDwlT"}' | http PUT "http://localhost:8080/contentlogs/1"  X-Api-User:user123
+// @Router /contentlogs/{contenDealLogsID} [put]
+// echo '{"id": 77,"name": "leHZJvoRmNXbjXOJdENbLsWRN","size": 65,"cid": "qgrbbLblRBssYZGIIKaPNTxns","requestingApiKey": "RBdHSptGHhqttthYcJIZBGkPW","pieceCommitmentId": 65,"status": "nEjQTflQVpBMtuUoWbcPZLFqo","connectionMode": "xYkfLUktrPeXAUyWJdjCjimaL","lastMessage": "qNgmgQHaBfXuFOTsVPJwRQgUn","nodeInfo": "AcfvdSMFXLkGuokpUfBsOKLjV","requesterInfo": "lvdKTxCjIQeRxfkTSTjQMYQrd","systemContentId": 80,"createdAt": "2028-02-09T06:37:50.943937692-05:00","updatedAt": "2056-05-09T02:45:27.67587013-04:00","deltaNodeUuid": "KaSLVGxVAIZMoHmpTNIrMZWYl"}' | http PUT "http://localhost:8080/contentlogs/1"  X-Api-User:user123
 func UpdateContentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contenDealLogsID, err := parseInt64(ps, "contenDealLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdateContentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 	}
 
 	contentlogs, _, err = dao.UpdateContentLogs(ctx,
-		argID,
+		contenDealLogsID,
 		contentlogs)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdateContentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 // @Tags ContentLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contenDealLogsID path int64 true "id"
 // @Success 204 {object} model.ContentLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /contentlogs/{argID} [delete]
+// @Router /contentlogs/{contenDealLogsID} [delete]
 // http DELETE "http://localhost:8080/contentlogs/1" X-Api-User:user123
 func DeleteContentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contenDealLogsID, err := parseInt64(ps, "contenDealLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeleteContentLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 		return
 	}
 
-	rowsAffected, err := dao.DeleteContentLogs(ctx, argID)
+	rowsAffected, err := dao.DeleteContentLogs(ctx, contenDealLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

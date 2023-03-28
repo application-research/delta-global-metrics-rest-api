@@ -17,18 +17,12 @@ var (
 
 func configDeltaStartupLogsRouter(router *httprouter.Router) {
 	router.GET("/deltastartuplogs", GetAllDeltaStartupLogs)
-	router.POST("/deltastartuplogs", AddDeltaStartupLogs)
-	router.GET("/deltastartuplogs/:argID", GetDeltaStartupLogs)
-	router.PUT("/deltastartuplogs/:argID", UpdateDeltaStartupLogs)
-	router.DELETE("/deltastartuplogs/:argID", DeleteDeltaStartupLogs)
+	router.GET("/deltastartuplogs/:deltaStartupLogsID", GetDeltaStartupLogs)
 }
 
 func configGinDeltaStartupLogsRouter(router gin.IRoutes) {
 	router.GET("/deltastartuplogs", ConverHttprouterToGin(GetAllDeltaStartupLogs))
-	router.POST("/deltastartuplogs", ConverHttprouterToGin(AddDeltaStartupLogs))
-	router.GET("/deltastartuplogs/:argID", ConverHttprouterToGin(GetDeltaStartupLogs))
-	router.PUT("/deltastartuplogs/:argID", ConverHttprouterToGin(UpdateDeltaStartupLogs))
-	router.DELETE("/deltastartuplogs/:argID", ConverHttprouterToGin(DeleteDeltaStartupLogs))
+	router.GET("/deltastartuplogs/:deltaStartupLogsID", ConverHttprouterToGin(GetDeltaStartupLogs))
 }
 
 // GetAllDeltaStartupLogs is a function to get a slice of record(s) from delta_startup_logs table in the estuary database
@@ -77,22 +71,22 @@ func GetAllDeltaStartupLogs(w http.ResponseWriter, r *http.Request, ps httproute
 }
 
 // GetDeltaStartupLogs is a function to get a single record from the delta_startup_logs table in the estuary database
-// @Summary Get record from table DeltaStartupLogs by  argID
+// @Summary Get record from table DeltaStartupLogs by  deltaStartupLogsID
 // @Tags DeltaStartupLogs
-// @ID argID
+// @ID deltaStartupLogsID
 // @Description GetDeltaStartupLogs is a function to get a single record from the delta_startup_logs table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  deltaStartupLogsID path int64 true "id"
 // @Success 200 {object} model.DeltaStartupLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /deltastartuplogs/{argID} [get]
+// @Router /deltastartuplogs/{deltaStartupLogsID} [get]
 // http "http://localhost:8080/deltastartuplogs/1" X-Api-User:user123
 func GetDeltaStartupLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	deltaStartupLogsID, err := parseInt64(ps, "deltaStartupLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetDeltaStartupLogs(w http.ResponseWriter, r *http.Request, ps httprouter.P
 		return
 	}
 
-	record, err := dao.GetDeltaStartupLogs(ctx, argID)
+	record, err := dao.GetDeltaStartupLogs(ctx, deltaStartupLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetDeltaStartupLogs(w http.ResponseWriter, r *http.Request, ps httprouter.P
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /deltastartuplogs [post]
-// echo '{"id": 67,"node_info": "VuCOeiOMORdNPHWHwREfHTDEH","os_details": "hGmgoOjoQaSaJKdpOXsUYgAwx","ip_address": "pvVEwkihlHbEHaxpKlcMDvJwv","created_at": "2092-09-29T08:13:19.236325037-04:00","updated_at": "2171-06-30T17:41:38.561843374-04:00","delta_node_uuid": "FIfUaOCwBBFjaistfNtfNmmUk"}' | http POST "http://localhost:8080/deltastartuplogs" X-Api-User:user123
+// echo '{"id": 17,"nodeInfo": "MiifxOjnqsUpOjndrGokBhUuL","osDetails": "fIDOfHOZfJMMKAdBmIxiBvYpC","ipAddress": "VogTZvQFdkLBQruBIclgLKiTa","createdAt": "2299-11-22T20:06:45.836550913-05:00","updatedAt": "2059-05-30T21:42:11.112312668-04:00","deltaNodeUuid": "DSimhMAQGdBANWNucLQNitfKW"}' | http POST "http://localhost:8080/deltastartuplogs" X-Api-User:user123
 func AddDeltaStartupLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	deltastartuplogs := &model.DeltaStartupLogs{}
@@ -165,17 +159,17 @@ func AddDeltaStartupLogs(w http.ResponseWriter, r *http.Request, ps httprouter.P
 // @Tags DeltaStartupLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  deltaStartupLogsID path int64 true "id"
 // @Param  DeltaStartupLogs body model.DeltaStartupLogs true "Update DeltaStartupLogs record"
 // @Success 200 {object} model.DeltaStartupLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /deltastartuplogs/{argID} [put]
-// echo '{"id": 67,"node_info": "VuCOeiOMORdNPHWHwREfHTDEH","os_details": "hGmgoOjoQaSaJKdpOXsUYgAwx","ip_address": "pvVEwkihlHbEHaxpKlcMDvJwv","created_at": "2092-09-29T08:13:19.236325037-04:00","updated_at": "2171-06-30T17:41:38.561843374-04:00","delta_node_uuid": "FIfUaOCwBBFjaistfNtfNmmUk"}' | http PUT "http://localhost:8080/deltastartuplogs/1"  X-Api-User:user123
+// @Router /deltastartuplogs/{deltaStartupLogsID} [put]
+// echo '{"id": 17,"nodeInfo": "MiifxOjnqsUpOjndrGokBhUuL","osDetails": "fIDOfHOZfJMMKAdBmIxiBvYpC","ipAddress": "VogTZvQFdkLBQruBIclgLKiTa","createdAt": "2299-11-22T20:06:45.836550913-05:00","updatedAt": "2059-05-30T21:42:11.112312668-04:00","deltaNodeUuid": "DSimhMAQGdBANWNucLQNitfKW"}' | http PUT "http://localhost:8080/deltastartuplogs/1"  X-Api-User:user123
 func UpdateDeltaStartupLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	deltaStartupLogsID, err := parseInt64(ps, "deltaStartupLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdateDeltaStartupLogs(w http.ResponseWriter, r *http.Request, ps httproute
 	}
 
 	deltastartuplogs, _, err = dao.UpdateDeltaStartupLogs(ctx,
-		argID,
+		deltaStartupLogsID,
 		deltastartuplogs)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdateDeltaStartupLogs(w http.ResponseWriter, r *http.Request, ps httproute
 // @Tags DeltaStartupLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  deltaStartupLogsID path int64 true "id"
 // @Success 204 {object} model.DeltaStartupLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /deltastartuplogs/{argID} [delete]
+// @Router /deltastartuplogs/{deltaStartupLogsID} [delete]
 // http DELETE "http://localhost:8080/deltastartuplogs/1" X-Api-User:user123
 func DeleteDeltaStartupLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	deltaStartupLogsID, err := parseInt64(ps, "deltaStartupLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeleteDeltaStartupLogs(w http.ResponseWriter, r *http.Request, ps httproute
 		return
 	}
 
-	rowsAffected, err := dao.DeleteDeltaStartupLogs(ctx, argID)
+	rowsAffected, err := dao.DeleteDeltaStartupLogs(ctx, deltaStartupLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

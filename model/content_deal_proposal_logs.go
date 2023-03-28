@@ -37,7 +37,7 @@ Table: content_deal_proposal_logs
 
 JSON Sample
 -------------------------------------
-{    "id": 95,    "content": 54,    "unsigned": "BdPlZSqEDRmQVZWRcAStrfDVo",    "signed": "TFZfPHSlKLHIbkpGDLiTMOFBG",    "meta": "agqScMxqrltdqEfAJEnKPZNXY",    "node_info": "UGOjVwkfRJGHIvoIEhmErJIAJ",    "requester_info": "BcLEWYWZcXWfMctbJSsEjJEwE",    "requesting_api_key": "EtByipcglOXRuXtLBXFvEXUxv",    "system_content_deal_proposal_id": 89,    "created_at": "2155-03-27T07:30:00.872085132-04:00",    "updated_at": "2158-08-27T22:03:34.596286539-04:00",    "delta_node_uuid": "xFrsHASTncOBrVcYtmntQWTIC"}
+{    "id": 89,    "content": 22,    "unsigned": "xhLCNmWsKJXMHJNVLbAotRLvd",    "signed": "NxnPbbAOrCWuUhNAZUWYCNTuH",    "meta": "avAOXCQJeaIngfaCMYmrBKVIH",    "nodeInfo": "HkcLsmLFptkoieXngLbnaaiMB",    "requesterInfo": "YvKDCcffBbTWqYIcjlqQEIfHI",    "requestingApiKey": "IJnyUdtVENbXQgBgMUQBdJmua",    "systemContentDealProposalId": 33,    "createdAt": "2202-05-29T02:34:23.990453036-04:00",    "updatedAt": "2299-05-12T06:26:46.780123564-04:00",    "deltaNodeUuid": "PmcqKEJNODZQUWfKVDYGPgcMv"}
 
 
 
@@ -48,27 +48,27 @@ type ContentDealProposalLogs struct {
 	//[ 0] id                                             INT8                 null: false  primary: true   isArray: false  auto: false  col: INT8            len: -1      default: []
 	ID int64 `gorm:"primary_key;column:id;type:INT8;"`
 	//[ 1] content                                        INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	Content sql.NullInt64 `gorm:"column:content;type:INT8;"`
+	Content null.Int `gorm:"column:content;type:INT8;"`
 	//[ 2] unsigned                                       TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	Unsigned sql.NullString `gorm:"column:unsigned;type:TEXT;"`
+	Unsigned null.String `gorm:"column:unsigned;type:TEXT;"`
 	//[ 3] signed                                         TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	Signed sql.NullString `gorm:"column:signed;type:TEXT;"`
+	Signed null.String `gorm:"column:signed;type:TEXT;"`
 	//[ 4] meta                                           TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	Meta sql.NullString `gorm:"column:meta;type:TEXT;"`
+	Meta null.String `gorm:"column:meta;type:TEXT;"`
 	//[ 5] node_info                                      TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	NodeInfo sql.NullString `gorm:"column:node_info;type:TEXT;"`
+	NodeInfo null.String `gorm:"column:node_info;type:TEXT;"`
 	//[ 6] requester_info                                 TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	RequesterInfo sql.NullString `gorm:"column:requester_info;type:TEXT;"`
+	RequesterInfo null.String `gorm:"column:requester_info;type:TEXT;"`
 	//[ 7] requesting_api_key                             TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	RequestingAPIKey sql.NullString `gorm:"column:requesting_api_key;type:TEXT;"`
+	RequestingAPIKey null.String `gorm:"column:requesting_api_key;type:TEXT;"`
 	//[ 8] system_content_deal_proposal_id                INT8                 null: true   primary: false  isArray: false  auto: false  col: INT8            len: -1      default: []
-	SystemContentDealProposalID sql.NullInt64 `gorm:"column:system_content_deal_proposal_id;type:INT8;"`
+	SystemContentDealProposalID null.Int `gorm:"column:system_content_deal_proposal_id;type:INT8;"`
 	//[ 9] created_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	CreatedAt time.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
+	CreatedAt null.Time `gorm:"column:created_at;type:TIMESTAMPTZ;"`
 	//[10] updated_at                                     TIMESTAMPTZ          null: true   primary: false  isArray: false  auto: false  col: TIMESTAMPTZ     len: -1      default: []
-	UpdatedAt time.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
+	UpdatedAt null.Time `gorm:"column:updated_at;type:TIMESTAMPTZ;"`
 	//[11] delta_node_uuid                                TEXT                 null: true   primary: false  isArray: false  auto: false  col: TEXT            len: -1      default: []
-	DeltaNodeUUID sql.NullString `gorm:"column:delta_node_uuid;type:TEXT;"`
+	DeltaNodeUUID null.String `gorm:"column:delta_node_uuid;type:TEXT;"`
 }
 
 var content_deal_proposal_logsTableInfo = &TableInfo{
@@ -110,7 +110,7 @@ var content_deal_proposal_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "Content",
-			GoFieldType:        "sql.NullInt64",
+			GoFieldType:        "null.Int",
 			JSONFieldName:      "content",
 			ProtobufFieldName:  "content",
 			ProtobufType:       "int32",
@@ -131,7 +131,7 @@ var content_deal_proposal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "Unsigned",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "unsigned",
 			ProtobufFieldName:  "unsigned",
 			ProtobufType:       "string",
@@ -152,7 +152,7 @@ var content_deal_proposal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "Signed",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "signed",
 			ProtobufFieldName:  "signed",
 			ProtobufType:       "string",
@@ -173,7 +173,7 @@ var content_deal_proposal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "Meta",
-			GoFieldType:        "sql.NullString",
+			GoFieldType:        "null.String",
 			JSONFieldName:      "meta",
 			ProtobufFieldName:  "meta",
 			ProtobufType:       "string",
@@ -194,8 +194,8 @@ var content_deal_proposal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "NodeInfo",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "node_info",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "nodeInfo",
 			ProtobufFieldName:  "node_info",
 			ProtobufType:       "string",
 			ProtobufPos:        6,
@@ -215,8 +215,8 @@ var content_deal_proposal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "RequesterInfo",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "requester_info",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "requesterInfo",
 			ProtobufFieldName:  "requester_info",
 			ProtobufType:       "string",
 			ProtobufPos:        7,
@@ -236,8 +236,8 @@ var content_deal_proposal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "RequestingAPIKey",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "requesting_api_key",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "requestingApiKey",
 			ProtobufFieldName:  "requesting_api_key",
 			ProtobufType:       "string",
 			ProtobufPos:        8,
@@ -257,8 +257,8 @@ var content_deal_proposal_logsTableInfo = &TableInfo{
 			ColumnType:         "INT8",
 			ColumnLength:       -1,
 			GoFieldName:        "SystemContentDealProposalID",
-			GoFieldType:        "sql.NullInt64",
-			JSONFieldName:      "system_content_deal_proposal_id",
+			GoFieldType:        "null.Int",
+			JSONFieldName:      "systemContentDealProposalId",
 			ProtobufFieldName:  "system_content_deal_proposal_id",
 			ProtobufType:       "int32",
 			ProtobufPos:        9,
@@ -278,8 +278,8 @@ var content_deal_proposal_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "CreatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "created_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "createdAt",
 			ProtobufFieldName:  "created_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        10,
@@ -299,8 +299,8 @@ var content_deal_proposal_logsTableInfo = &TableInfo{
 			ColumnType:         "TIMESTAMPTZ",
 			ColumnLength:       -1,
 			GoFieldName:        "UpdatedAt",
-			GoFieldType:        "time.Time",
-			JSONFieldName:      "updated_at",
+			GoFieldType:        "null.Time",
+			JSONFieldName:      "updatedAt",
 			ProtobufFieldName:  "updated_at",
 			ProtobufType:       "uint64",
 			ProtobufPos:        11,
@@ -320,8 +320,8 @@ var content_deal_proposal_logsTableInfo = &TableInfo{
 			ColumnType:         "TEXT",
 			ColumnLength:       -1,
 			GoFieldName:        "DeltaNodeUUID",
-			GoFieldType:        "sql.NullString",
-			JSONFieldName:      "delta_node_uuid",
+			GoFieldType:        "null.String",
+			JSONFieldName:      "deltaNodeUuid",
 			ProtobufFieldName:  "delta_node_uuid",
 			ProtobufType:       "string",
 			ProtobufPos:        12,

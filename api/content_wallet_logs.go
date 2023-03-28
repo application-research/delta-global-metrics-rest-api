@@ -17,18 +17,12 @@ var (
 
 func configContentWalletLogsRouter(router *httprouter.Router) {
 	router.GET("/contentwalletlogs", GetAllContentWalletLogs)
-	router.POST("/contentwalletlogs", AddContentWalletLogs)
-	router.GET("/contentwalletlogs/:argID", GetContentWalletLogs)
-	router.PUT("/contentwalletlogs/:argID", UpdateContentWalletLogs)
-	router.DELETE("/contentwalletlogs/:argID", DeleteContentWalletLogs)
+	router.GET("/contentwalletlogs/:contenWalletLogsID", GetContentWalletLogs)
 }
 
 func configGinContentWalletLogsRouter(router gin.IRoutes) {
 	router.GET("/contentwalletlogs", ConverHttprouterToGin(GetAllContentWalletLogs))
-	router.POST("/contentwalletlogs", ConverHttprouterToGin(AddContentWalletLogs))
-	router.GET("/contentwalletlogs/:argID", ConverHttprouterToGin(GetContentWalletLogs))
-	router.PUT("/contentwalletlogs/:argID", ConverHttprouterToGin(UpdateContentWalletLogs))
-	router.DELETE("/contentwalletlogs/:argID", ConverHttprouterToGin(DeleteContentWalletLogs))
+	router.GET("/contentwalletlogs/:contenWalletLogsID", ConverHttprouterToGin(GetContentWalletLogs))
 }
 
 // GetAllContentWalletLogs is a function to get a slice of record(s) from content_wallet_logs table in the estuary database
@@ -77,22 +71,22 @@ func GetAllContentWalletLogs(w http.ResponseWriter, r *http.Request, ps httprout
 }
 
 // GetContentWalletLogs is a function to get a single record from the content_wallet_logs table in the estuary database
-// @Summary Get record from table ContentWalletLogs by  argID
+// @Summary Get record from table ContentWalletLogs by  contenWalletLogsID
 // @Tags ContentWalletLogs
-// @ID argID
+// @ID contenWalletLogsID
 // @Description GetContentWalletLogs is a function to get a single record from the content_wallet_logs table in the estuary database
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contenWalletLogsID path int64 true "id"
 // @Success 200 {object} model.ContentWalletLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError "ErrNotFound, db record for id not found - returns NotFound HTTP 404 not found error"
-// @Router /contentwalletlogs/{argID} [get]
+// @Router /contentwalletlogs/{contenWalletLogsID} [get]
 // http "http://localhost:8080/contentwalletlogs/1" X-Api-User:user123
 func GetContentWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contenWalletLogsID, err := parseInt64(ps, "contenWalletLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -103,7 +97,7 @@ func GetContentWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.
 		return
 	}
 
-	record, err := dao.GetContentWalletLogs(ctx, argID)
+	record, err := dao.GetContentWalletLogs(ctx, contenWalletLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -123,7 +117,7 @@ func GetContentWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
 // @Router /contentwalletlogs [post]
-// echo '{"id": 37,"content": 66,"wallet": "HXwhbEEbUDkILariIOEdyUGwc","node_info": "BDsVZuciOnZFyNpniaRUlJkTD","requester_info": "GYdZXJMuITCjufxSalGmPZUVM","requesting_api_key": "DsGLgpxKcAlXEPnsjlcqfdJfh","system_content_wallet_id": 1,"created_at": "2051-06-18T09:27:15.630154219-04:00","updated_at": "2133-05-10T11:16:40.423989347-04:00","delta_node_uuid": "MEgXDWQVLZUYPJoWMEVFoBbaW","wallet_id": 5}' | http POST "http://localhost:8080/contentwalletlogs" X-Api-User:user123
+// echo '{"id": 32,"content": 30,"wallet": "IPWZJQDFqOtrZAiOqxXsTcxGA","nodeInfo": "bqfDOZUYMqlEMJMpMNWWCCAFU","requesterInfo": "RGnuoAwqrHeiSIbCNaAtinoEn","requestingApiKey": "oKedRqCcjjdtkhmRKWWoKYqkN","systemContentWalletId": 40,"createdAt": "2253-07-27T03:41:17.410938197-04:00","updatedAt": "2272-09-27T09:42:15.555605978-04:00","deltaNodeUuid": "MmyGprUgsHYiZKBoEcxYVUCrN","walletId": 32}' | http POST "http://localhost:8080/contentwalletlogs" X-Api-User:user123
 func AddContentWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	contentwalletlogs := &model.ContentWalletLogs{}
@@ -165,17 +159,17 @@ func AddContentWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.
 // @Tags ContentWalletLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contenWalletLogsID path int64 true "id"
 // @Param  ContentWalletLogs body model.ContentWalletLogs true "Update ContentWalletLogs record"
 // @Success 200 {object} model.ContentWalletLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 404 {object} api.HTTPError
-// @Router /contentwalletlogs/{argID} [put]
-// echo '{"id": 37,"content": 66,"wallet": "HXwhbEEbUDkILariIOEdyUGwc","node_info": "BDsVZuciOnZFyNpniaRUlJkTD","requester_info": "GYdZXJMuITCjufxSalGmPZUVM","requesting_api_key": "DsGLgpxKcAlXEPnsjlcqfdJfh","system_content_wallet_id": 1,"created_at": "2051-06-18T09:27:15.630154219-04:00","updated_at": "2133-05-10T11:16:40.423989347-04:00","delta_node_uuid": "MEgXDWQVLZUYPJoWMEVFoBbaW","wallet_id": 5}' | http PUT "http://localhost:8080/contentwalletlogs/1"  X-Api-User:user123
+// @Router /contentwalletlogs/{contenWalletLogsID} [put]
+// echo '{"id": 32,"content": 30,"wallet": "IPWZJQDFqOtrZAiOqxXsTcxGA","nodeInfo": "bqfDOZUYMqlEMJMpMNWWCCAFU","requesterInfo": "RGnuoAwqrHeiSIbCNaAtinoEn","requestingApiKey": "oKedRqCcjjdtkhmRKWWoKYqkN","systemContentWalletId": 40,"createdAt": "2253-07-27T03:41:17.410938197-04:00","updatedAt": "2272-09-27T09:42:15.555605978-04:00","deltaNodeUuid": "MmyGprUgsHYiZKBoEcxYVUCrN","walletId": 32}' | http PUT "http://localhost:8080/contentwalletlogs/1"  X-Api-User:user123
 func UpdateContentWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contenWalletLogsID, err := parseInt64(ps, "contenWalletLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -204,7 +198,7 @@ func UpdateContentWalletLogs(w http.ResponseWriter, r *http.Request, ps httprout
 	}
 
 	contentwalletlogs, _, err = dao.UpdateContentWalletLogs(ctx,
-		argID,
+		contenWalletLogsID,
 		contentwalletlogs)
 	if err != nil {
 		returnError(ctx, w, r, err)
@@ -220,16 +214,16 @@ func UpdateContentWalletLogs(w http.ResponseWriter, r *http.Request, ps httprout
 // @Tags ContentWalletLogs
 // @Accept  json
 // @Produce  json
-// @Param  argID path int64 true "id"
+// @Param  contenWalletLogsID path int64 true "id"
 // @Success 204 {object} model.ContentWalletLogs
 // @Failure 400 {object} api.HTTPError
 // @Failure 500 {object} api.HTTPError
-// @Router /contentwalletlogs/{argID} [delete]
+// @Router /contentwalletlogs/{contenWalletLogsID} [delete]
 // http DELETE "http://localhost:8080/contentwalletlogs/1" X-Api-User:user123
 func DeleteContentWalletLogs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 
-	argID, err := parseInt64(ps, "argID")
+	contenWalletLogsID, err := parseInt64(ps, "contenWalletLogsID")
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return
@@ -240,7 +234,7 @@ func DeleteContentWalletLogs(w http.ResponseWriter, r *http.Request, ps httprout
 		return
 	}
 
-	rowsAffected, err := dao.DeleteContentWalletLogs(ctx, argID)
+	rowsAffected, err := dao.DeleteContentWalletLogs(ctx, contenWalletLogsID)
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

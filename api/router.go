@@ -26,21 +26,21 @@ var (
 // CrudAPI describes requests available for tables in the database
 type CrudAPI struct {
 	Name            string           `json:"name"`
-	CreateURL       string           `json:"create_url"`
-	RetrieveOneURL  string           `json:"retrieve_one_url"`
-	RetrieveManyURL string           `json:"retrieve_many_url"`
-	UpdateURL       string           `json:"update_url"`
-	DeleteURL       string           `json:"delete_url"`
-	FetchDDLURL     string           `json:"fetch_ddl_url"`
-	TableInfo       *model.TableInfo `json:"table_info"`
+	CreateURL       string           `json:"createUrl"`
+	RetrieveOneURL  string           `json:"retrieveOneUrl"`
+	RetrieveManyURL string           `json:"retrieveManyUrl"`
+	UpdateURL       string           `json:"updateUrl"`
+	DeleteURL       string           `json:"deleteUrl"`
+	FetchDDLURL     string           `json:"fetchDdlUrl"`
+	TableInfo       *model.TableInfo `json:"tableInfo"`
 }
 
 // PagedResults results for pages GetAll results.
 type PagedResults struct {
 	Page         int64       `json:"page"`
-	PageSize     int64       `json:"page_size"`
+	PageSize     int64       `json:"pageSize"`
 	Data         interface{} `json:"data"`
-	TotalRecords int         `json:"total_records"`
+	TotalRecords int         `json:"totalRecords"`
 }
 
 // HTTPError example

@@ -82,24 +82,24 @@ type TableInfo struct {
 // ColumnInfo describes a column in the database table
 type ColumnInfo struct {
 	Index              int    `json:"index"`
-	GoFieldName        string `json:"go_field_name"`
-	GoFieldType        string `json:"go_field_type"`
-	JSONFieldName      string `json:"json_field_name"`
-	ProtobufFieldName  string `json:"protobuf_field_name"`
-	ProtobufType       string `json:"protobuf_field_type"`
-	ProtobufPos        int    `json:"protobuf_field_pos"`
+	GoFieldName        string `json:"goFieldName"`
+	GoFieldType        string `json:"goFieldType"`
+	JSONFieldName      string `json:"jsonFieldName"`
+	ProtobufFieldName  string `json:"protobufFieldName"`
+	ProtobufType       string `json:"protobufFieldType"`
+	ProtobufPos        int    `json:"protobufFieldPos"`
 	Comment            string `json:"comment"`
 	Notes              string `json:"notes"`
 	Name               string `json:"name"`
-	Nullable           bool   `json:"is_nullable"`
-	DatabaseTypeName   string `json:"database_type_name"`
-	DatabaseTypePretty string `json:"database_type_pretty"`
-	IsPrimaryKey       bool   `json:"is_primary_key"`
-	IsAutoIncrement    bool   `json:"is_auto_increment"`
-	IsArray            bool   `json:"is_array"`
-	ColumnType         string `json:"column_type"`
-	ColumnLength       int64  `json:"column_length"`
-	DefaultValue       string `json:"default_value"`
+	Nullable           bool   `json:"isNullable"`
+	DatabaseTypeName   string `json:"databaseTypeName"`
+	DatabaseTypePretty string `json:"databaseTypePretty"`
+	IsPrimaryKey       bool   `json:"isPrimaryKey"`
+	IsAutoIncrement    bool   `json:"isAutoIncrement"`
+	IsArray            bool   `json:"isArray"`
+	ColumnType         string `json:"columnType"`
+	ColumnLength       int64  `json:"columnLength"`
+	DefaultValue       string `json:"defaultValue"`
 }
 
 // GetTableInfo retrieve TableInfo for a table
