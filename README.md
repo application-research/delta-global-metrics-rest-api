@@ -1,4 +1,4 @@
-## Delta Metrics Rest
+# Delta Metrics Rest
 Rest API for Delta Global Metrics
 ```
 make dmr
