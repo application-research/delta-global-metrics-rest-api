@@ -67,6 +67,41 @@ package dao
 // function to get all totals info
 func GetOpenTotalInfoStats() (interface{}, error) {
 
-	return nil, nil
+	// total deals attempted
+	var totalDealsAttempted int64
+	DB.Raw("select sum(cnt) as total_deals_attempted from (select count(dt_chan) as cnt from content_deal_logs group by dt_chan) subquery").Scan(&totalDealsAttempted)
+
+	// total e2e deals attempted
+	var totalE2EDealsAttempted int
+	DB.Raw("select sum(cnt) as total_rows from (select count(dt_chan) as cnt from content_deal_logs where connection_mode = 'e2e' group by dt_chan) subquery").Find(&totalE2EDealsAttempted)
+
+	// total import deals attempted
+	var totalImportDealsAttempted int
+	DB.Raw("select sum(cnt) as total_rows from (select count(dt_chan) as cnt from content_deal_logs where connection_mode = 'import' group by dt_chan) subquery").Find(&totalImportDealsAttempted)
+
+	// total e2e deals succeeded
+	var totalE2EDealsSucceeded int
+	DB.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery").Find(&totalE2EDealsSucceeded)
+
+	// total import deals succeeded
+	var totalImportDealsSucceeded int
+	DB.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status in ('making-deal-proposal','deal-proposal-sent','deal-proposal-accepted','deal-proposal-rejected','deal-activated','deal-terminated','deal-completed') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery").Find(&totalImportDealsSucceeded)
+
+	// total number of sps
+	var totalSPs int
+	DB.Raw("select count(miners) as total_rows from (select distinct(miner) as miners from content_miner_logs group by miner) subquery").Find(&totalSPs)
+
+	var totalDeltaNodes int
+	DB.Raw("select count(delta_node) as total_rows from (select distinct(delta_node_uuid) as delta_node from delta_startup_logs group by delta_node_uuid) subquery").Find(&totalDeltaNodes)
+
+	return map[string]interface{}{
+		"total_deals_attempted":        totalDealsAttempted,
+		"total_e2e_deals_attempted":    totalE2EDealsAttempted,
+		"total_import_deals_attempted": totalImportDealsAttempted,
+		"total_e2e_deals_succeeded":    totalE2EDealsSucceeded,
+		"total_import_deals_succeeded": totalImportDealsSucceeded,
+		"total_number_of_sps":          totalSPs,
+		"total_number_of_delta_nodes":  totalDeltaNodes,
+	}, nil
 
 }
