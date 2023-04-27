@@ -1,131 +1,72 @@
 package dao
 
-import (
-	"fmt"
-	"github.com/application-research/delta-metrics-rest/model"
-)
+//-- deals attempted and size (with created_at filter)
+//select sum(cnt) as total_rows from (select count(dt_chan) as cnt from content_deal_logs group by dt_chan) subquery;
+//select sum(cnt) as total_rows from (select count(dt_chan) as cnt from content_deal_logs where (created_at between '2023-01-01' and '2023-12-30') group by dt_chan) subquery;
+//select sum(size) as total_size_sum from (select c.size as size,cd.dt_chan from content_deal_logs cd, content_logs c where cd.content = c.system_content_id and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,cd.dt_chan) subquery;
+//select sum(size) as total_size_sum from (select c.size as size,cd.dt_chan from content_deal_logs cd, content_logs c where cd.content = c.system_content_id and (created_at between '2023-01-01' and '2023-12-30') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,cd.dt_chan) subquery;
+//
+//-- e2e deals attempted and size (with created_at filter)
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' group by system_content_id) subquery;
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
+//select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'e2e' and (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,system_content_id) subquery;
+//select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'e2e' and (created_at between '2023-01-01' and '2023-12-30') and (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,system_content_id) subquery;
+//
+//-- import deals attempted and size (with created_at filter)
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' group by system_content_id) subquery;
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
+//select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'import' and (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,system_content_id) subquery;
+//select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'import' and (created_at between '2023-01-01' and '2023-12-30') and (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,system_content_id) subquery;
+//
+//-- e2e succeeded (with created_at filter)
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery;
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started','transfer-finished') and (created_at between '2023-01-01' and '2023-12-30') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery;
+//
+//-- import succeeded (with created_at filter)
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status in ('deal-proposal-sent') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery;
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status in ('deal-proposal-sent') and (created_at between '2023-01-01' and '2023-12-30') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery;
+//
+//-- e2e failed (with created_at filter)
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status not in ('transfer-started','transfer-finished') group by system_content_id) subquery;
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status not in ('transfer-started','transfer-finished') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
+//
+//-- import failed (with created_at filter)
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status not in ('deal-proposal-sent') group by system_content_id) subquery;
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status not in ('deal-proposal-sent') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
+//
+//-- import failed (with created_at filter)
+//select sum(cnt) as total_rows from (select count(system_content_deal_id) as cnt from content_deal_logs cd, content_logs c where c.system_content_id = cd.content and c.connection_mode = 'import' and c.status not in ('deal-proposal-sent') group by system_content_deal_id) subquery;
+//select sum(cnt) as total_rows from (select count(system_content_deal_id) as cnt from content_deal_logs cd, content_logs c where c.system_content_id = cd.content and c.connection_mode = 'import' and c.status not in ('deal-proposal-sent') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_deal_id) subquery;
+//
+//-- total deals active (with created_at filter)
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started') group by system_content_id) subquery;
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
+//
+//-- total e2e deals active (with created_at filter)
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started') group by system_content_id) subquery;
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
+//
+//-- total import deals active (with created_at filter)
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status in ('making-deal-proposal') group by system_content_id) subquery;
+//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status in ('making-deal-proposal') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
+//
+//-- total number of SPs (with created_at filter)
+//select count(miners) as total_rows from (select distinct(miner) as miners from content_miner_logs group by miner) subquery;
+//
+//-- total number of unique delta nodes (with created_at filter)
+//select count(delta_node) as total_rows from (select distinct(delta_node_uuid) as delta_node from delta_startup_logs group by delta_node_uuid) subquery;
+//
+//select distinct(delta_node_uuid) as delta_node from delta_startup_logs group by delta_node_uuid;
+//
+//select * from content_deal_logs cd where (cd.delta_node_uuid is null or cd.delta_node_uuid = '') and requester_info = '139.178.81.109' order by created_at desc;
+//
+//select count(*) from content_deal_logs cd where (cd.delta_node_uuid is null or cd.delta_node_uuid = '') and node_info = 'shuttle-4';
+//select * from content_deal_logs cd where cd.delta_node_uuid is null or cd.delta_node_uuid = '' order by created_at desc;
+//select * from content_deal_logs cd where cd.delta_node_uuid is null order by created_at desc;
 
 // function to get all totals info
 func GetOpenTotalInfoStats() (interface{}, error) {
 
-	var totalContentConsumed int64
-	//SELECT SUM(cnt) as total_rows
-	//FROM (
-	//         SELECT COUNT(*) as cnt
-	//         FROM content_logs
-	//         GROUP BY system_content_id, delta_node_uuid
-	//     ) subquery;
-	DB.Raw("SELECT SUM(cnt) as total_rows FROM (SELECT COUNT(*) as cnt FROM content_logs GROUP BY system_content_id, delta_node_uuid) subquery").Find(&totalContentConsumed)
-	//DB.Raw("select count(*) from content_logs").Count(&totalContentConsumed)
+	return nil, nil
 
-	var totalTransferStarted int64
-	//SELECT SUM(cnt) as total_rows
-	//FROM (
-	//         SELECT COUNT(*) as cnt
-	//         FROM content_logs
-	//         WHERE status = 'transfer-started'
-	//         GROUP BY system_content_id, delta_node_uuid
-	//     ) subquery;
-	err := DB.Model(model.ContentLogs{}).Where("status = ?", "transfer-started").Count(&totalTransferStarted).Error
-	if err != nil {
-		fmt.Println("Error in GetOpenTotalInfoStats", err)
-		return nil, err
-	}
-
-	var totalTransferFinished int64
-	//SELECT SUM(cnt) as total_rows
-	//FROM (
-	//         SELECT COUNT(*) as cnt
-	//         FROM content_logs
-	//         WHERE status = 'transfer-started'
-	//         GROUP BY system_content_id, delta_node_uuid
-	//     ) subquery;
-	err = DB.Model(model.ContentLogs{}).Where("status = ?", "transfer-finished").Count(&totalTransferFinished).Error
-	if err != nil {
-		fmt.Println("Error in GetOpenTotalInfoStats", err)
-		return nil, err
-	}
-	var totalProposalMade int64
-	//SELECT SUM(cnt) as total_rows
-	//FROM (
-	//	SELECT COUNT(*) as cnt
-	//FROM content_deal_proposal_logs
-	//GROUP BY system_content_deal_proposal_id, delta_node_uuid
-	//) subquery;
-	DB.Raw("select count(*) from content_deal_proposal_logs").Find(&totalProposalMade)
-
-	var totalCommitmentPiece int64
-	//SELECT SUM(cnt) as total_rows
-	//FROM (
-	//	SELECT COUNT(*) as cnt
-	//FROM piece_commitment_logs
-	//GROUP BY system_content_piece_commitment_id, delta_node_uuid
-	//) subquery;
-	DB.Raw("select count(*) from piece_commitment_logs").Find(&totalCommitmentPiece)
-
-	var totalPieceCommitted int64
-	//SELECT SUM(cnt) as total_rows
-	//FROM (
-	//	SELECT COUNT(*) as cnt
-	//FROM piece_commitment_logs
-	//WHERE status = 'committed'
-	//GROUP BY system_content_piece_commitment_id, delta_node_uuid
-	//) subquery;
-	DB.Raw("select count(*) from piece_commitment_logs where status = 'committed'").Find(&totalPieceCommitted)
-
-	var totalMiners int64
-	//SELECT count(cnt) as total_rows
-	//FROM (
-	//	SELECT miner as cnt
-	//FROM content_miner_logs
-	//GROUP BY miner
-	//) subquery;
-	rows, err := DB.Raw("select distinct(miner) from content_miner_logs").Rows()
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	for rows.Next() {
-		var miner string
-		rows.Scan(&miner)
-		totalMiners++
-	}
-
-	var totalStorageAllocated int64
-	DB.Raw("select sum(size) from content_logs").Count(&totalStorageAllocated)
-
-	var totalProposalSent int64
-	DB.Raw("select count(*) from content_logs c where status = 'deal-proposal-sent' and c.system_content_id in (select c.system_content_id from content_logs where status = 'deal-proposal-sent')").Count(&totalProposalSent)
-
-	var totalSealedDealInBytes int64
-	DB.Raw("select sum(size) from content_logs where status in ('transfer-started','transfer-finished','deal-proposal-sent')").Scan(&totalSealedDealInBytes)
-
-	var totalImportDeals int64
-	DB.Raw("select count(*) from content_logs where connection_mode = 'import'").Count(&totalImportDeals)
-
-	var totalE2EDeals int64
-	DB.Raw("select count(*) from content_logs where connection_mode = 'e2e'").Count(&totalE2EDeals)
-
-	var totalE2EDealsInBytes int64
-	DB.Raw("select sum(size) from content_logs where connection_mode = 'e2e'").Count(&totalE2EDealsInBytes)
-
-	var totalImportDealsInBytes int64
-	DB.Raw("select sum(size) from content_logs where connection_mode = 'import'").Count(&totalImportDealsInBytes)
-
-	return map[string]interface{}{
-		"total_content_consumed":      totalContentConsumed,
-		"total_transfer_started":      totalTransferStarted,
-		"total_transfer_finished":     totalTransferFinished,
-		"total_piece_commitment_made": totalCommitmentPiece,
-		"total_piece_committed":       totalPieceCommitted,
-		"total_miners":                totalMiners,
-		"total_storage_allocated":     totalStorageAllocated,
-		"total_proposal_made":         totalProposalMade,
-		"total_proposal_sent":         totalProposalSent,
-		"total_sealed_deal_in_bytes":  totalSealedDealInBytes,
-		"total_import_deals":          totalImportDeals,
-		"total_e2e_deals":             totalE2EDeals,
-		"total_e2e_deals_in_bytes":    totalE2EDealsInBytes,
-		"total_import_deals_in_bytes": totalImportDealsInBytes,
-	}, nil
 }

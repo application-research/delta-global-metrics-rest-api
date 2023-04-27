@@ -3,22 +3,20 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/spf13/viper"
-	"log"
-	"os"
-	"os/signal"
-	"syscall"
-
+	"github.com/droundy/goopt"
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mssql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-
-	"github.com/droundy/goopt"
-	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
+	"github.com/spf13/viper"
 	"github.com/swaggo/files"       // swagger embed files
 	"github.com/swaggo/gin-swagger" // gin-swagger middleware
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/application-research/delta-metrics-rest/api"
 	"github.com/application-research/delta-metrics-rest/dao"
@@ -144,6 +142,8 @@ func main() {
 	dao.Logger = func(ctx context.Context, sql string) {
 		fmt.Printf("SQL: %s\n", sql)
 	}
+
+	// cache
 
 	go GinServer()
 	LoopForever()
