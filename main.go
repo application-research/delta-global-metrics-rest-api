@@ -24,9 +24,9 @@ import (
 	"time"
 )
 
-const CacheSize = 256 * 1024 * 1024 // 256MB
-const CacheDuration = time.Minute * 60
-const CachePurgeEveryDuration = time.Minute * 120
+const CacheSize = 1024 * 1024 * 1024 // 1GB
+const CacheDuration = time.Minute * 24
+const CachePurgeEveryDuration = time.Hour * 48
 
 var (
 	// BuildDate date string of when build was performed filled in by -X compile flag
