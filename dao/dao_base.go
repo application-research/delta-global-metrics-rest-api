@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"reflect"
-
 	"github.com/jinzhu/gorm"
+	explru "github.com/paskal/golang-lru/simplelru"
+	"reflect"
 )
 
 // BuildInfo is used to define the application build info, and inject values into via the build process.
@@ -54,6 +54,8 @@ var (
 
 	// DB reference to database
 	DB *gorm.DB
+
+	Cacher *explru.ExpirableLRU
 
 	// AppBuildInfo reference to build info
 	AppBuildInfo *BuildInfo

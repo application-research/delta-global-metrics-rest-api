@@ -1,73 +1,242 @@
 package dao
 
+import (
+	"fmt"
+	"github.com/jinzhu/gorm"
+)
+
 // function to get all totals info
 func GetOpenTotalInfoStats() (interface{}, error) {
 
-	var totalContentConsumed int64
-	DB.Raw("select count(*) from content_logs").Count(&totalContentConsumed)
-
-	var totalTransferStarted int64
-	DB.Raw("select count(*) from content_logs where status = 'transfer-started'").Count(&totalTransferStarted)
-
-	var totalTransferFinished int64
-	DB.Raw("select count(*) from content_logs where status = 'transfer-finished'").Count(&totalTransferFinished)
-
-	var totalProposalMade int64
-	DB.Raw("select count(*) from content_deal_proposal_logs").Count(&totalProposalMade)
-
-	var totalCommitmentPiece int64
-	DB.Raw("select count(*) from piece_commitment_logs").Count(&totalCommitmentPiece)
-
-	var totalPieceCommitted int64
-	DB.Raw("select count(*) from piece_commitment_logs where status = 'committed'").Count(&totalPieceCommitted)
-
-	var totalMiners int64
-	rows, err := DB.Raw("select distinct(miner) from content_miner_logs").Rows()
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	for rows.Next() {
-		var miner string
-		rows.Scan(&miner)
-		totalMiners++
+	// total deals attempted
+	var statsTotal struct {
+		TotalDealsAttempted                       int `json:"total_deals_attempted,omitempty"`
+		TotalE2EDealsAttempted                    int `json:"total_e2e_deals_attempted,omitempty"`
+		TotalImportDealsAttempted                 int `json:"total_import_deals_attempted,omitempty"`
+		TotalPieceCommitmentsComputeAttempted     int `json:"total_piece_commitments_compute_attempted,omitempty"`
+		TotalDealsAttemptedSize                   int `json:"total_deals_attempted_size,omitempty"`
+		TotalE2EDealsAttemptedSize                int `json:"total_e2e_deals_attempted_size,omitempty"`
+		TotalImportDealsAttemptedSize             int `json:"total_import_deals_attempted_size,omitempty"`
+		TotalPieceCommitmentsComputeAttemptedSize int `json:"total_piece_commitments_compute_attempted_size,omitempty"`
+		TotalDealsSucceeded                       int `json:"total_deals_succeeded,omitempty"`
+		TotalE2ESucceeded                         int `json:"total_e2e_succeeded,omitempty"`
+		TotalImportSucceeded                      int `json:"total_import_succeeded,omitempty"`
+		TotalPieceCommitmentsComputeSucceeded     int `json:"total_piece_commitments_compute_succeeded,omitempty"`
+		TotalDealsSucceededSize                   int `json:"total_deals_succeeded_size,omitempty"`
+		TotalE2ESucceededSize                     int `json:"total_e2e_succeeded_size,omitempty"`
+		TotalImportSucceededSize                  int `json:"total_import_succeeded_size,omitempty"`
+		TotalPieceCommitmentsComputeSucceededSize int `json:"total_piece_commitments_compute_succeeded_size,omitempty"`
+		TotalInProgressDeals24h                   int `json:"total_in_progress_deals_24h,omitempty"`
+		TotalInProgressE2EDeals24h                int `json:"total_in_progress_e2e_deals_24h,omitempty"`
+		TotalInProgressImportDeals24h             int `json:"total_in_progress_import_deals_24h,omitempty"`
+		TotalInProgressDealsSize24h               int `json:"total_in_progress_deals_size_24h,omitempty"`
+		TotalInProgressE2EDealsSize24h            int `json:"total_in_progress_e2e_deals_size_24h,omitempty"`
+		TotalInProgressImportDealsSize24h         int `json:"total_in_progress_import_deals_size_24h,omitempty"`
+		TotalNumberOfSpsWorkWith                  int `json:"total_number_of_sps_worked_with,omitempty"`
+		TotalNumberOfUniqueDeltaNodes             int `json:"total_number_of_unique_delta_nodes,omitempty"`
 	}
 
-	var totalStorageAllocated int64
-	DB.Raw("select sum(size) from content_logs").Count(&totalStorageAllocated)
+	val, ok := Cacher.Get("statsTotal")
+	if !ok {
 
-	var totalProposalSent int64
-	DB.Raw("select count(*) from content_logs where status = 'deal-proposal-sent'").Count(&totalProposalSent)
+		DB.Transaction(func(tx *gorm.DB) error {
 
-	var totalSealedDealInBytes int64
-	DB.Raw("select sum(size) from content_logs where status in ('transfer-started','transfer-finished','deal-proposal-sent')").Scan(&totalSealedDealInBytes)
+			var totalDealsAttempted int
+			row := DB.Raw("select sum(cnt) as total_deals_attempted from (select count(dt_chan) as cnt from content_deal_logs group by dt_chan) subquery").Row()
+			err := row.Scan(&totalDealsAttempted)
+			if err != nil {
+				fmt.Println("Error in getting total deals attempted", err)
+				return err
+			}
+			fmt.Sprintf("totalDealsAttempted: %d", totalDealsAttempted)
+			statsTotal.TotalDealsAttempted = totalDealsAttempted
 
-	var totalImportDeals int64
-	DB.Raw("select count(*) from content_logs where connection_mode = 'import'").Count(&totalImportDeals)
+			var totalDealsAttemptedSize int
+			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,cd.dt_chan from content_deal_logs cd, content_logs c where cd.content = c.system_content_id group by c.size,cd.dt_chan) subquery").Row()
+			err = row.Scan(&totalDealsAttemptedSize)
+			if err != nil {
+				fmt.Println("Error in getting total deals attempted size", err)
+				return err
+			}
+			statsTotal.TotalDealsAttemptedSize = totalDealsAttemptedSize
 
-	var totalE2EDeals int64
-	DB.Raw("select count(*) from content_logs where connection_mode = 'e2e'").Count(&totalE2EDeals)
+			var totalE2EDealsAttempted int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' group by system_content_id) subquery").Row()
+			err = row.Scan(&totalE2EDealsAttempted)
+			if err != nil {
+				fmt.Println("Error in getting total e2e deals attempted", err)
+				return err
+			}
+			statsTotal.TotalE2EDealsAttempted = totalE2EDealsAttempted
 
-	var totalE2EDealsInBytes int64
-	DB.Raw("select sum(size) from content_logs where connection_mode = 'e2e'").Count(&totalE2EDealsInBytes)
+			var totalPieceCommitmentsComputeAttempted int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(p.piece) as cnt from piece_commitment_logs p group by p.piece) subquery").Row()
+			err = row.Scan(&totalPieceCommitmentsComputeAttempted)
+			if err != nil {
+				fmt.Println("Error in getting total piece commitments compute attempted", err)
+				return err
+			}
+			statsTotal.TotalPieceCommitmentsComputeAttempted = totalPieceCommitmentsComputeAttempted
 
-	var totalImportDealsInBytes int64
-	DB.Raw("select sum(size) from content_logs where connection_mode = 'import'").Count(&totalImportDealsInBytes)
+			var totalPieceCommitmentsComputeAttemptedSize int
+			row = tx.Raw("select sum(size) as total_size_sum from (select p.size as size from piece_commitment_logs p group by p.size,p.piece) subquery").Row()
+			err = row.Scan(&totalPieceCommitmentsComputeAttemptedSize)
+			if err != nil {
+				fmt.Println("Error in getting total piece commitments compute attempted size", err)
+				return err
+			}
+			statsTotal.TotalPieceCommitmentsComputeAttemptedSize = totalPieceCommitmentsComputeAttemptedSize
 
-	return map[string]interface{}{
-		"total_content_consumed":      totalContentConsumed,
-		"total_transfer_started":      totalTransferStarted,
-		"total_transfer_finished":     totalTransferFinished,
-		"total_piece_commitment_made": totalCommitmentPiece,
-		"total_piece_committed":       totalPieceCommitted,
-		"total_miners":                totalMiners,
-		"total_storage_allocated":     totalStorageAllocated,
-		"total_proposal_made":         totalProposalMade,
-		"total_proposal_sent":         totalProposalSent,
-		"total_sealed_deal_in_bytes":  totalSealedDealInBytes,
-		"total_import_deals":          totalImportDeals,
-		"total_e2e_deals":             totalE2EDeals,
-		"total_e2e_deals_in_bytes":    totalE2EDealsInBytes,
-		"total_import_deals_in_bytes": totalImportDealsInBytes,
-	}, nil
+			var totalE2EDealsAttemptedSize int
+			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'e2e' and (system_content_id is null or system_content_id is not null) group by c.size,system_content_id) subquery").Row()
+			err = row.Scan(&totalE2EDealsAttemptedSize)
+			if err != nil {
+				fmt.Println("Error in getting total e2e deals attempted size", err)
+				return err
+			}
+			statsTotal.TotalE2EDealsAttemptedSize = totalE2EDealsAttemptedSize
+
+			var totalImportDealsAttempted int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' group by system_content_id) subquery").Row()
+			err = row.Scan(&totalImportDealsAttempted)
+			if err != nil {
+				fmt.Println("Error in getting total import deals attempted", err)
+				return err
+			}
+			statsTotal.TotalImportDealsAttempted = totalImportDealsAttempted
+
+			var totalImportDealsAttemptedSize int
+			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'import' and (system_content_id is null or system_content_id is not null) group by c.size,system_content_id) subquery").Row()
+			err = row.Scan(&totalImportDealsAttemptedSize)
+			if err != nil {
+				fmt.Println("Error in getting total import deals attempted size", err)
+				return err
+			}
+			statsTotal.TotalImportDealsAttemptedSize = totalImportDealsAttemptedSize
+
+			var totalDealsSucceeded int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where status in ('deal-proposal-sent','transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery").Row()
+			err = row.Scan(&totalDealsSucceeded)
+			if err != nil {
+				fmt.Println("Error in getting total deals succeeded", err)
+				return err
+			}
+			statsTotal.TotalDealsSucceeded = totalDealsSucceeded
+
+			var totalDealsSucceededSize int
+			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where status in ('deal-proposal-sent','transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by c.size,system_content_id) subquery").Row()
+			err = row.Scan(&totalDealsSucceededSize)
+			if err != nil {
+				fmt.Println("Error in getting total deals succeeded size", err)
+				return err
+			}
+			statsTotal.TotalDealsSucceededSize = totalDealsSucceededSize
+
+			var totalE2EDealsSucceeded int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery").Row()
+			err = row.Scan(&totalE2EDealsSucceeded)
+			if err != nil {
+				fmt.Println("Error in getting total e2e deals succeeded", err)
+				return err
+			}
+			statsTotal.TotalE2ESucceeded = totalE2EDealsSucceeded
+
+			var totalPieceCommitmentsComputeSucceeded int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(p.piece) as cnt from piece_commitment_logs p where p.status = 'committed' group by p.piece) subquery").Row()
+			err = row.Scan(&totalPieceCommitmentsComputeSucceeded)
+			if err != nil {
+				fmt.Println("Error in getting total piece commitments compute succeeded", err)
+				return err
+			}
+			statsTotal.TotalPieceCommitmentsComputeSucceeded = totalPieceCommitmentsComputeSucceeded
+
+			var totalPieceCommitmentsComputeSucceededSize int
+			row = tx.Raw("select sum(size) as total_size_sum from (select p.size as size from piece_commitment_logs p where p.status = 'committed' group by p.size,p.piece) subquery").Row()
+			err = row.Scan(&totalPieceCommitmentsComputeSucceededSize)
+			if err != nil {
+				fmt.Println("Error in getting total piece commitments compute succeeded size", err)
+				return err
+			}
+			statsTotal.TotalPieceCommitmentsComputeSucceededSize = totalPieceCommitmentsComputeSucceededSize
+
+			var totalE2EDealsSucceededSize int
+			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by c.size,system_content_id) subquery").Row()
+			err = row.Scan(&totalE2EDealsSucceededSize)
+			if err != nil {
+				fmt.Println("Error in getting total e2e deals succeeded size", err)
+				return err
+			}
+			statsTotal.TotalE2ESucceededSize = totalE2EDealsSucceededSize
+
+			var totalImportDealsSucceeded int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status in ('deal-proposal-sent') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery").Row()
+			err = row.Scan(&totalImportDealsSucceeded)
+			if err != nil {
+				fmt.Println("Error in getting total import deals succeeded", err)
+				return err
+			}
+			statsTotal.TotalImportSucceeded = totalImportDealsSucceeded
+
+			var totalImportDealsSucceededSize int
+			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'import' and status in ('deal-proposal-sent') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by c.size,system_content_id) subquery").Row()
+			err = row.Scan(&totalImportDealsSucceededSize)
+			if err != nil {
+				fmt.Println("Error in getting total import deals succeeded size", err)
+				return err
+			}
+			statsTotal.TotalImportSucceededSize = totalImportDealsSucceededSize
+
+			var totalInProgressDeals int
+
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
+			err = row.Scan(&totalInProgressDeals)
+			if err != nil {
+				fmt.Println("Error in getting total in progress deals", err)
+				return err
+			}
+			statsTotal.TotalInProgressDeals24h = totalInProgressDeals
+
+			var totalInProgressE2EDeals int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
+			err = row.Scan(&totalInProgressE2EDeals)
+			if err != nil {
+				fmt.Println("Error in getting total in progress e2e deals", err)
+				return err
+			}
+			statsTotal.TotalInProgressE2EDeals24h = totalInProgressE2EDeals
+
+			var totalInProgressImportDeals int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
+			err = row.Scan(&totalInProgressImportDeals)
+			if err != nil {
+				fmt.Println("Error in getting total in progress import deals", err)
+				return err
+			}
+			statsTotal.TotalInProgressImportDeals24h = totalInProgressImportDeals
+
+			var totalNumberOfSpsWorkWith int
+			// select count(miners) as total_rows from (select distinct(miner) as miners from content_miner_logs group by miner) subquery;
+			row = tx.Raw("select count(miners) as total_rows from (select distinct(miner) as miners from content_miner_logs group by miner) subquery").Row()
+			err = row.Scan(&totalNumberOfSpsWorkWith)
+			if err != nil {
+				fmt.Println("Error in getting total number of sps work with", err)
+				return err
+			}
+			statsTotal.TotalNumberOfSpsWorkWith = totalNumberOfSpsWorkWith
+
+			var totalNumberOfUniqueDeltaNodes int
+			row = tx.Raw("select count(delta_node) as total_rows from (select distinct(delta_node_uuid) as delta_node from delta_startup_logs group by delta_node_uuid) subquery").Row()
+			err = row.Scan(&totalNumberOfUniqueDeltaNodes)
+			if err != nil {
+				fmt.Println("Error in getting total number of unique delta nodes", err)
+				return err
+			}
+			statsTotal.TotalNumberOfUniqueDeltaNodes = totalNumberOfUniqueDeltaNodes
+			return nil
+		})
+		val = statsTotal
+		Cacher.Add("statsTotal", val)
+	}
+	return val, nil
+
 }

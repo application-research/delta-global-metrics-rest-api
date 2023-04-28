@@ -3,27 +3,30 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/spf13/viper"
-	"log"
-	"os"
-	"os/signal"
-	"syscall"
-
+	"github.com/application-research/delta-metrics-rest/api"
+	"github.com/application-research/delta-metrics-rest/dao"
+	"github.com/application-research/delta-metrics-rest/model"
+	"github.com/droundy/goopt"
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mssql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-
-	"github.com/droundy/goopt"
-	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
+	explru "github.com/paskal/golang-lru/simplelru"
+	"github.com/spf13/viper"
 	"github.com/swaggo/files"       // swagger embed files
 	"github.com/swaggo/gin-swagger" // gin-swagger middleware
-
-	"github.com/application-research/delta-metrics-rest/api"
-	"github.com/application-research/delta-metrics-rest/dao"
-	"github.com/application-research/delta-metrics-rest/model"
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
+
+const CacheSize = 256 * 1024 * 1024 // 256MB
+const CacheDuration = time.Minute * 60
+const CachePurgeEveryDuration = time.Minute * 120
 
 var (
 	// BuildDate date string of when build was performed filled in by -X compile flag
@@ -145,8 +148,23 @@ func main() {
 		fmt.Printf("SQL: %s\n", sql)
 	}
 
+	// cache
+	dao.Cacher = explru.NewExpirableLRU(CacheSize, nil, CacheDuration, CachePurgeEveryDuration)
+
+	// Recache
+	go Recache()
 	go GinServer()
 	LoopForever()
+}
+
+func Recache() {
+	for {
+		_, err := dao.GetOpenTotalInfoStats()
+		if err != nil {
+			fmt.Printf("Error while recaching %s\n", err)
+		}
+		time.Sleep(30 * time.Minute)
+	}
 }
 
 // LoopForever on signal processing
