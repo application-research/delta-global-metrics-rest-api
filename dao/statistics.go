@@ -42,7 +42,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 		DB.Transaction(func(tx *gorm.DB) error {
 
 			var totalDealsAttempted int
-			row := DB.Raw("select sum(cnt) as total_deals_attempted from (select count(dt_chan) as cnt from content_deal_logs group by dt_chan) subquery").Row()
+			row := tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c group by system_content_id) subquery").Row()
 			err := row.Scan(&totalDealsAttempted)
 			if err != nil {
 				fmt.Println("Error in getting total deals attempted", err)
@@ -52,7 +52,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalDealsAttempted = totalDealsAttempted
 
 			var totalDealsAttemptedSize int
-			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,cd.dt_chan from content_deal_logs cd, content_logs c where cd.content = c.system_content_id group by c.size,cd.dt_chan) subquery").Row()
+			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,system_content_id) subquery").Row()
 			err = row.Scan(&totalDealsAttemptedSize)
 			if err != nil {
 				fmt.Println("Error in getting total deals attempted size", err)
