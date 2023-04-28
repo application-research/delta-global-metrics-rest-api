@@ -3,6 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/application-research/delta-metrics-rest/api"
+	"github.com/application-research/delta-metrics-rest/dao"
+	"github.com/application-research/delta-metrics-rest/model"
 	"github.com/droundy/goopt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -10,6 +13,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	explru "github.com/paskal/golang-lru/simplelru"
 	"github.com/spf13/viper"
 	"github.com/swaggo/files"       // swagger embed files
 	"github.com/swaggo/gin-swagger" // gin-swagger middleware
@@ -17,11 +21,12 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-
-	"github.com/application-research/delta-metrics-rest/api"
-	"github.com/application-research/delta-metrics-rest/dao"
-	"github.com/application-research/delta-metrics-rest/model"
+	"time"
 )
+
+const CacheSize = 256 * 1024 * 1024 // 256MB
+const CacheDuration = time.Minute * 60
+const CachePurgeEveryDuration = time.Minute * 120
 
 var (
 	// BuildDate date string of when build was performed filled in by -X compile flag
@@ -144,7 +149,7 @@ func main() {
 	}
 
 	// cache
-
+	dao.Cacher = explru.NewExpirableLRU(CacheSize, nil, CacheDuration, CachePurgeEveryDuration)
 	go GinServer()
 	LoopForever()
 }

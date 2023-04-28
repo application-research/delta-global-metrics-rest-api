@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/eko/gocache/store/bigcache/v4"
 	"github.com/jinzhu/gorm"
+	explru "github.com/paskal/golang-lru/simplelru"
 	"reflect"
 )
 
@@ -55,7 +55,7 @@ var (
 	// DB reference to database
 	DB *gorm.DB
 
-	Cacher bigcache.BigcacheStore
+	Cacher *explru.ExpirableLRU
 
 	// AppBuildInfo reference to build info
 	AppBuildInfo *BuildInfo
