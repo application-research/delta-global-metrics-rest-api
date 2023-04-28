@@ -5,95 +5,35 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-//-- deals attempted and size (with created_at filter)
-//select sum(cnt) as total_rows from (select count(dt_chan) as cnt from content_deal_logs group by dt_chan) subquery;
-//select sum(cnt) as total_rows from (select count(dt_chan) as cnt from content_deal_logs where (created_at between '2023-01-01' and '2023-12-30') group by dt_chan) subquery;
-//select sum(size) as total_size_sum from (select c.size as size,cd.dt_chan from content_deal_logs cd, content_logs c where cd.content = c.system_content_id and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,cd.dt_chan) subquery;
-//select sum(size) as total_size_sum from (select c.size as size,cd.dt_chan from content_deal_logs cd, content_logs c where cd.content = c.system_content_id and (created_at between '2023-01-01' and '2023-12-30') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,cd.dt_chan) subquery;
-//
-//-- e2e deals attempted and size (with created_at filter)
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' group by system_content_id) subquery;
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
-//select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'e2e' and (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,system_content_id) subquery;
-//select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'e2e' and (created_at between '2023-01-01' and '2023-12-30') and (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,system_content_id) subquery;
-//
-//-- import deals attempted and size (with created_at filter)
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' group by system_content_id) subquery;
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
-//select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'import' and (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,system_content_id) subquery;
-//select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'import' and (created_at between '2023-01-01' and '2023-12-30') and (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,system_content_id) subquery;
-//
-//-- e2e succeeded (with created_at filter)
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery;
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started','transfer-finished') and (created_at between '2023-01-01' and '2023-12-30') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery;
-//
-//-- import succeeded (with created_at filter)
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status in ('deal-proposal-sent') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery;
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status in ('deal-proposal-sent') and (created_at between '2023-01-01' and '2023-12-30') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery;
-//
-//-- e2e failed (with created_at filter)
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status not in ('transfer-started','transfer-finished') group by system_content_id) subquery;
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status not in ('transfer-started','transfer-finished') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
-//
-//-- import failed (with created_at filter)
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status not in ('deal-proposal-sent') group by system_content_id) subquery;
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status not in ('deal-proposal-sent') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
-//
-//-- import failed (with created_at filter)
-//select sum(cnt) as total_rows from (select count(system_content_deal_id) as cnt from content_deal_logs cd, content_logs c where c.system_content_id = cd.content and c.connection_mode = 'import' and c.status not in ('deal-proposal-sent') group by system_content_deal_id) subquery;
-//select sum(cnt) as total_rows from (select count(system_content_deal_id) as cnt from content_deal_logs cd, content_logs c where c.system_content_id = cd.content and c.connection_mode = 'import' and c.status not in ('deal-proposal-sent') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_deal_id) subquery;
-//
-//-- total deals active (with created_at filter)
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started') group by system_content_id) subquery;
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
-//
-//-- total e2e deals active (with created_at filter)
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started') group by system_content_id) subquery;
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
-//
-//-- total import deals active (with created_at filter)
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status in ('making-deal-proposal') group by system_content_id) subquery;
-//select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status in ('making-deal-proposal') and (created_at between '2023-01-01' and '2023-12-30') group by system_content_id) subquery;
-//
-//-- total number of SPs (with created_at filter)
-//select count(miners) as total_rows from (select distinct(miner) as miners from content_miner_logs group by miner) subquery;
-//
-//-- total number of unique delta nodes (with created_at filter)
-//select count(delta_node) as total_rows from (select distinct(delta_node_uuid) as delta_node from delta_startup_logs group by delta_node_uuid) subquery;
-//
-//select distinct(delta_node_uuid) as delta_node from delta_startup_logs group by delta_node_uuid;
-//
-//select * from content_deal_logs cd where (cd.delta_node_uuid is null or cd.delta_node_uuid = '') and requester_info = '139.178.81.109' order by created_at desc;
-//
-//select count(*) from content_deal_logs cd where (cd.delta_node_uuid is null or cd.delta_node_uuid = '') and node_info = 'shuttle-4';
-//select * from content_deal_logs cd where cd.delta_node_uuid is null or cd.delta_node_uuid = '' order by created_at desc;
-//select * from content_deal_logs cd where cd.delta_node_uuid is null order by created_at desc;
-
 // function to get all totals info
 func GetOpenTotalInfoStats() (interface{}, error) {
 
 	// total deals attempted
 	var statsTotal struct {
-		TotalDealsAttempted               int `json:"total_deals_attempted,omitempty"`
-		TotalE2EDealsAttempted            int `json:"total_e2e_deals_attempted,omitempty"`
-		TotalImportDealsAttempted         int `json:"total_import_deals_attempted,omitempty"`
-		TotalDealsAttemptedSize           int `json:"total_deals_attempted_size,omitempty"`
-		TotalE2EDealsAttemptedSize        int `json:"total_e2e_deals_attempted_size,omitempty"`
-		TotalImportDealsAttemptedSize     int `json:"total_import_deals_attempted_size,omitempty"`
-		TotalDealsSucceeded               int `json:"total_deals_succeeded,omitempty"`
-		TotalE2ESucceeded                 int `json:"total_e2e_succeeded,omitempty"`
-		TotalImportSucceeded              int `json:"total_import_succeeded,omitempty"`
-		TotalDealsSucceededSize           int `json:"total_deals_succeeded_size,omitempty"`
-		TotalE2ESucceededSize             int `json:"total_e2e_succeeded_size,omitempty"`
-		TotalImportSucceededSize          int `json:"total_import_succeeded_size,omitempty"`
-		TotalInProgressDeals24h           int `json:"total_in_progress_deals_24h,omitempty"`
-		TotalInProgressE2EDeals24h        int `json:"total_in_progress_e2e_deals_24h,omitempty"`
-		TotalInProgressImportDeals24h     int `json:"total_in_progress_import_deals_24h,omitempty"`
-		TotalInProgressDealsSize24h       int `json:"total_in_progress_deals_size_24h,omitempty"`
-		TotalInProgressE2EDealsSize24h    int `json:"total_in_progress_e2e_deals_size_24h,omitempty"`
-		TotalInProgressImportDealsSize24h int `json:"total_in_progress_import_deals_size_24h,omitempty"`
-		TotalNumberOfSpsWorkWith          int `json:"total_number_of_sps_worked_with,omitempty"`
-		TotalNumberOfUniqueDeltaNodes     int `json:"total_number_of_unique_delta_nodes,omitempty"`
+		TotalDealsAttempted                       int `json:"total_deals_attempted,omitempty"`
+		TotalE2EDealsAttempted                    int `json:"total_e2e_deals_attempted,omitempty"`
+		TotalImportDealsAttempted                 int `json:"total_import_deals_attempted,omitempty"`
+		TotalPieceCommitmentsComputeAttempted     int `json:"total_piece_commitments_compute_attempted,omitempty"`
+		TotalDealsAttemptedSize                   int `json:"total_deals_attempted_size,omitempty"`
+		TotalE2EDealsAttemptedSize                int `json:"total_e2e_deals_attempted_size,omitempty"`
+		TotalImportDealsAttemptedSize             int `json:"total_import_deals_attempted_size,omitempty"`
+		TotalPieceCommitmentsComputeAttemptedSize int `json:"total_piece_commitments_compute_attempted_size,omitempty"`
+		TotalDealsSucceeded                       int `json:"total_deals_succeeded,omitempty"`
+		TotalE2ESucceeded                         int `json:"total_e2e_succeeded,omitempty"`
+		TotalImportSucceeded                      int `json:"total_import_succeeded,omitempty"`
+		TotalPieceCommitmentsComputeSucceeded     int `json:"total_piece_commitments_compute_succeeded,omitempty"`
+		TotalDealsSucceededSize                   int `json:"total_deals_succeeded_size,omitempty"`
+		TotalE2ESucceededSize                     int `json:"total_e2e_succeeded_size,omitempty"`
+		TotalImportSucceededSize                  int `json:"total_import_succeeded_size,omitempty"`
+		TotalPieceCommitmentsComputeSucceededSize int `json:"total_piece_commitments_compute_succeeded_size,omitempty"`
+		TotalInProgressDeals24h                   int `json:"total_in_progress_deals_24h,omitempty"`
+		TotalInProgressE2EDeals24h                int `json:"total_in_progress_e2e_deals_24h,omitempty"`
+		TotalInProgressImportDeals24h             int `json:"total_in_progress_import_deals_24h,omitempty"`
+		TotalInProgressDealsSize24h               int `json:"total_in_progress_deals_size_24h,omitempty"`
+		TotalInProgressE2EDealsSize24h            int `json:"total_in_progress_e2e_deals_size_24h,omitempty"`
+		TotalInProgressImportDealsSize24h         int `json:"total_in_progress_import_deals_size_24h,omitempty"`
+		TotalNumberOfSpsWorkWith                  int `json:"total_number_of_sps_worked_with,omitempty"`
+		TotalNumberOfUniqueDeltaNodes             int `json:"total_number_of_unique_delta_nodes,omitempty"`
 	}
 
 	val, ok := Cacher.Get("statsTotal")
@@ -128,6 +68,24 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 				return err
 			}
 			statsTotal.TotalE2EDealsAttempted = totalE2EDealsAttempted
+
+			var totalPieceCommitmentsComputeAttempted int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(p.piece) as cnt from piece_commitment_logs p group by p.piece) subquery").Row()
+			err = row.Scan(&totalPieceCommitmentsComputeAttempted)
+			if err != nil {
+				fmt.Println("Error in getting total piece commitments compute attempted", err)
+				return err
+			}
+			statsTotal.TotalPieceCommitmentsComputeAttempted = totalPieceCommitmentsComputeAttempted
+
+			var totalPieceCommitmentsComputeAttemptedSize int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(p.piece) as cnt from piece_commitment_logs p where p.status = 'committed' group by p.piece) subquery").Row()
+			err = row.Scan(&totalPieceCommitmentsComputeAttemptedSize)
+			if err != nil {
+				fmt.Println("Error in getting total piece commitments compute attempted size", err)
+				return err
+			}
+			statsTotal.TotalPieceCommitmentsComputeAttemptedSize = totalPieceCommitmentsComputeAttemptedSize
 
 			var totalE2EDealsAttemptedSize int
 			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'e2e' and (system_content_id is null or system_content_id is not null) group by c.size,system_content_id) subquery").Row()
@@ -182,6 +140,24 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 				return err
 			}
 			statsTotal.TotalE2ESucceeded = totalE2EDealsSucceeded
+
+			var totalPieceCommitmentsComputeSucceeded int
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(p.piece) as cnt from piece_commitment_logs p where p.status = 'committed' group by p.piece) subquery").Row()
+			err = row.Scan(&totalPieceCommitmentsComputeSucceeded)
+			if err != nil {
+				fmt.Println("Error in getting total piece commitments compute succeeded", err)
+				return err
+			}
+			statsTotal.TotalPieceCommitmentsComputeSucceeded = totalPieceCommitmentsComputeSucceeded
+
+			var totalPieceCommitmentsComputeSucceededSize int
+			row = tx.Raw("select sum(size) as total_size_sum from (select p.size as size from piece_commitment_logs p where p.status = 'committed' group by p.size,p.piece) subquery").Row()
+			err = row.Scan(&totalPieceCommitmentsComputeSucceededSize)
+			if err != nil {
+				fmt.Println("Error in getting total piece commitments compute succeeded size", err)
+				return err
+			}
+			statsTotal.TotalPieceCommitmentsComputeSucceededSize = totalPieceCommitmentsComputeSucceededSize
 
 			var totalE2EDealsSucceededSize int
 			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by c.size,system_content_id) subquery").Row()

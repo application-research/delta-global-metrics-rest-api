@@ -150,8 +150,21 @@ func main() {
 
 	// cache
 	dao.Cacher = explru.NewExpirableLRU(CacheSize, nil, CacheDuration, CachePurgeEveryDuration)
+
+	// Recache
+	go Recache()
 	go GinServer()
 	LoopForever()
+}
+
+func Recache() {
+	for {
+		_, err := dao.GetOpenTotalInfoStats()
+		if err != nil {
+			fmt.Printf("Error while recaching %s\n", err)
+		}
+		time.Sleep(30 * time.Minute)
+	}
 }
 
 // LoopForever on signal processing
