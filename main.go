@@ -25,7 +25,7 @@ import (
 )
 
 const CacheSize = 1024 * 1024 * 1024 // 1GB
-const CacheDuration = time.Minute * 24
+const CacheDuration = time.Hour * 24
 const CachePurgeEveryDuration = time.Hour * 48
 
 var (
@@ -152,7 +152,7 @@ func main() {
 	dao.Cacher = explru.NewExpirableLRU(CacheSize, nil, CacheDuration, CachePurgeEveryDuration)
 
 	// Recache
-	go Recache()
+	//go Recache()
 	go GinServer()
 	LoopForever()
 }

@@ -49,43 +49,10 @@ type HTTPError struct {
 	Message string `json:"message" example:"status bad request"`
 }
 
-// ConfigRouter configure http.Handler router
-func ConfigRouter() http.Handler {
-	router := httprouter.New()
-	configContentDealLogsRouter(router)
-	configContentDealProposalLogsRouter(router)
-	configContentDealProposalParametersLogsRouter(router)
-	configContentLogsRouter(router)
-	configContentMinerLogsRouter(router)
-	configContentWalletLogsRouter(router)
-	configDeltaNodeGeoLocationsRouter(router)
-	configDeltaStartupLogsRouter(router)
-	configInstanceMetaLogsRouter(router)
-	configLogEventsRouter(router)
-	configPieceCommitmentLogsRouter(router)
-	configWalletLogsRouter(router)
-
-	router.GET("/ddl/:argID", GetDdl)
-	router.GET("/ddl", GetDdlEndpoints)
-	return router
-}
-
 // ConfigGinRouter configure gin router
 func ConfigGinRouter(router gin.IRoutes) {
-	configGinContentDealLogsRouter(router)
-	configGinContentDealProposalLogsRouter(router)
-	configGinContentDealProposalParametersLogsRouter(router)
-	configGinContentLogsRouter(router)
-	configGinContentMinerLogsRouter(router)
-	configGinContentWalletLogsRouter(router)
-	configGinDeltaNodeGeoLocationsRouter(router)
-	configGinDeltaStartupLogsRouter(router)
-	configGinInstanceMetaLogsRouter(router)
-	configGinLogEventsRouter(router)
-	configGinPieceCommitmentLogsRouter(router)
-	configGinWalletLogsRouter(router)
 	configGinStatisticsRouter(router)
-
+	configGinStatisticsTimeSeriesRouter(router)
 	router.GET("/ddl/:argID", ConverHttprouterToGin(GetDdl))
 	router.GET("/ddl", ConverHttprouterToGin(GetDdlEndpoints))
 	return
