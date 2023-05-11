@@ -186,33 +186,33 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			}
 			statsTotal.TotalImportSucceededSize = totalImportDealsSucceededSize
 
-			var totalInProgressDeals int
-
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
-			err = row.Scan(&totalInProgressDeals)
-			if err != nil {
-				fmt.Println("Error in getting total in progress deals", err)
-				return err
-			}
-			statsTotal.TotalInProgressDeals24h = totalInProgressDeals
-
-			var totalInProgressE2EDeals int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
-			err = row.Scan(&totalInProgressE2EDeals)
-			if err != nil {
-				fmt.Println("Error in getting total in progress e2e deals", err)
-				return err
-			}
-			statsTotal.TotalInProgressE2EDeals24h = totalInProgressE2EDeals
-
-			var totalInProgressImportDeals int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
-			err = row.Scan(&totalInProgressImportDeals)
-			if err != nil {
-				fmt.Println("Error in getting total in progress import deals", err)
-				return err
-			}
-			statsTotal.TotalInProgressImportDeals24h = totalInProgressImportDeals
+			//var totalInProgressDeals int
+			//
+			//row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
+			//err = row.Scan(&totalInProgressDeals)
+			//if err != nil {
+			//	fmt.Println("Error in getting total in progress deals", err)
+			//	return err
+			//}
+			//statsTotal.TotalInProgressDeals24h = totalInProgressDeals
+			//
+			//var totalInProgressE2EDeals int
+			//row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
+			//err = row.Scan(&totalInProgressE2EDeals)
+			//if err != nil {
+			//	fmt.Println("Error in getting total in progress e2e deals", err)
+			//	return err
+			//}
+			//statsTotal.TotalInProgressE2EDeals24h = totalInProgressE2EDeals
+			//
+			//var totalInProgressImportDeals int
+			//row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
+			//err = row.Scan(&totalInProgressImportDeals)
+			//if err != nil {
+			//	fmt.Println("Error in getting total in progress import deals", err)
+			//	return err
+			//}
+			//statsTotal.TotalInProgressImportDeals24h = totalInProgressImportDeals
 
 			var totalNumberOfSpsWorkWith int
 			// select count(miners) as total_rows from (select distinct(miner) as miners from content_miner_logs group by miner) subquery;
