@@ -46,7 +46,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err := row.Scan(&totalDealsAttempted)
 			if err != nil {
 				fmt.Println("Error in getting total deals attempted", err)
-				return err
+				totalDealsAttempted = 0
+				//return err
 			}
 			fmt.Sprintf("totalDealsAttempted: %d", totalDealsAttempted)
 			statsTotal.TotalDealsAttempted = totalDealsAttempted
@@ -56,7 +57,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalDealsAttemptedSize)
 			if err != nil {
 				fmt.Println("Error in getting total deals attempted size", err)
-				return err
+				totalDealsAttemptedSize = 0
+				//return err
 			}
 			statsTotal.TotalDealsAttemptedSize = totalDealsAttemptedSize
 
@@ -65,7 +67,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalE2EDealsAttempted)
 			if err != nil {
 				fmt.Println("Error in getting total e2e deals attempted", err)
-				return err
+				totalE2EDealsAttempted = 0
+				//return err
 			}
 			statsTotal.TotalE2EDealsAttempted = totalE2EDealsAttempted
 
@@ -74,7 +77,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalPieceCommitmentsComputeAttempted)
 			if err != nil {
 				fmt.Println("Error in getting total piece commitments compute attempted", err)
-				return err
+				totalPieceCommitmentsComputeAttempted = 0
+				//return err
 			}
 			statsTotal.TotalPieceCommitmentsComputeAttempted = totalPieceCommitmentsComputeAttempted
 
@@ -83,7 +87,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalPieceCommitmentsComputeAttemptedSize)
 			if err != nil {
 				fmt.Println("Error in getting total piece commitments compute attempted size", err)
-				return err
+				totalPieceCommitmentsComputeAttemptedSize = 0
+				//return err
 			}
 			statsTotal.TotalPieceCommitmentsComputeAttemptedSize = totalPieceCommitmentsComputeAttemptedSize
 
@@ -92,7 +97,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalE2EDealsAttemptedSize)
 			if err != nil {
 				fmt.Println("Error in getting total e2e deals attempted size", err)
-				return err
+				totalE2EDealsAttemptedSize = 0
+				//return err
 			}
 			statsTotal.TotalE2EDealsAttemptedSize = totalE2EDealsAttemptedSize
 
@@ -101,7 +107,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalImportDealsAttempted)
 			if err != nil {
 				fmt.Println("Error in getting total import deals attempted", err)
-				return err
+				totalImportDealsAttempted = 0
+				//return err
 			}
 			statsTotal.TotalImportDealsAttempted = totalImportDealsAttempted
 
@@ -110,7 +117,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalImportDealsAttemptedSize)
 			if err != nil {
 				fmt.Println("Error in getting total import deals attempted size", err)
-				return err
+				totalImportDealsAttemptedSize = 0
+				//return err
 			}
 			statsTotal.TotalImportDealsAttemptedSize = totalImportDealsAttemptedSize
 
@@ -119,7 +127,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalDealsSucceeded)
 			if err != nil {
 				fmt.Println("Error in getting total deals succeeded", err)
-				return err
+				totalDealsSucceeded = 0
+				//return err
 			}
 			statsTotal.TotalDealsSucceeded = totalDealsSucceeded
 
@@ -128,7 +137,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalDealsSucceededSize)
 			if err != nil {
 				fmt.Println("Error in getting total deals succeeded size", err)
-				return err
+				totalDealsSucceededSize = 0
+				//return err
 			}
 			statsTotal.TotalDealsSucceededSize = totalDealsSucceededSize
 
@@ -137,7 +147,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalE2EDealsSucceeded)
 			if err != nil {
 				fmt.Println("Error in getting total e2e deals succeeded", err)
-				return err
+				totalE2EDealsSucceeded = 0
+				//return err
 			}
 			statsTotal.TotalE2ESucceeded = totalE2EDealsSucceeded
 
@@ -146,7 +157,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalPieceCommitmentsComputeSucceeded)
 			if err != nil {
 				fmt.Println("Error in getting total piece commitments compute succeeded", err)
-				return err
+				totalPieceCommitmentsComputeSucceeded = 0
+				//return err
 			}
 			statsTotal.TotalPieceCommitmentsComputeSucceeded = totalPieceCommitmentsComputeSucceeded
 
@@ -155,7 +167,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalPieceCommitmentsComputeSucceededSize)
 			if err != nil {
 				fmt.Println("Error in getting total piece commitments compute succeeded size", err)
-				return err
+				totalPieceCommitmentsComputeSucceededSize = 0
+				//return err
 			}
 			statsTotal.TotalPieceCommitmentsComputeSucceededSize = totalPieceCommitmentsComputeSucceededSize
 
@@ -164,7 +177,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalE2EDealsSucceededSize)
 			if err != nil {
 				fmt.Println("Error in getting total e2e deals succeeded size", err)
-				return err
+				totalE2EDealsSucceededSize = 0
+				//return err
 			}
 			statsTotal.TotalE2ESucceededSize = totalE2EDealsSucceededSize
 
@@ -173,7 +187,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalImportDealsSucceeded)
 			if err != nil {
 				fmt.Println("Error in getting total import deals succeeded", err)
-				return err
+				totalDealsSucceeded = 0
+				//return err
 			}
 			statsTotal.TotalImportSucceeded = totalImportDealsSucceeded
 
@@ -182,7 +197,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalImportDealsSucceededSize)
 			if err != nil {
 				fmt.Println("Error in getting total import deals succeeded size", err)
-				return err
+				totalImportDealsSucceededSize = 0
+				//return err
 			}
 			statsTotal.TotalImportSucceededSize = totalImportDealsSucceededSize
 
@@ -192,7 +208,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalInProgressDeals)
 			if err != nil {
 				fmt.Println("Error in getting total in progress deals", err)
-				return err
+				totalInProgressDeals = 0
+				//return err
 			}
 			statsTotal.TotalInProgressDeals24h = totalInProgressDeals
 
@@ -201,16 +218,18 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalInProgressE2EDeals)
 			if err != nil {
 				fmt.Println("Error in getting total in progress e2e deals", err)
-				return err
+				totalInProgressE2EDeals = 0
+				//return err
 			}
 			statsTotal.TotalInProgressE2EDeals24h = totalInProgressE2EDeals
 
 			var totalInProgressImportDeals int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
+			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '48 hours' group by system_content_id) subquery").Row()
 			err = row.Scan(&totalInProgressImportDeals)
 			if err != nil {
 				fmt.Println("Error in getting total in progress import deals", err)
-				return err
+				totalInProgressImportDeals = 0
+				//return err
 			}
 			statsTotal.TotalInProgressImportDeals24h = totalInProgressImportDeals
 
@@ -220,7 +239,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalNumberOfSpsWorkWith)
 			if err != nil {
 				fmt.Println("Error in getting total number of sps work with", err)
-				return err
+				totalNumberOfSpsWorkWith = 0
+				//return err
 			}
 			statsTotal.TotalNumberOfSpsWorkWith = totalNumberOfSpsWorkWith
 
@@ -229,7 +249,8 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			err = row.Scan(&totalNumberOfUniqueDeltaNodes)
 			if err != nil {
 				fmt.Println("Error in getting total number of unique delta nodes", err)
-				return err
+				totalNumberOfUniqueDeltaNodes = 0
+				//return err
 			}
 			statsTotal.TotalNumberOfUniqueDeltaNodes = totalNumberOfUniqueDeltaNodes
 			return nil
