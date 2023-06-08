@@ -123,7 +123,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalImportDealsAttemptedSize = totalImportDealsAttemptedSize
 
 			var totalDealsSucceeded int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where status in ('deal-proposal-sent','transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery").Row()
+			row = tx.Raw("select sum(size) as total_size_sum from (select p.padded_piece_size as size,system_content_id from content_logs c, piece_commitment_logs p where c.piece_commitment_id = p.system_content_piece_commitment_id and c.status in ('deal-proposal-sent','transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id, p.padded_piece_size) subquery").Row()
 			err = row.Scan(&totalDealsSucceeded)
 			if err != nil {
 				fmt.Println("Error in getting total deals succeeded", err)
