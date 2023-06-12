@@ -11,8 +11,7 @@ func configGinStatisticsRouter(router gin.IRoutes) {
 	router.GET("/open/stats/totals/info", ConverHttprouterToGin(GetOpenTotalInfoStats))
 	router.GET("/open/stats/list/sps", ConverHttprouterToGin(GetAllSps))
 	router.GET("/open/stats/list/wallet/addrs", ConverHttprouterToGin(GetWalletsAddrs))
-
-	// top endpoint usage
+	router.GET("/open/stats/instance/ips", ConverHttprouterToGin(GetDeltaIps))
 }
 
 func GetOpenTotalInfoStats(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -40,6 +39,17 @@ func GetAllSps(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 func GetWalletsAddrs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ctx := initializeContext(r)
 	record, err := dao.GetAllWalletAddrs()
+	if err != nil {
+		returnError(ctx, w, r, err)
+		return
+	}
+
+	writeJSON(ctx, w, record)
+}
+
+func GetDeltaIps(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	ctx := initializeContext(r)
+	record, err := dao.GetAllDeltaIps()
 	if err != nil {
 		returnError(ctx, w, r, err)
 		return

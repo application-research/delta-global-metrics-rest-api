@@ -310,3 +310,29 @@ func GetAllSPs() (interface{}, error) {
 	}
 	return val, nil
 }
+
+func GetAllDeltaIps() (interface{}, error) {
+
+	// total deals attempted
+	var allDeltaIps []string
+
+	val, ok := Cacher.Get("allDeltaIps")
+	if !ok {
+
+		DB.Transaction(func(tx *gorm.DB) error {
+
+			row := tx.Raw("select ip_addresses from (select distinct(ip_address) as ip_addresses from delta_startup_logs where ip_address <> '' group by ip_address) subquery").Row()
+			err := row.Scan(&allDeltaIps)
+			if err != nil {
+				fmt.Println("Error in getting total number of sps work with", err)
+				//return err
+			}
+			return nil
+		})
+		val = allDeltaIps
+		Cacher.Add("allDeltaIps", val)
+	}
+	return val, nil
+}
+
+//
