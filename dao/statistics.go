@@ -264,23 +264,23 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 }
 
 func GetAllWalletAddrs() (interface{}, error) {
-
+	type WalletLog struct {
+		Addr string
+	}
 	// total deals attempted
-	var allWalletAddrs []string
+	var addresses []WalletLog
 
 	val, ok := Cacher.Get("allWalletAddrs")
 	if !ok {
 
-		DB.Transaction(func(tx *gorm.DB) error {
-
-			row := tx.Raw("select addrs from (select distinct(addr) as addrs from wallet_logs group by addr) subquery").Row()
-			err := row.Scan(&allWalletAddrs)
-			if err != nil {
-				fmt.Println("Error in getting total number of sps work with", err)
-				//return err
-			}
-			return nil
-		})
+		DB.Model(&WalletLog{}).
+			Select("addr").
+			Group("addr").
+			Find(&addresses)
+		var allWalletAddrs []string
+		for _, addr := range addresses {
+			allWalletAddrs = append(allWalletAddrs, addr.Addr)
+		}
 		val = allWalletAddrs
 		Cacher.Add("allWalletAddrs", val)
 	}
@@ -290,23 +290,25 @@ func GetAllWalletAddrs() (interface{}, error) {
 func GetAllSPs() (interface{}, error) {
 
 	// total deals attempted
-	var allSpsStats []string
+	type ContentMinerLog struct {
+		Miner string
+	}
 
+	var miners []ContentMinerLog
 	val, ok := Cacher.Get("allSpsStats")
 	if !ok {
 
-		DB.Transaction(func(tx *gorm.DB) error {
+		DB.Model(&ContentMinerLog{}).
+			Select("miner").
+			Group("miner").
+			Find(&miners)
+		var minersStr []string
+		for _, miner := range miners {
+			minersStr = append(minersStr, miner.Miner)
+		}
+		val = minersStr
 
-			row := tx.Raw("select miners from (select distinct(miner) as miners from content_miner_logs group by miner) subquery").Row()
-			err := row.Scan(&allSpsStats)
-			if err != nil {
-				fmt.Println("Error in getting total number of sps work with", err)
-				//return err
-			}
-			return nil
-		})
-		val = allSpsStats
-		Cacher.Add("allSpsStats", val)
+		Cacher.Add("allSpsStats", minersStr)
 	}
 	return val, nil
 }
@@ -314,21 +316,23 @@ func GetAllSPs() (interface{}, error) {
 func GetAllDeltaIps() (interface{}, error) {
 
 	// total deals attempted
-	var allDeltaIps []string
-
+	type DeltaStartupLog struct {
+		IPAddress string
+	}
+	var ipAddresses []DeltaStartupLog
 	val, ok := Cacher.Get("allDeltaIps")
 	if !ok {
 
-		DB.Transaction(func(tx *gorm.DB) error {
+		DB.Model(&DeltaStartupLog{}).
+			Select("ip_address").
+			Where("ip_address <> ?", "").
+			Group("ip_address").
+			Find(&ipAddresses)
 
-			row := tx.Raw("select ip_addresses from (select distinct(ip_address) as ip_addresses from delta_startup_logs where ip_address <> '' group by ip_address) subquery").Row()
-			err := row.Scan(&allDeltaIps)
-			if err != nil {
-				fmt.Println("Error in getting total number of sps work with", err)
-				//return err
-			}
-			return nil
-		})
+		var allDeltaIps []string
+		for _, ip := range ipAddresses {
+			allDeltaIps = append(allDeltaIps, ip.IPAddress)
+		}
 		val = allDeltaIps
 		Cacher.Add("allDeltaIps", val)
 	}
