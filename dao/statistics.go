@@ -262,3 +262,81 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 	return val, nil
 
 }
+
+func GetAllWalletAddrs() (interface{}, error) {
+	type WalletLog struct {
+		Addr string
+	}
+	// total deals attempted
+	var addresses []WalletLog
+
+	val, ok := Cacher.Get("allWalletAddrs")
+	if !ok {
+
+		DB.Model(&WalletLog{}).
+			Select("addr").
+			Group("addr").
+			Find(&addresses)
+		var allWalletAddrs []string
+		for _, addr := range addresses {
+			allWalletAddrs = append(allWalletAddrs, addr.Addr)
+		}
+		val = allWalletAddrs
+		Cacher.Add("allWalletAddrs", val)
+	}
+	return val, nil
+}
+
+func GetAllSPs() (interface{}, error) {
+
+	// total deals attempted
+	type ContentMinerLog struct {
+		Miner string
+	}
+
+	var miners []ContentMinerLog
+	val, ok := Cacher.Get("allSpsStats")
+	if !ok {
+
+		DB.Model(&ContentMinerLog{}).
+			Select("miner").
+			Group("miner").
+			Find(&miners)
+		var minersStr []string
+		for _, miner := range miners {
+			minersStr = append(minersStr, miner.Miner)
+		}
+		val = minersStr
+
+		Cacher.Add("allSpsStats", minersStr)
+	}
+	return val, nil
+}
+
+func GetAllDeltaIps() (interface{}, error) {
+
+	// total deals attempted
+	type DeltaStartupLog struct {
+		IPAddress string
+	}
+	var ipAddresses []DeltaStartupLog
+	val, ok := Cacher.Get("allDeltaIps")
+	if !ok {
+
+		DB.Model(&DeltaStartupLog{}).
+			Select("ip_address").
+			Where("ip_address <> ?", "").
+			Group("ip_address").
+			Find(&ipAddresses)
+
+		var allDeltaIps []string
+		for _, ip := range ipAddresses {
+			allDeltaIps = append(allDeltaIps, ip.IPAddress)
+		}
+		val = allDeltaIps
+		Cacher.Add("allDeltaIps", val)
+	}
+	return val, nil
+}
+
+//
