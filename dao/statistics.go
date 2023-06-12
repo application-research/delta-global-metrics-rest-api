@@ -263,6 +263,30 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 
 }
 
+func GetAllWalletAddrs() (interface{}, error) {
+
+	// total deals attempted
+	var allWalletAddrs []string
+
+	val, ok := Cacher.Get("allWalletAddrs")
+	if !ok {
+
+		DB.Transaction(func(tx *gorm.DB) error {
+
+			row := tx.Raw("select addrs from (select distinct(addr) as addrs from wallet_logs group by addr) subquery").Row()
+			err := row.Scan(&allWalletAddrs)
+			if err != nil {
+				fmt.Println("Error in getting total number of sps work with", err)
+				//return err
+			}
+			return nil
+		})
+		val = allWalletAddrs
+		Cacher.Add("allWalletAddrs", val)
+	}
+	return val, nil
+}
+
 func GetAllSPs() (interface{}, error) {
 
 	// total deals attempted
@@ -282,7 +306,7 @@ func GetAllSPs() (interface{}, error) {
 			return nil
 		})
 		val = allSpsStats
-		Cacher.Add("statsTotal", val)
+		Cacher.Add("allSpsStats", val)
 	}
 	return val, nil
 }
