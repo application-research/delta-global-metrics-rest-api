@@ -262,3 +262,27 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 	return val, nil
 
 }
+
+func GetAllSPs() (interface{}, error) {
+
+	// total deals attempted
+	var allSpsStats []string
+
+	val, ok := Cacher.Get("allSpsStats")
+	if !ok {
+
+		DB.Transaction(func(tx *gorm.DB) error {
+
+			row := tx.Raw("select miners from (select distinct(miner) as miners from content_miner_logs group by miner) subquery").Row()
+			err := row.Scan(&allSpsStats)
+			if err != nil {
+				fmt.Println("Error in getting total number of sps work with", err)
+				//return err
+			}
+			return nil
+		})
+		val = allSpsStats
+		Cacher.Add("statsTotal", val)
+	}
+	return val, nil
+}
