@@ -8,6 +8,7 @@ import (
 	"github.com/application-research/delta-metrics-rest/model"
 	"github.com/droundy/goopt"
 	"github.com/gin-gonic/gin"
+	"github.com/go-co-op/gocron"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mssql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -151,20 +152,33 @@ func main() {
 	// cache
 	dao.Cacher = explru.NewExpirableLRU(CacheSize, nil, CacheDuration, CachePurgeEveryDuration)
 
-	// Recache
+	// Initialize Refresh Views
 	//go Recache()
 	go GinServer()
 	LoopForever()
 }
 
 func Recache() {
-	for {
-		_, err := dao.GetOpenTotalInfoStats()
+	s := gocron.NewScheduler(time.UTC)
+
+	// Every starts the job immediately and then runs at the
+	// specified interval
+	job, err := s.Every(24).Hours().Do(func() {
+		fmt.Println("Refresh Views")
+		refreshViews, err := os.ReadFile("sql/views/refresh_mv_stats.sql")
+		refreshViewsStr := string(refreshViews)
 		if err != nil {
-			fmt.Printf("Error while recaching %s\n", err)
+			log.Fatalf("Got error when reading refresh_mv_stats.sql, the error is '%v'", err)
 		}
-		time.Sleep(30 * time.Minute)
+		if err := dao.DB.Exec(refreshViewsStr); err != nil {
+			panic(err)
+		}
+	})
+	if err != nil {
+		log.Fatalf("Got error when recache, the error is '%v'", err)
 	}
+	fmt.Println(job)
+	s.StartAsync()
 }
 
 // LoopForever on signal processing
