@@ -12,6 +12,12 @@ func configGinStatisticsRouter(router gin.IRoutes) {
 	router.GET("/open/stats/list/sps", ConverHttprouterToGin(GetAllSps))
 	router.GET("/open/stats/list/wallet/addrs", ConverHttprouterToGin(GetWalletsAddrs))
 	router.GET("/open/stats/instance/ips", ConverHttprouterToGin(GetDeltaIps))
+
+	// open stats
+	// /open/stats/onboarded/deals/by-username/:username
+	// /open/stats/onboarded/deals/by-sp/:sp_id
+	// /open/stats/onboarded/deals/by-delta-uuid/:delta_uuid
+	// /open/stats/onboarded/deals/by-key/ (post)
 }
 
 func GetOpenTotalInfoStats(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
