@@ -42,7 +42,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 		DB.Transaction(func(tx *gorm.DB) error {
 
 			var totalDealsAttempted int
-			row := tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c group by system_content_id) subquery").Row()
+			row := tx.Raw("select * from mv_deals_attempted").Row()
 			err := row.Scan(&totalDealsAttempted)
 			if err != nil {
 				fmt.Println("Error in getting total deals attempted", err)
@@ -53,7 +53,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalDealsAttempted = totalDealsAttempted
 
 			var totalDealsAttemptedSize int
-			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,system_content_id) subquery").Row()
+			row = tx.Raw("select * from mv_deals_attempted_size").Row()
 			err = row.Scan(&totalDealsAttemptedSize)
 			if err != nil {
 				fmt.Println("Error in getting total deals attempted size", err)
@@ -63,7 +63,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalDealsAttemptedSize = totalDealsAttemptedSize
 
 			var totalE2EDealsAttempted int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' group by system_content_id) subquery").Row()
+			row = tx.Raw("select * from mv_e2e_deals_attempted").Row()
 			err = row.Scan(&totalE2EDealsAttempted)
 			if err != nil {
 				fmt.Println("Error in getting total e2e deals attempted", err)
@@ -73,7 +73,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalE2EDealsAttempted = totalE2EDealsAttempted
 
 			var totalPieceCommitmentsComputeAttempted int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(p.piece) as cnt from piece_commitment_logs p group by p.piece) subquery").Row()
+			row = tx.Raw("select * from mv_commp_compute_attempted").Row()
 			err = row.Scan(&totalPieceCommitmentsComputeAttempted)
 			if err != nil {
 				fmt.Println("Error in getting total piece commitments compute attempted", err)
@@ -83,7 +83,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalPieceCommitmentsComputeAttempted = totalPieceCommitmentsComputeAttempted
 
 			var totalPieceCommitmentsComputeAttemptedSize int
-			row = tx.Raw("select sum(size) as total_size_sum from (select p.size as size from piece_commitment_logs p group by p.size,p.piece) subquery").Row()
+			row = tx.Raw("select * from mv_commp_compute_attempted_size").Row()
 			err = row.Scan(&totalPieceCommitmentsComputeAttemptedSize)
 			if err != nil {
 				fmt.Println("Error in getting total piece commitments compute attempted size", err)
@@ -93,7 +93,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalPieceCommitmentsComputeAttemptedSize = totalPieceCommitmentsComputeAttemptedSize
 
 			var totalE2EDealsAttemptedSize int
-			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'e2e' and (system_content_id is null or system_content_id is not null) group by c.size,system_content_id) subquery").Row()
+			row = tx.Raw("select * from mv_e2e_deals_attempted_size").Row()
 			err = row.Scan(&totalE2EDealsAttemptedSize)
 			if err != nil {
 				fmt.Println("Error in getting total e2e deals attempted size", err)
@@ -103,7 +103,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalE2EDealsAttemptedSize = totalE2EDealsAttemptedSize
 
 			var totalImportDealsAttempted int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' group by system_content_id) subquery").Row()
+			row = tx.Raw("select * from mv_import_deals_attempted").Row()
 			err = row.Scan(&totalImportDealsAttempted)
 			if err != nil {
 				fmt.Println("Error in getting total import deals attempted", err)
@@ -113,7 +113,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalImportDealsAttempted = totalImportDealsAttempted
 
 			var totalImportDealsAttemptedSize int
-			row = tx.Raw("select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where c.connection_mode = 'import' and (system_content_id is null or system_content_id is not null) group by c.size,system_content_id) subquery").Row()
+			row = tx.Raw("select * from mv_import_deals_attempted_size").Row()
 			err = row.Scan(&totalImportDealsAttemptedSize)
 			if err != nil {
 				fmt.Println("Error in getting total import deals attempted size", err)
@@ -123,7 +123,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalImportDealsAttemptedSize = totalImportDealsAttemptedSize
 
 			var totalDealsSucceeded int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where status in ('deal-proposal-sent','transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery").Row()
+			row = tx.Raw("select * from mv_deals_succeeded").Row()
 			err = row.Scan(&totalDealsSucceeded)
 			if err != nil {
 				fmt.Println("Error in getting total deals succeeded", err)
@@ -133,7 +133,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalDealsSucceeded = totalDealsSucceeded
 
 			var totalDealsSucceededSize int
-			row = tx.Raw("select sum(size) as total_size_sum from (select p.padded_piece_size as size,system_content_id from content_logs c, piece_commitment_logs p where c.piece_commitment_id = p.system_content_piece_commitment_id and c.status in ('deal-proposal-sent','transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id, p.padded_piece_size) subquery").Row()
+			row = tx.Raw("select * from mv_deals_succeeded_size").Row()
 			err = row.Scan(&totalDealsSucceededSize)
 			if err != nil {
 				fmt.Println("Error in getting total deals succeeded size", err)
@@ -143,7 +143,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalDealsSucceededSize = totalDealsSucceededSize
 
 			var totalE2EDealsSucceeded int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status in ('transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery").Row()
+			row = tx.Raw("select * from mv_e2e_deals_succeeded").Row()
 			err = row.Scan(&totalE2EDealsSucceeded)
 			if err != nil {
 				fmt.Println("Error in getting total e2e deals succeeded", err)
@@ -153,7 +153,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalE2ESucceeded = totalE2EDealsSucceeded
 
 			var totalPieceCommitmentsComputeSucceeded int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(p.piece) as cnt from piece_commitment_logs p where p.status = 'committed' group by p.piece) subquery").Row()
+			row = tx.Raw("select * from mv_commp_compute_succeeded").Row()
 			err = row.Scan(&totalPieceCommitmentsComputeSucceeded)
 			if err != nil {
 				fmt.Println("Error in getting total piece commitments compute succeeded", err)
@@ -173,7 +173,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalPieceCommitmentsComputeSucceededSize = totalPieceCommitmentsComputeSucceededSize
 
 			var totalE2EDealsSucceededSize int
-			row = tx.Raw("select sum(size) as total_size_sum from (select p.padded_piece_size as size,system_content_id from content_logs c, piece_commitment_logs p where c.piece_commitment_id = p.system_content_piece_commitment_id and c.status in ('transfer-started','transfer-finished') and c.connection_mode = 'e2e' and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id, p.padded_piece_size) subquery").Row()
+			row = tx.Raw("select * from mv_e2e_deals_succeeded_size").Row()
 			//
 			err = row.Scan(&totalE2EDealsSucceededSize)
 			if err != nil {
@@ -184,7 +184,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalE2ESucceededSize = totalE2EDealsSucceededSize
 
 			var totalImportDealsSucceeded int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status in ('deal-proposal-sent') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery").Row()
+			row = tx.Raw("select * from mv_import_deals_succeeded").Row()
 			err = row.Scan(&totalImportDealsSucceeded)
 			if err != nil {
 				fmt.Println("Error in getting total import deals succeeded", err)
@@ -194,7 +194,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalImportSucceeded = totalImportDealsSucceeded
 
 			var totalImportDealsSucceededSize int
-			row = tx.Raw("select sum(size) as total_size_sum from (select p.padded_piece_size as size,system_content_id from content_logs c, piece_commitment_logs p where c.piece_commitment_id = p.system_content_piece_commitment_id and c.status in ('deal-proposal-sent') and c.connection_mode = 'import' and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id, p.padded_piece_size) subquery").Row()
+			row = tx.Raw("select * from mv_import_deals_succeeded_size").Row()
 			err = row.Scan(&totalImportDealsSucceededSize)
 			if err != nil {
 				fmt.Println("Error in getting total import deals succeeded size", err)
@@ -236,7 +236,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 
 			var totalNumberOfSpsWorkWith int
 			// select count(miners) as total_rows from (select distinct(miner) as miners from content_miner_logs group by miner) subquery;
-			row = tx.Raw("select count(miners) as total_rows from (select distinct(miner) as miners from content_miner_logs group by miner) subquery").Row()
+			row = tx.Raw("select * from mv_number_of_sps_work_with").Row()
 			err = row.Scan(&totalNumberOfSpsWorkWith)
 			if err != nil {
 				fmt.Println("Error in getting total number of sps work with", err)
@@ -246,7 +246,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalNumberOfSpsWorkWith = totalNumberOfSpsWorkWith
 
 			var totalNumberOfUniqueDeltaNodes int
-			row = tx.Raw("select count(delta_node) as total_rows from (select distinct(delta_node_uuid) as delta_node from delta_startup_logs group by delta_node_uuid) subquery").Row()
+			row = tx.Raw("select * from mv_number_of_unique_delta_nodes").Row()
 			err = row.Scan(&totalNumberOfUniqueDeltaNodes)
 			if err != nil {
 				fmt.Println("Error in getting total number of unique delta nodes", err)
