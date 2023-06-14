@@ -163,7 +163,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalPieceCommitmentsComputeSucceeded = totalPieceCommitmentsComputeSucceeded
 
 			var totalPieceCommitmentsComputeSucceededSize int
-			row = tx.Raw("select sum(size) as total_size_sum from (select p.size as size from piece_commitment_logs p where p.status = 'committed' group by p.size,p.piece) subquery").Row()
+			row = tx.Raw("select * from mv_commp_compute_succeeded_size").Row()
 			err = row.Scan(&totalPieceCommitmentsComputeSucceededSize)
 			if err != nil {
 				fmt.Println("Error in getting total piece commitments compute succeeded size", err)
