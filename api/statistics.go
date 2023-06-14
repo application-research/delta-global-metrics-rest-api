@@ -14,6 +14,7 @@ func configGinStatisticsRouter(router gin.IRoutes) {
 	router.GET("/open/stats/instance/ips", ConverHttprouterToGin(GetDeltaIps))
 
 	// open stats
+	//router.GET("/open/stats/onboarded/deals/by-sp/:sp_id", ConverHttprouterToGin(GetDeltaIps))
 	// /open/stats/onboarded/deals/by-username/:username
 	// /open/stats/onboarded/deals/by-sp/:sp_id
 	// /open/stats/onboarded/deals/by-delta-uuid/:delta_uuid
