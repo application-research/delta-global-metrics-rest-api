@@ -85,3 +85,20 @@ select count(miners) as total_rows from (select distinct(miner) as miners from c
 CREATE MATERIALIZED VIEW  IF NOT EXISTS mv_number_of_unique_delta_nodes
 AS
 select count(delta_node) as total_rows from (select distinct(delta_node_uuid) as delta_node from delta_startup_logs group by delta_node_uuid) subquery;
+
+
+--mv_total_in_progress_deals_24
+CREATE MATERIALIZED VIEW  IF NOT EXISTS mv_total_in_progress_deals_24
+AS
+select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery;
+
+--mv_total_in_progress_e2e_deals_24
+CREATE MATERIALIZED VIEW  IF NOT EXISTS mv_total_in_progress_e2e_deals_24
+AS
+select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery
+
+
+--mv_total_in_progress_import_deals_24
+CREATE MATERIALIZED VIEW  IF NOT EXISTS mv_total_in_progress_import_deals_24
+AS
+select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '48 hours' group by system_content_id) subquery;

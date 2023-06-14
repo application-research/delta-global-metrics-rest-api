@@ -205,7 +205,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 
 			var totalInProgressDeals int
 
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
+			row = tx.Raw("select * from mv_total_in_progress_deals_24").Row()
 			err = row.Scan(&totalInProgressDeals)
 			if err != nil {
 				fmt.Println("Error in getting total in progress deals", err)
@@ -215,7 +215,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalInProgressDeals24h = totalInProgressDeals
 
 			var totalInProgressE2EDeals int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'e2e' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '24 hours' group by system_content_id) subquery").Row()
+			row = tx.Raw("select * from mv_total_in_progress_e2e_deals_24").Row()
 			err = row.Scan(&totalInProgressE2EDeals)
 			if err != nil {
 				fmt.Println("Error in getting total in progress e2e deals", err)
@@ -225,7 +225,7 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			statsTotal.TotalInProgressE2EDeals24h = totalInProgressE2EDeals
 
 			var totalInProgressImportDeals int
-			row = tx.Raw("select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.connection_mode = 'import' and status not in ('transfer-failed','deal-proposal-failed','piece-computing-failed','failed-to-process') and id not in (select id from content_logs c1 where c.id = c1.id and c1.status in ('deal-proposal-sent','transfer-started','transfer-finished')) and created_at > now() - interval '48 hours' group by system_content_id) subquery").Row()
+			row = tx.Raw("select * from mv_total_in_progress_import_deals_24").Row()
 			err = row.Scan(&totalInProgressImportDeals)
 			if err != nil {
 				fmt.Println("Error in getting total in progress import deals", err)

@@ -16,3 +16,6 @@ REFRESH MATERIALIZED VIEW CONCURRENTLY mv_commp_compute_attempted;
 REFRESH MATERIALIZED VIEW CONCURRENTLY mv_commp_compute_attempted_size;
 REFRESH MATERIALIZED VIEW CONCURRENTLY mv_number_of_sps_work_with;
 REFRESH MATERIALIZED VIEW CONCURRENTLY mv_number_of_unique_delta_nodes;
+REFRESH MATERIALIZED VIEW CONCURRENTLY mv_total_in_progress_deals_24;
+REFRESH MATERIALIZED VIEW CONCURRENTLY mv_total_in_progress_e2e_deals_24;
+REFRESH MATERIALIZED VIEW CONCURRENTLY mv_total_in_progress_import_deals_24;
