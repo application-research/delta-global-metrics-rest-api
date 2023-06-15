@@ -1,7 +1,28 @@
 # Delta Metrics Rest
 Rest API for Delta Global Metrics
+
+## Set up the .env file
+```
+DB_NAME=deltadb_metrics
+DB_HOST=<delta-metrics connection uri>
+DB_USER=deltadb_metrics_user
+DB_PASS=<password>
+DB_PORT=5432
+```
+
+## Build the binary
 ```
 make dmr
+```
+
+## Run the binary
+```
+./dmr
+```
+
+## Check the live totals info here
+```
+https://global.delta.store/open/stats/totals/info
 ```
 
 ## Global Stats available
