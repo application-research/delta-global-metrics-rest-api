@@ -1,4 +1,4 @@
-# Delta Metrics Rest
+# Delta Global Metrics Rest
 Rest API for Delta Global Metrics
 
 # How it works
