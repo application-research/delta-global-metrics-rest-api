@@ -1,5 +1,13 @@
-# Delta Metrics Rest
+# Delta Global Metrics Rest
 Rest API for Delta Global Metrics
+
+# How it works
+
+- delta instances reports all data using https://github.com/application-research/delta-events-consumer
+- the event consumer inserts record on delta metrics database.
+- delta-metrics-rest-api (this project) interface all the tables and views of the delta metrics database.
+
+![image](https://github.com/application-research/delta-metrics-rest-api/assets/4479171/64dd71f4-55e3-4c08-89e5-74d396d32e0d)
 
 ## Set up the .env file
 ```
