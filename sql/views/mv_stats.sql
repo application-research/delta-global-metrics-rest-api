@@ -4,11 +4,23 @@ AS
 select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c group by system_content_id) subquery;
 CREATE UNIQUE INDEX ON mv_deals_attempted(total_rows);
 
+DROP MATERIALIZED VIEW IF EXISTS mv_deals_attempted_past_24h;
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_deals_attempted_past_24h
+AS
+select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where c.created_at > now() - interval '24 hours' group by system_content_id) subquery;
+CREATE UNIQUE INDEX ON mv_deals_attempted_past_24h(total_rows);
+
 DROP MATERIALIZED VIEW IF EXISTS mv_deals_attempted_size;
 CREATE MATERIALIZED VIEW IF NOT EXISTS mv_deals_attempted_size
 AS
 select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') group by c.size,system_content_id) subquery;
 CREATE UNIQUE INDEX ON mv_deals_attempted_size(total_size_sum);
+
+DROP MATERIALIZED VIEW IF EXISTS mv_deals_attempted_size_past_24h;
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_deals_attempted_size_past_24h
+AS
+select sum(size) as total_size_sum from (select c.size as size,system_content_id from content_logs c where (system_content_id is null or system_content_id is not null) and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') and created_at > now() - interval '24 hours' group by c.size,system_content_id) subquery;
+CREATE UNIQUE INDEX ON mv_deals_attempted_size_past_24h(total_size_sum);
 
 --mv_e2e_deals_attempted
 DROP MATERIALIZED VIEW IF EXISTS mv_e2e_deals_attempted;
@@ -45,12 +57,24 @@ AS
 select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where status in ('deal-proposal-sent','transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id) subquery;
 CREATE UNIQUE INDEX ON mv_deals_succeeded(total_rows);
 
+DROP MATERIALIZED VIEW IF EXISTS mv_deals_succeeded_past_24h;
+CREATE MATERIALIZED VIEW  IF NOT EXISTS mv_deals_succeeded_past_24h
+AS
+select sum(cnt) as total_rows from (select count(*) as cnt from content_logs c where status in ('deal-proposal-sent','transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') and created_at > now() - interval '24 hours' group by system_content_id) subquery;
+CREATE UNIQUE INDEX ON mv_deals_succeeded_past_24h(total_rows);
+
 --mv_deals_succeeded_size
 DROP MATERIALIZED VIEW IF EXISTS mv_deals_succeeded_size;
 CREATE MATERIALIZED VIEW  IF NOT EXISTS mv_deals_succeeded_size
 AS
 select sum(size) as total_size_sum from (select p.padded_piece_size as size,system_content_id from content_logs c, piece_commitment_logs p where c.piece_commitment_id = p.system_content_piece_commitment_id and c.status in ('deal-proposal-sent','transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '')  group by system_content_id, p.padded_piece_size) subquery;
 CREATE UNIQUE INDEX ON mv_deals_succeeded_size(total_size_sum);
+
+DROP MATERIALIZED VIEW IF EXISTS mv_deals_succeeded_size_past_24h;
+CREATE MATERIALIZED VIEW  IF NOT EXISTS mv_deals_succeeded_size_past_24h
+AS
+select sum(size) as total_size_sum from (select p.padded_piece_size as size,system_content_id from content_logs c, piece_commitment_logs p where c.piece_commitment_id = p.system_content_piece_commitment_id and c.status in ('deal-proposal-sent','transfer-started','transfer-finished') and (c.delta_node_uuid is not null or c.delta_node_uuid is null or c.delta_node_uuid = '') and c.created_at > now() - interval '24 hours'  group by system_content_id, p.padded_piece_size) subquery;
+CREATE UNIQUE INDEX ON mv_deals_succeeded_size_past_24h(total_size_sum);
 
 --mv_e2e_deals_succeeded
 DROP MATERIALIZED VIEW IF EXISTS mv_e2e_deals_succeeded;

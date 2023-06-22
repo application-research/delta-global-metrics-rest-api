@@ -13,16 +13,20 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 		TotalDealsAttempted                       int `json:"total_deals_attempted,omitempty"`
 		TotalE2EDealsAttempted                    int `json:"total_e2e_deals_attempted,omitempty"`
 		TotalImportDealsAttempted                 int `json:"total_import_deals_attempted,omitempty"`
+		TotalDealsAttemptedPast24h                int `json:"total_deals_attempted_past_24h,omitempty"`
 		TotalPieceCommitmentsComputeAttempted     int `json:"total_piece_commitments_compute_attempted,omitempty"`
 		TotalDealsAttemptedSize                   int `json:"total_deals_attempted_size,omitempty"`
+		TotalDealsAttemptedSizePast24h            int `json:"total_deals_attempted_size_past_24h,omitempty"`
 		TotalE2EDealsAttemptedSize                int `json:"total_e2e_deals_attempted_size,omitempty"`
 		TotalImportDealsAttemptedSize             int `json:"total_import_deals_attempted_size,omitempty"`
 		TotalPieceCommitmentsComputeAttemptedSize int `json:"total_piece_commitments_compute_attempted_size,omitempty"`
 		TotalDealsSucceeded                       int `json:"total_deals_succeeded,omitempty"`
+		TotalDealsSucceededPast24h                int `json:"total_deals_succeeded_past_24h,omitempty"`
 		TotalE2ESucceeded                         int `json:"total_e2e_succeeded,omitempty"`
 		TotalImportSucceeded                      int `json:"total_import_succeeded,omitempty"`
 		TotalPieceCommitmentsComputeSucceeded     int `json:"total_piece_commitments_compute_succeeded,omitempty"`
 		TotalDealsSucceededSize                   int `json:"total_deals_succeeded_size,omitempty"`
+		TotalDealsSucceededSizePast24h            int `json:"total_deals_succeeded_size_past_24h,omitempty"`
 		TotalE2ESucceededSize                     int `json:"total_e2e_succeeded_size,omitempty"`
 		TotalImportSucceededSize                  int `json:"total_import_succeeded_size,omitempty"`
 		TotalPieceCommitmentsComputeSucceededSize int `json:"total_piece_commitments_compute_succeeded_size,omitempty"`
@@ -52,6 +56,16 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			fmt.Sprintf("totalDealsAttempted: %d", totalDealsAttempted)
 			statsTotal.TotalDealsAttempted = totalDealsAttempted
 
+			var totalDealsAttemptedPast24h int
+			row = tx.Raw("select * from mv_deals_attempted_past_24h").Row()
+			err = row.Scan(&totalDealsAttemptedPast24h)
+			if err != nil {
+				fmt.Println("Error in getting total deals attempted size", err)
+				totalDealsAttemptedPast24h = 0
+				//return err
+			}
+			statsTotal.TotalDealsAttemptedPast24h = totalDealsAttemptedPast24h
+
 			var totalDealsAttemptedSize int
 			row = tx.Raw("select * from mv_deals_attempted_size").Row()
 			err = row.Scan(&totalDealsAttemptedSize)
@@ -61,6 +75,16 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 				//return err
 			}
 			statsTotal.TotalDealsAttemptedSize = totalDealsAttemptedSize
+
+			var totalDealsAttemptedSizePast24 int
+			row = tx.Raw("select * from mv_deals_attempted_size_past_24h").Row()
+			err = row.Scan(&totalDealsAttemptedSizePast24)
+			if err != nil {
+				fmt.Println("Error in getting total deals attempted size", err)
+				totalDealsAttemptedSizePast24 = 0
+				//return err
+			}
+			statsTotal.TotalDealsAttemptedSizePast24h = totalDealsAttemptedSizePast24
 
 			var totalE2EDealsAttempted int
 			row = tx.Raw("select * from mv_e2e_deals_attempted").Row()
@@ -132,6 +156,16 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 			}
 			statsTotal.TotalDealsSucceeded = totalDealsSucceeded
 
+			var totalDealsSucceededPast24h int
+			row = tx.Raw("select * from mv_deals_succeeded_past_24h").Row()
+			err = row.Scan(&totalDealsSucceededPast24h)
+			if err != nil {
+				fmt.Println("Error in getting total deals succeeded", err)
+				totalDealsSucceeded = 0
+				//return err
+			}
+			statsTotal.TotalDealsSucceededPast24h = totalDealsSucceededPast24h
+
 			var totalDealsSucceededSize int
 			row = tx.Raw("select * from mv_deals_succeeded_size").Row()
 			err = row.Scan(&totalDealsSucceededSize)
@@ -141,6 +175,16 @@ func GetOpenTotalInfoStats() (interface{}, error) {
 				//return err
 			}
 			statsTotal.TotalDealsSucceededSize = totalDealsSucceededSize
+
+			var totalDealsSucceededSizePast24h int
+			row = tx.Raw("select * from mv_deals_succeeded_size_past_24h").Row()
+			err = row.Scan(&totalDealsSucceededSizePast24h)
+			if err != nil {
+				fmt.Println("Error in getting total deals succeeded size", err)
+				totalDealsSucceededSizePast24h = 0
+				//return err
+			}
+			statsTotal.TotalDealsSucceededSizePast24h = totalDealsSucceededSizePast24h
 
 			var totalE2EDealsSucceeded int
 			row = tx.Raw("select * from mv_e2e_deals_succeeded").Row()
