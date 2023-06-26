@@ -166,8 +166,8 @@ func RefreshDBViews() {
 	// Every starts the job immediately and then runs at the
 	// specified interval
 	jobRefreshGlobalStats, err := s.Every(4).Hours().Do(func() {
-		fmt.Println("Refresh Views")
-		refreshViews, err := os.ReadFile("sql/views/refresh_all_tables.sql")
+		fmt.Println("Refresh Stats Views")
+		refreshViews, err := os.ReadFile("sql/views/refresh_mv_stats.sql")
 		refreshViewsStr := string(refreshViews)
 		if err != nil {
 			log.Fatalf("Got error when reading refresh_mv_stats.sql, the error is '%v'", err)
@@ -181,8 +181,8 @@ func RefreshDBViews() {
 	}
 
 	jobRefreshAllTables, err := s.Every(4).Hours().Do(func() {
-		fmt.Println("Refresh Views")
-		refreshViews, err := os.ReadFile("sql/views/refresh_mv_stats.sql")
+		fmt.Println("Refresh All Table Views")
+		refreshViews, err := os.ReadFile("sql/views/refresh_all_tables.sql")
 		refreshViewsStr := string(refreshViews)
 		if err != nil {
 			log.Fatalf("Got error when reading refresh_mv_stats.sql, the error is '%v'", err)
