@@ -153,19 +153,21 @@ func main() {
 	dao.Cacher = explru.NewExpirableLRU(CacheSize, nil, CacheDuration, CachePurgeEveryDuration)
 
 	// Initialize Refresh Views
-	//go Recache()
+	RefreshDBViews()
+
 	go GinServer()
 	LoopForever()
 }
 
-func Recache() {
+func RefreshDBViews() {
+
 	s := gocron.NewScheduler(time.UTC)
 
 	// Every starts the job immediately and then runs at the
 	// specified interval
-	job, err := s.Every(24).Hours().Do(func() {
+	jobRefreshGlobalStats, err := s.Every(4).Hours().Do(func() {
 		fmt.Println("Refresh Views")
-		refreshViews, err := os.ReadFile("sql/views/refresh_mv_stats.sql")
+		refreshViews, err := os.ReadFile("sql/views/refresh_all_tables.sql")
 		refreshViewsStr := string(refreshViews)
 		if err != nil {
 			log.Fatalf("Got error when reading refresh_mv_stats.sql, the error is '%v'", err)
@@ -177,7 +179,22 @@ func Recache() {
 	if err != nil {
 		log.Fatalf("Got error when recache, the error is '%v'", err)
 	}
-	fmt.Println(job)
+
+	jobRefreshAllTables, err := s.Every(4).Hours().Do(func() {
+		fmt.Println("Refresh Views")
+		refreshViews, err := os.ReadFile("sql/views/refresh_mv_stats.sql")
+		refreshViewsStr := string(refreshViews)
+		if err != nil {
+			log.Fatalf("Got error when reading refresh_mv_stats.sql, the error is '%v'", err)
+		}
+		if err := dao.DB.Exec(refreshViewsStr); err != nil {
+			panic(err)
+		}
+	})
+
+	fmt.Println(jobRefreshGlobalStats)
+	fmt.Println(jobRefreshAllTables)
+
 	s.StartAsync()
 }
 
