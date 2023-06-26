@@ -52,6 +52,7 @@ type HTTPError struct {
 // ConfigGinRouter configure gin router
 func ConfigGinRouter(router gin.IRoutes) {
 	configGinStatisticsRouter(router)
+	configGinRefreshViewsRouter(router)
 	configGinStatisticsTimeSeriesRouter(router)
 	router.GET("/ddl/:argID", ConverHttprouterToGin(GetDdl))
 	router.GET("/ddl", ConverHttprouterToGin(GetDdlEndpoints))
