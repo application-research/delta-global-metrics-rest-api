@@ -170,14 +170,14 @@ func RefreshDBViews() {
 		refreshViews, err := os.ReadFile("sql/views/refresh_mv_stats.sql")
 		refreshViewsStr := string(refreshViews)
 		if err != nil {
-			log.Fatalf("Got error when reading refresh_mv_stats.sql, the error is '%v'", err)
+			log.Printf("Got error when reading refresh_mv_stats.sql, the error is '%v'", err)
 		}
 		if err := dao.DB.Exec(refreshViewsStr); err != nil {
-			panic(err)
+			log.Println(err)
 		}
 	})
 	if err != nil {
-		log.Fatalf("Got error when recache, the error is '%v'", err)
+		log.Println(err)
 	}
 
 	jobRefreshAllTables, err := s.Every(4).Hours().Do(func() {
@@ -185,10 +185,10 @@ func RefreshDBViews() {
 		refreshViews, err := os.ReadFile("sql/views/refresh_all_tables.sql")
 		refreshViewsStr := string(refreshViews)
 		if err != nil {
-			log.Fatalf("Got error when reading refresh_mv_stats.sql, the error is '%v'", err)
+			log.Println(err)
 		}
 		if err := dao.DB.Exec(refreshViewsStr); err != nil {
-			panic(err)
+			log.Println(err)
 		}
 	})
 
