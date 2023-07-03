@@ -14,8 +14,45 @@ import (
 const viewTypeRefreshGlobalStats = "global_stats"
 const viewTypeRefreshAllTableViews = "all_table_views"
 
+// write a temporary storage to track view refreshes
+
 func configGinRefreshViewsRouter(router gin.IRoutes) {
 	router.GET("/admin/views/refresh/:view_name", ConverHttprouterToGin(RefreshView))
+	router.GET("/admin/views/refresh/status/:view_name", ConverHttprouterToGin(GetRefreshViewStatus))
+}
+
+type RefreshViewResponse struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
+}
+
+func GetRefreshViewStatus(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+
+	// use the tracker to return the result
+	ctx := initializeContext(r)
+	viewName := ps.ByName("view_name")
+	if viewName == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		writeJSON(ctx, w, "view_name required")
+		return
+	}
+
+	// check if the view is being refreshed
+	if dao.ViewRefreshes[viewName] {
+		w.WriteHeader(http.StatusAccepted)
+		writeJSON(ctx, w,
+			struct {
+				Message string `json:"message"`
+			}{
+				Message: "refresh in progress for view " + viewName,
+			})
+		return
+	} else {
+		w.WriteHeader(http.StatusOK)
+		writeJSON(ctx, w, "no refresh in progress for view "+viewName)
+		return
+	}
+
 }
 
 func RefreshView(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -25,7 +62,11 @@ func RefreshView(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	authParts := strings.Split(r.Header.Get("Authorization"), " ")
 	if len(authParts) != 2 {
 		w.WriteHeader(http.StatusUnauthorized)
-		writeJSON(ctx, w, "invalid authorization header")
+		writeJSON(ctx, w, struct {
+			Message string `json:"message"`
+		}{
+			Message: "invalid authorization header",
+		})
 		return
 	}
 
@@ -35,7 +76,7 @@ func RefreshView(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		writeJSON(ctx, w, "AUTH_SVC_API not set")
 		return
 	}
-	
+
 	response, err := http.Post(
 		authSvcApi+"/check-api-key",
 		"application/json",
@@ -56,25 +97,49 @@ func RefreshView(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 	if authResp.Result.Validated == false {
 		w.WriteHeader(http.StatusUnauthorized)
-		writeJSON(ctx, w, "invalid token")
+		writeJSON(ctx, w,
+			struct {
+				Message string `json:"message"`
+			}{
+				Message: "invalid api key",
+			})
 		return
 	}
 
 	// get query params
 	viewName := ps.ByName("view_name")
-	go func() {
-		if viewName == viewTypeRefreshGlobalStats {
-			_, err := dao.RefreshGlobalStatsView()
+
+	if viewName == viewTypeRefreshGlobalStats {
+		go func() {
+			_, err := dao.RefreshGlobalStatsView(viewName)
 			if err != nil {
 				returnError(ctx, w, r, err)
-
 				return
 			}
-		}
-	}()
+		}()
+		// add tracking
+		dao.ViewRefreshes[viewName] = true
+	}
+
+	if viewName == viewTypeRefreshAllTableViews {
+		go func() {
+			_, err := dao.RefreshGlobalAllTableView(viewName)
+			if err != nil {
+				returnError(ctx, w, r, err)
+				return
+			}
+		}()
+		dao.ViewRefreshes[viewName] = true
+	}
 
 	w.WriteHeader(http.StatusOK)
-	writeJSON(ctx, w, "Refresh view request received. Please wait for a few minutes for the view to be refreshed.")
+	writeJSON(ctx, w,
+		struct {
+			Message string `json:"message"`
+		}{
+			Message: "Refresh view request received. Please wait for a few minutes for the view to be refreshed.",
+		},
+	)
 	return
 }
 
