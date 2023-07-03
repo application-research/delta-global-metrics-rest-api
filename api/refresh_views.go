@@ -1,6 +1,8 @@
 package api
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/application-research/delta-metrics-rest/dao"
 	"github.com/gin-gonic/gin"
 	"github.com/julienschmidt/httprouter"
@@ -17,39 +19,99 @@ func configGinRefreshViewsRouter(router gin.IRoutes) {
 }
 
 func RefreshView(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	ctx := initializeContext(r)
-	authKey := viper.Get("REFRESH_VIEW")
-	if authKey == nil {
-		w.WriteHeader(http.StatusUnauthorized)
-		writeJSON(ctx, w, "REFRESH_VIEW not set")
-		return
-	}
 
-	// check auth header
-	authorizationString := r.Header.Get("Authorization")
-	authParts := strings.Split(authorizationString, " ")
+	fmt.Println("refreshing view")
+	ctx := initializeContext(r)
+	authParts := strings.Split(r.Header.Get("Authorization"), " ")
 	if len(authParts) != 2 {
 		w.WriteHeader(http.StatusUnauthorized)
 		writeJSON(ctx, w, "invalid authorization header")
 		return
 	}
-	if authParts[1] != authKey {
+
+	authSvcApi := viper.Get("AUTH_SVC_API").(string)
+	if authSvcApi == "" {
 		w.WriteHeader(http.StatusUnauthorized)
-		writeJSON(ctx, w, "invalid authorization header")
+		writeJSON(ctx, w, "AUTH_SVC_API not set")
+		return
+	}
+	
+	response, err := http.Post(
+		authSvcApi+"/check-api-key",
+		"application/json",
+		strings.NewReader(fmt.Sprintf(`{"token": "%s"}`, authParts[1])),
+	)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		writeJSON(ctx, w, err.Error())
+		return
+	}
+
+	authResp, err := GetAuthResponse(response)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		writeJSON(ctx, w, err.Error())
+		return
+	}
+
+	if authResp.Result.Validated == false {
+		w.WriteHeader(http.StatusUnauthorized)
+		writeJSON(ctx, w, "invalid token")
 		return
 	}
 
 	// get query params
 	viewName := ps.ByName("view_name")
-	if viewName == viewTypeRefreshGlobalStats {
-		record, err := dao.RefreshGlobalStatsView()
-		if err != nil {
-			returnError(ctx, w, r, err)
+	go func() {
+		if viewName == viewTypeRefreshGlobalStats {
+			_, err := dao.RefreshGlobalStatsView()
+			if err != nil {
+				returnError(ctx, w, r, err)
 
-			return
+				return
+			}
 		}
-		writeJSON(ctx, w, record)
-	}
+	}()
 
+	w.WriteHeader(http.StatusOK)
+	writeJSON(ctx, w, "Refresh view request received. Please wait for a few minutes for the view to be refreshed.")
 	return
+}
+
+type AuthResponse struct {
+	User struct {
+		Username string `json:"username"`
+		Perm     int    `json:"perm"`
+		Flags    int    `json:"flags"`
+	} `json:"user"`
+	Result struct {
+		Validated bool   `json:"validated"`
+		Details   string `json:"details"`
+	} `json:"result"`
+}
+
+func GetAuthResponse(resp *http.Response) (AuthResponse, error) {
+	jsonBody := AuthResponse{}
+	err := json.NewDecoder(resp.Body).Decode(&jsonBody)
+	if err != nil {
+		return AuthResponse{
+			User: struct {
+				Username string `json:"username"`
+				Perm     int    `json:"perm"`
+				Flags    int    `json:"flags"`
+			}{
+				Username: "",
+				Perm:     0,
+				Flags:    0,
+			},
+			Result: struct {
+				Validated bool   `json:"validated"`
+				Details   string `json:"details"`
+			}{
+				Validated: false,
+				Details:   "empty json body",
+			},
+		}, nil
+	}
+	return jsonBody, nil
 }
